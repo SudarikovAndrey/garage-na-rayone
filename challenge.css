@@ -1,0 +1,93 @@
+/* Стрелка. Экран собран из готовых кусков меню, здесь только то, чего в них нет:
+   контейнер карточки вызова и несколько строк списка. */
+
+/* Карточка вызова живёт по тем же правилам, что заставка босса: во весь экран, поверх всего. */
+#challenge-intro{position:absolute;inset:0;z-index:31;overflow:hidden;
+ background:radial-gradient(120% 80% at 50% 12%,#20242a,#0b0d0c 62%,#070807);
+ display:flex;flex-direction:column}
+#challenge-intro[hidden]{display:none}
+#challenge-intro .intro-stack{position:relative;inset:auto;flex:1 1 auto;min-height:0;justify-content:center;gap:14px;padding:max(4dvh,18px) 18px 0}
+#challenge-intro .intro-plate{text-align:center;animation:none}
+#challenge-intro .intro-plate h2{margin:6px 0 0;font:600 34px/1 Oswald,sans-serif;letter-spacing:1px;color:#f2e2bd}
+/* Вызов написан в три строки и так и должен читаться. */
+#challenge-intro [data-taunt]{white-space:pre-line}
+#challenge-intro [data-avatar]{width:96px;height:96px;border-radius:50%;object-fit:cover;align-self:center;border:2px solid #d8b869}
+/* У заставки босса блок тачки показывается только на втором шаге; здесь шага два нет. */
+#challenge-intro .intro-car{display:block;position:relative;inset:auto;margin:0 18px 4px;text-align:center;opacity:1;transform:none;animation:none}
+.challenge-intro-actions{flex:0 0 auto;display:grid;gap:10px;padding:14px 18px calc(max(18px,env(safe-area-inset-bottom)) + 10px)}
+.challenge-intro-actions .primary{min-height:52px;font:600 22px/1 Oswald,sans-serif;letter-spacing:1px}
+.challenge-intro-actions .text-button{margin:0 auto;color:#8e866f}
+
+/* Экран со списком.
+   Окно держит свой размер: вкладки внутри разные по объёму, и если высоту задаёт содержимое,
+   окно прыгает при каждом переключении. Поэтому высота фиксированная, а тянется содержимое. */
+#challenge-dialog{width:min(448px,calc(100% - 20px));max-width:none;
+ height:min(660px,calc(100dvh - 24px));padding:0;overflow:hidden;
+ border:1px solid #ffffff20;border-radius:7px;background:#191d1b;color:#e8e0c8;box-shadow:0 24px 80px #000b}
+#challenge-dialog[open]{display:flex;flex-direction:column}
+#challenge-dialog .meta-header{flex-shrink:0;margin:0;padding:14px 16px;background:#191d1b;border-bottom:1px solid #ffffff12;gap:12px}
+.challenge-body{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;padding:14px 14px 16px}
+.challenge-call{flex-shrink:0;width:100%;min-height:50px;font:600 21px/1 Oswald,sans-serif;letter-spacing:1px}
+#challenge-dialog .event-tabs{flex-shrink:0;margin:0}
+.challenge-panel{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+/* Пустая вкладка не оставляет окно полупустым сверху: сообщение стоит по центру свободного места. */
+.challenge-panel>.event-empty{margin:auto;text-align:center;padding:0 12px}
+.challenge-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #ffffff12;border-radius:4px;background:#1c211d}
+.challenge-row[data-tone="win"]{border-color:#5d7a4a66}
+.challenge-row[data-tone="lose"]{border-color:#7a4a4a66}
+.challenge-who{flex:1;min-width:0;display:grid;gap:2px}
+.challenge-who strong{font:500 16px/1.1 Oswald,sans-serif;color:#eee0c0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.challenge-who span{font-size:12px;color:#95907e}
+.challenge-score{font:500 15px/1 Oswald,sans-serif;color:#e0c48b;font-style:normal;white-space:nowrap}
+.challenge-row button{flex-shrink:0;min-height:38px;padding:0 12px;border:1px solid #d8b86955;border-radius:4px;background:#2b2a22;color:#eac68a;font:500 13px/1 Oswald,sans-serif;letter-spacing:.5px}
+.challenge-row button:disabled{opacity:.5}
+
+/* Результат стрелки: свой счёт рядом с чужим, без новой вёрстки диалога. */
+.challenge-result{display:flex;justify-content:center;gap:10px;align-items:baseline;margin-top:6px;font:500 15px/1 Oswald,sans-serif;color:#e0c48b}
+
+/* Кореша: три галочки и одна кнопка. Без таблиц и мелкого текста. */
+.mates-card{padding:14px 12px;border:1px solid #ffffff12;border-radius:4px;background:#1c211d;text-align:center;display:grid;gap:10px;justify-items:center}
+.mates-ticks{display:flex;gap:10px}
+.mates-ticks i{width:26px;height:26px;border-radius:50%;border:2px solid #4b5347;background:#161a17}
+.mates-ticks i.on{border-color:#d8b869;background:#d8b869}
+.mates-goal{margin:0;font:500 15px/1.2 Oswald,sans-serif;color:#e0c48b}
+.mates-card .primary{width:100%;min-height:46px;font:600 18px/1 Oswald,sans-serif;letter-spacing:1px}
+.mates-note{margin:0;font-size:13px;color:#8e886f;text-align:center}
+.mates-list{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.mates-list li{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border:1px solid #ffffff0e;border-radius:4px;background:#191d1a;color:#9d9885;font-size:13px}
+.mates-list li.on{color:#dfd3b4;border-color:#5d7a4a55}
+.mates-list em{font-style:normal;color:#7e7a68}
+.mates-list li.on em{color:#a9c08d}
+
+/* Таблица: место, имя, тачка, победы. Своя строка подсвечена. */
+.board-scope{display:flex;gap:6px;margin-bottom:8px}
+.board-scope button{flex:1;min-height:36px;border:1px solid #ffffff14;border-radius:4px;background:#1b201c;color:#8e886f;font:500 12px/1 Oswald,sans-serif;letter-spacing:.6px}
+.board-scope button[aria-pressed="true"]{border-color:#d8b86955;background:#2b2a22;color:#eac68a}
+.challenge-board{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid #ffffff0e;border-radius:4px;background:#1a1e1b}
+.challenge-board.is-me{background:#2c2a20;border-color:#d8b86944}
+.challenge-board b{min-width:22px;font:500 15px/1 Oswald,sans-serif;color:#9d9885}
+.challenge-board strong{flex:1;min-width:0;font:500 15px/1.1 Oswald,sans-serif;color:#eee0c0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.challenge-board span{font-size:11px;color:#7e7a68;white-space:nowrap}
+.challenge-board em{font-style:normal;font:500 16px/1 Oswald,sans-serif;color:#e0c48b;min-width:24px;text-align:right}
+
+/* Позвать — первое действие вкладки, поэтому кнопка во всю ширину и стоит над задачей. */
+.mates-card .secondary{width:100%;min-height:42px;border:1px solid #d8b86955;border-radius:4px;background:#2b2a22;color:#eac68a;font:500 14px/1 Oswald,sans-serif;letter-spacing:.6px}
+.mates-list li button{flex-shrink:0;min-height:32px;padding:0 10px;border:1px solid #d8b86944;border-radius:4px;background:#23271f;color:#d8bf8c;font:500 11px/1 Oswald,sans-serif;letter-spacing:.5px}
+.mates-list li button:disabled{opacity:.5}
+
+/* Экран «вызов брошен»: соперник ещё не выезжал, поэтому ни места, ни колонки его времени —
+   только кому ушёл вызов и своё время одной строкой. */
+#result-dialog[data-tier=sent] .result-times{display:none}
+/* Порядок на этом экране: кому бросил вызов — сразу под заголовком, время следом одной строкой. */
+#result-dialog[data-tier=sent] .result-card{display:flex;flex-direction:column}
+#result-dialog[data-tier=sent] #result-kicker{order:-2}
+#result-dialog[data-tier=sent] #result-loot{order:-1;margin:10px 0 2px}
+#result-dialog[data-tier=sent] .result-reward{border-color:#ffffff1a}
+.invited-row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:4px 0 2px}
+.invited-face{display:grid;justify-items:center;gap:5px;width:64px}
+.invited-face img,.invited-face i{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#2a3128;border:1px solid #c5a06459;display:grid;place-items:center;font:600 18px Oswald,sans-serif;font-style:normal;color:#e2c784}
+.invited-face em{font:12px/1.2 Arial,sans-serif;font-style:normal;color:#a6b596;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:64px}
+.invited-note{font:13px/1.4 Arial,sans-serif;color:#a6b596;text-align:center;margin:2px 0 0}
+
+/* Свёрнутые стрелки с тем же человеком: счётчик рядом с состоянием, а не пять одинаковых строк. */
+.challenge-more{display:inline-block;margin-left:8px;padding:1px 7px;border:1px solid #c5a06459;border-radius:999px;font:11px/1.5 Arial,sans-serif;font-style:normal;color:#d8b56a;vertical-align:1px}

@@ -1,0 +1,54 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Заставка перед заездом — превью</title>
+<link rel="stylesheet" href="style.css?v=027e2d9"><link rel="stylesheet" href="progression-ui.css?v=027e2d9">
+<style>
+ html,body{margin:0;height:auto;background:#0d0f0d;font-family:Oswald,sans-serif;color:#e7d8b8;display:block!important}
+ .stage{position:relative;width:min(420px,100vw);height:min(760px,78svh);margin:0 auto;overflow:hidden;
+  background:linear-gradient(#26313a,#12181a 55%,#0b0d0c);}
+ .road{position:absolute;inset:auto 0 0;height:46%;background:linear-gradient(#2c2f2e,#1a1d1c);}
+ .road i{position:absolute;left:50%;top:0;bottom:0;width:6px;margin-left:-3px;
+  background:repeating-linear-gradient(#cfc6ab 0 42px,transparent 42px 96px);opacity:.5}
+ #boss-intro{cursor:default}
+ .bar{display:flex;gap:8px;justify-content:center;align-items:center;padding:12px}
+ .bar button{font:600 15px Oswald,sans-serif;background:#1c231f;color:#e7d8b8;border:1px solid #6d6a54;border-radius:6px;padding:9px 16px}
+ .bar b{min-width:150px;text-align:center}
+</style></head><body>
+<div class="stage">
+ <div class="road"><i></i></div>
+ <div id="boss-intro" class="with-portrait" data-step="1">
+  <div class="intro-glow" aria-hidden="true"></div><div class="intro-fx" aria-hidden="true"></div><div class="intro-dust" aria-hidden="true"></div>
+  <div class="intro-stack"><div class="intro-plate"><span class="tiny-label" id="intro-kicker"></span><h2 id="intro-name"></h2><i class="intro-rule" aria-hidden="true"></i><p class="intro-role" id="intro-role"></p><p class="intro-power" id="intro-cars"></p></div><div class="intro-bubble" id="intro-bubble"><p id="intro-taunt"></p></div><img id="intro-portrait" alt=""></div>
+  
+  <div class="intro-car" id="intro-car"><span class="tiny-label">ТАЧКА СОПЕРНИКА</span><h3 id="intro-car-name"></h3><p id="intro-car-note">Смотри, на чём он приехал</p></div>
+</div>
+</div>
+<div class="bar"><button id="prev">◀</button><b id="who"></b><button id="next">▶</button></div>
+<script type="module">
+import {CAST,DISTRICT_BOSSES} from './characters.js';
+import {buildAtmosphere} from './intro-atmosphere.js';
+const DISTRICT=['СПАЛЬНЫЙ РАЙОН','ПРОМЗОНА','СТРОЙКА','СЕЛЬСКАЯ ДОРОГА','ВДОЛЬ ЖД ПУТЕЙ'];
+const CARS=['ДЕСЯТКА','ВОЛГА','НИВА','ДЕВЯТКА','МОСКВИЧ','ПЯТЁРКА','УАЗИК'];
+let i=0;
+const $=s=>document.querySelector(s);
+function show(step=1){
+ const c=CAST[i],intro=$('#boss-intro'),boss=DISTRICT_BOSSES.indexOf(c.name);
+ $('#intro-kicker').textContent=boss>=0?'БОСС РАЙОНА · '+DISTRICT[boss]
+  :c.recurring?'СТАРЫЙ ЗНАКОМЫЙ · СНОВА ОН':'ГЛАВАРЬ · '+c.role.toUpperCase();
+ $('#intro-name').textContent=c.name;
+ $('#intro-role').textContent=c.role;
+ $('#intro-car-name').textContent=CARS[i%CARS.length];
+ $('#intro-cars').textContent='ДЕСЯТКА · МОЩЬ 244 против твоих 237';
+ $('#intro-taunt').textContent='«'+c.start+'»';
+ $('#who').textContent=c.name+' · '+c.role;
+ $('#intro-portrait').src='assets/characters/'+c.portrait+'.png';
+ buildAtmosphere($('.intro-fx'),$('.intro-dust'));
+ intro.dataset.step=String(step);
+ for(const el of [$('#intro-portrait'),$('.intro-bubble'),$('.intro-plate'),$('.intro-glow'),$('.intro-car'),$('#intro-kicker'),$('#intro-name'),$('.intro-rule'),$('#intro-role')]){
+  el.style.animation='none';void el.offsetWidth;el.style.animation='';}
+}
+$('#next').onclick=()=>{i=(i+1)%CAST.length;show();};
+$('#prev').onclick=()=>{i=(i+CAST.length-1)%CAST.length;show();};
+$('.stage').onclick=()=>show($('#boss-intro').dataset.step==='1'?2:1);
+show();
+</script></body></html>

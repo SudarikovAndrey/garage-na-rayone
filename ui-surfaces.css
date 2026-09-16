@@ -1,0 +1,305 @@
+/* Shared Pitstop surfaces. Race composition and semantic rarity colours stay independent. */
+#garage-screen{--home-height:166px}
+#garage-screen #garage-view.scene-wrap{margin-bottom:var(--home-height)}
+
+.garage-status-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.garage-status-heading>div{display:flex;align-items:baseline;gap:7px;min-width:0}
+#garage-level{font:600 13px/1.2 Oswald,sans-serif;letter-spacing:.5px;white-space:nowrap;color:var(--ink)}
+#garage-name{font:11px/1.3 Arial,sans-serif;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#garage-spaces{font:11px/1.3 Arial,sans-serif;color:var(--muted);white-space:nowrap}
+.garage-status .garage-upgrade{min-height:47px;padding:7px 10px;gap:8px;border:1px solid #ad834951;border-radius:4px;background:#302b22;color:var(--accent);box-shadow:0 2px #101412}
+.garage-status .garage-icon{display:none}.garage-status .garage-upgrade>span{min-width:0}
+.garage-status .garage-upgrade b{font:600 15px/1.2 Oswald,sans-serif;letter-spacing:.4px}
+.garage-status .garage-upgrade small{display:block;font:11px/1.25 Arial,sans-serif;color:#c4b597;margin-top:3px}
+.garage-status .garage-upgrade strong{font:500 13px/1.3 Oswald,sans-serif;color:#f0d6a5;text-align:right;white-space:normal;max-width:108px;flex-shrink:0}
+.garage-status .garage-upgrade.locked{opacity:1;background:#232723;border-color:#ffffff14}
+.garage-status .garage-upgrade.locked b{color:#d1c5aa}
+.garage-status .garage-upgrade:disabled{opacity:.7;cursor:default;box-shadow:none}
+
+#garage-screen[data-panel=custom] .garage-status{display:none}
+#garage-screen[data-panel=custom] #garage-view.scene-wrap{margin-bottom:var(--custom-height)}
+#garage-radio #help{display:grid;place-items:center;flex:0 0 32px;position:static;margin:0 0 0 3px;width:32px;height:28px;border:0;border-left:1px solid #ffffff16;border-radius:0;background:none;color:#c5bda8;font:500 17px Oswald}
+.pitstop-keys{display:flex}.pitstop-keys>button{flex:1;min-width:0}
+
+.pitstop-launch:not(:has([data-meta=shop]:not([hidden]))){grid-template-columns:1fr}
+#home-sheet:not(:has(.pitstop-keys button:not([hidden]))){padding-top:9px}
+/* Dialog shell: stationary title and one predictable scrolling body. */
+#meta-dialog,#event-dialog,#duel-dialog,#help-dialog,#driving-lesson{width:min(448px,calc(100% - 20px));max-height:calc(100dvh - 24px);padding:0;border:1px solid #ffffff20;border-radius:7px;background:#191d1b;color:var(--ink);box-shadow:0 24px 80px #000b;overflow:auto}
+#meta-dialog[open],#event-dialog[open],#duel-dialog[open]{display:flex;flex-direction:column}
+#meta-dialog .meta-header,#event-dialog .meta-header,#duel-dialog .meta-header{position:sticky;top:0;z-index:3;flex-shrink:0;margin:0;padding:14px 16px;background:#191d1b;border-bottom:1px solid #ffffff12;gap:12px}
+.meta-header h2{font:600 25px/1.1 Oswald,sans-serif;letter-spacing:.5px;color:var(--ink)}
+.meta-header small{font:12px/1.4 Arial,sans-serif;color:var(--muted);margin-top:6px}
+.meta-header .icon-button,.lesson-card header button{width:44px;height:44px;flex:0 0 44px;border:0;border-radius:4px;background:#ffffff07;color:#c7beaa;font:26px Arial;box-shadow:none}
+#meta-body,#event-body,#duel-dialog .duel-body{padding:14px 14px 18px;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#655c49 transparent}
+#help-dialog .result-card{padding:20px 18px 14px}#help-dialog h2{font:600 29px/1.1 Oswald;margin:12px 0 20px}
+#help-dialog p{font:14px/1.6 Arial;color:#c3bdaF}#help-dialog .tiny-label{color:var(--accent);font-size:10px}
+#help-dialog .primary{margin:18px 0 0}
+:is(#meta-dialog,#event-dialog,#duel-dialog,#help-dialog,#result-dialog) .primary{min-height:48px;justify-content:center;gap:12px;font:600 20px/1.2 Oswald;border-radius:4px;padding:10px 14px;background:#eab45b;color:#241e15;border:1px solid #f1c477;box-shadow:0 3px #876231}
+:is(#meta-dialog,#event-dialog,#duel-dialog,#help-dialog,#result-dialog) .secondary{min-height:44px;padding:10px 12px;margin-top:8px;background:#ffffff05;border:1px solid #ffffff16;border-radius:4px;color:#d7cbb1;font:500 16px/1.3 Oswald}
+:is(.shop-tabs,.event-tabs,.race-modes){gap:0;padding:0;margin:0 0 14px;border-bottom:1px solid #ffffff18}
+:is(.shop-tabs,.event-tabs,.race-modes) button{min-height:44px;padding:9px 5px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--muted);font:500 14px/1.2 Oswald;box-shadow:none}
+:is(.shop-tabs,.race-modes) button.active,.event-tabs [aria-selected=true]{border-color:var(--accent);background:transparent;color:var(--accent)}
+:is(.crate-note,.odds,.route-note,.event-note,.loot-history,.loot-progress,.career-summary){color:var(--muted);font-size:12px;line-height:1.5}
+:is(.loot-tile,.fleet-tile,.track-tile,.part-card,.paint-tile,.part-tile,.part-tile.owned){background:#242925;border:1px solid #ffffff16;border-radius:4px;box-shadow:none;color:var(--ink)}
+:is(.loot-tile,.part-card,.part-tile.owned,.paint-tile){border-top:2px solid var(--rarity,#727468)}
+:is(.fleet-tile.active,.track-tile.active){background:#302d24;border-color:#c19751;box-shadow:inset 0 0 0 1px #c1975130}
+.fleet-tile.fragment{background:#202522}
+.fleet-tile b{font:500 20px/1.15 Oswald;padding-top:4px}
+.fleet-tile small,.fleet-tile .car-character{color:#bcb8a8;font-size:12px;font-weight:400}
+.fleet-tile .car-specs{font:500 12px/1.3 Oswald;border-color:#ffffff10;color:#ddd3bd}
+.fleet-car-image{background:radial-gradient(ellipse at 50% 75%,#aab29718,transparent 62%)}
+.fleet-subtitle,.custom-subhead{color:var(--accent);font:500 13px/1.3 Oswald;letter-spacing:1px}
+.loot-tile>b{font:500 20px/1.15 Oswald}.loot-tile>small{color:#bcb8a8;font-size:12px}
+.loot-tile .loot-rarity{color:var(--rarity)}.shop-price{color:#f0d29c;border-color:#ffffff12;font-size:14px}
+.loot-action{color:var(--accent);min-height:38px;align-items:center}
+.loot-info{min-height:44px;color:#c4bba6;text-decoration:none;font-size:12px}
+.loot-owned>.loot-tile{height:calc(100% - 44px)}
+.crate-detail .odds,.event-rules{background:#222723;border:0;border-radius:4px;padding:12px;color:var(--muted)}
+.event-rules summary,.loot-history summary{min-height:32px;line-height:1.5;color:#ded2b8}
+.event-rules p,.crate-detail>p{color:#bdb8a8;font-size:13px;line-height:1.5}
+.loot-prize{border:1px solid #ffffff16;border-top:3px solid var(--rarity);border-radius:4px;background:radial-gradient(ellipse at 50% 25%,color-mix(in srgb,var(--rarity) 13%,#232823),#1b201d 80%)}
+.loot-prize h3{color:var(--ink)}.loot-prize p{color:#bdb8a8}
+.loot-history div,.board-row{border-color:#ffffff12}
+.route-stop{border-color:#ffffff1c;border-radius:3px;background:#222723}.route-stop.selected{border-color:var(--accent);box-shadow:none}
+.route-banner{border-radius:4px}.route-banner>div{background:linear-gradient(transparent,#131815ed)}
+.career-rival,.career-rival.drift{background:#252b26;border:1px solid #ffffff12;border-radius:4px}
+.career-rival.boss{background:#302a20;border-color:#bc94523d}
+.career-rival h3{color:var(--ink)}.career-rival p,.career-rival small{color:#bfbba9}
+.route-reward,.route-reward.claimed{background:#252823;border:0;border-left:2px solid #b99b63;border-radius:0;color:#ddd0b4}
+.route-lock{background:#222723;border:0;border-radius:4px}.route-lock span{color:var(--muted)}
+.weekly-goals{background:#222723;border:0;border-radius:4px}.goal-row{border-color:#ffffff12}
+.goal-row small,.goals-head small{color:var(--muted)}.goal-row button{min-height:44px;border-radius:4px;animation:none;background:#3a3020;color:var(--accent);border-color:#b78c4244}
+.event-season{background:#2d291f;border:1px solid #ac854033;border-radius:4px}.event-season>b{color:var(--ink)}
+.event-stats{gap:0;border-block:1px solid #ffffff12}.event-stats>div{background:none;border-radius:0;padding:14px 3px}.event-stats>div+div{border-left:1px solid #ffffff12}.event-stats b{color:#f0d29c}.event-stats small{color:var(--muted);font-size:13px}
+.profile-emblem{background:#302b21;border:1px solid #c5a0644d;border-radius:6px;color:var(--accent);box-shadow:none}
+/* Лицо игрока: своё фото из галереи или аватар Telegram. Кадр квадратный, лицо не растягиваем. */
+.profile-emblem.has-photo{padding:0;overflow:hidden;background:#161b17}
+.profile-emblem img{display:block;width:100%;height:100%;object-fit:cover}
+.profile-photo-actions{display:flex;gap:8px;margin-top:10px}
+.profile-photo-actions button{flex:1;min-height:42px;font:500 13px Oswald,sans-serif;letter-spacing:.08em}
+/* Наладка: отделена от игрока и подписана, чтобы её нельзя было спутать с обычным экраном. */
+.event-profile.dev-tools{margin-top:16px;border:1px dashed #c5a06466;background:#12171399}
+.event-profile.dev-tools .tiny-label{color:var(--accent);letter-spacing:.18em}
+.event-profile input{min-height:48px;background:#101713;border:1px solid #ffffff26;border-radius:4px;color:var(--ink)}
+.event-avatars{gap:8px;margin:12px 0}.event-avatars button{width:44px;height:44px;background:#262b25;border-color:#ffffff20;border-radius:4px;color:#cfc3a8}
+.event-avatars [aria-pressed=true]{background:#3c3221;border-color:var(--accent);color:var(--accent)}
+.duel-car{border-radius:4px;background:#222723}.duel-car span,.event-empty{color:var(--muted)}
+/* Workshop uses the same selection language as collection and shop. */
+#garage-screen{--custom-height:min(440px,62dvh)}
+.custom-header{height:auto;min-height:40px;gap:5px}.custom-header h2{font:500 14px Oswald;color:#d8ccb2;letter-spacing:.7px}
+.custom-header>button{min-height:40px;padding:8px 10px;border-radius:4px;background:#302c23;color:var(--accent);font:500 13px Oswald}
+#custom-groups button{min-height:42px;border:0;border-bottom:2px solid transparent;background:none;color:var(--muted);font:500 17px Oswald;border-radius:0}
+#custom-groups button[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent);background:none}
+#custom-categories button{min-height:44px;border:1px solid #ffffff12;border-radius:4px;background:#242925;color:#aaaD9e}
+#custom-categories button[aria-selected=true]{background:#393121;color:var(--accent);border-color:#bd934b77;box-shadow:none}
+#custom-options{gap:8px;padding:2px 2px 8px}
+.part-tile strong,.paint-tile strong{font:500 15px/1.2 Oswald;letter-spacing:0}
+.part-tile small,.part-tile span,.paint-tile span{font:13px/1.3 Arial;color:#c0c0b1}
+.part-tile .rarity-label{font:500 10px/1.3 Arial;color:var(--rarity)}
+.part-tile.selected,.part-tile.owned.selected,.paint-tile.selected{outline:2px solid #e5b968;outline-offset:-2px;box-shadow:none;background-color:#302f25}
+
+
+#custom-footer{border-top:1px solid #ffffff16;gap:8px;flex-wrap:wrap;padding-top:8px}
+#custom-info{margin:0;flex:1 1 100%;font:14px/1.4 Arial;color:#d3ccb8}
+.tune-preview{font-size:13px;line-height:1.4;color:#c7d1b4}
+.custom-buttons{width:100%;gap:8px}.custom-buttons button{min-height:50px;flex:1;border-radius:4px;font:600 18px/1.15 Oswald;padding:8px 10px}
+#custom-action{background:#eab45b;color:#241e15;border:1px solid #eab45b;box-shadow:0 2px #876231}
+#custom-secondary{background:#292e28;color:#d3c8b1;border:1px solid #ffffff18;box-shadow:none}
+/* Teaching and rewards keep their own meaning, with the shared material palette. */
+.lesson-card{padding:18px}.lesson-demo{border:1px solid #ffffff17;border-radius:4px}.lesson-road{background:#141a16}
+.lesson-copy small,.lesson-card footer{color:var(--muted)}.lesson-copy h2{color:var(--ink)}.lesson-copy p{color:#d3cebc}
+.lesson-action{border-radius:4px;background:#eab45b;border-color:#efc27a;color:#241e15;box-shadow:0 3px #876231}
+#celebration{background:radial-gradient(ellipse at 50% 35%,#343226f5,#111814fa 75%)}
+#celebration.unlock .celebration-card{border:1px solid #b99b6350;border-radius:6px;background:#1e241f;padding:22px}
+#celebration.unlock .celebration-card .tiny-label{color:var(--accent)}
+.celebrate-card{background:#252b24;border-color:#ffffff20;border-radius:4px}
+.series-award{background:#302a1f;border:0;border-left:2px solid #d8b56a;border-radius:0}
+#result-dialog[data-tier=series] .result-card,#result-dialog[data-tier=district] .result-card,#result-dialog[data-tier=champion] .result-card{border:0;border-top:3px solid #d8b56a;box-shadow:none}
+#result-dialog[data-tier=district] .result-card,#result-dialog[data-tier=champion] .result-card{border-top-color:#c091ed}
+#result-dialog[data-tier=series] .result-card::before{position:static;display:block;transform:none;border:0;padding:8px 0 0;letter-spacing:2px;text-align:center}
+#toast{background:#242b24f5;border:1px solid #c7a26555;border-radius:4px;color:#eee0c4;box-shadow:0 8px 25px #0006}
+@media(max-height:720px){#garage-screen{--home-height:153px;--custom-height:min(410px,64dvh)}.garage-status{padding-top:7px}.garage-status-heading{margin-bottom:5px}}
+@media(max-width:350px){#garage-name{max-width:110px;font-size:10px}#garage-spaces{font-size:10px}.garage-status .garage-upgrade small{font-size:10px}.garage-status .garage-upgrade strong{font-size:12px;max-width:94px}.meta-header h2{font-size:23px}.shop-tabs button{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.goal-row button{animation:none}}
+.decal-tile{background:#242925;border:1px solid #ffffff16;border-top:2px solid var(--rarity,#727468);border-radius:4px;color:var(--ink);box-shadow:none}.decal-tile.selected{outline:2px solid #e5b968;outline-offset:-2px;background-color:#302f25}.decal-tile strong{font:500 15px/1.2 Oswald}.decal-tile span{color:var(--muted);font-size:13px}
+.unlock-hint{font:12px/1.5 Arial;color:var(--muted)}
+.pass-tile{background:#242925;border-color:#ffffff16;border-radius:4px;box-shadow:none}.pass-tile.available{border-color:var(--reward-color)}.pass-tile small{color:var(--muted)}
+.pass-progress,.board-summary,.board-self{background:#252a24;border-color:#ffffff12;border-radius:4px}.pass-progress progress,.loot-progress progress{accent-color:var(--accent)}
+.board-row.is-me{background:#342e21}.board-row strong{color:#eac68a}.board-avatar{background:#30372c;color:#d1c2a2;border-radius:4px}
+.quest-row{border-color:#ffffff12}.quest-row button{min-height:44px;background:#393020;border:1px solid #bc91434a;border-radius:4px;color:var(--accent)}
+.reset-progress{min-height:44px;border:1px solid #b880673a;border-radius:4px;background:#372923;color:#dba990}.reset-progress-note{color:var(--muted);font-size:13px;line-height:1.5}
+#custom-action:disabled{background:#30352c;color:#aeb49f;border-color:#ffffff12;box-shadow:none;cursor:default}
+#custom-secondary{max-width:none}
+.hard-note{background:#262c25;border:0;border-left:2px solid #9da985;border-radius:0;color:#c3ccb3;margin-bottom:12px}.hard-note b{font-size:18px}.hard-note span{font-size:13px}
+.route-ladder i{background:#272e26;border-color:#ffffff1a;color:#aeb49e}.route-ladder i.current{background:#d4af65;color:#201e16;border-color:#d4af65}
+#custom-options .decal-tile small{color:var(--rarity,var(--muted))}
+
+/* Nine training locations stay legible without shrinking into tiny buttons. */
+#meta-body .route-map.practice-map{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.practice-map .route-stop{min-height:72px}.practice-map .route-stop img{height:52px}.practice-map .route-stop.selected img{height:51px}.practice-map .route-stop small{font:500 11px/1.3 Oswald;padding:5px 2px;min-height:24px}.practice-map .route-stop b{font-size:22px}
+
+#meta-body .primary+.primary{margin-top:9px}.career-summary{gap:10px}.career-summary>b{flex-shrink:0}.career-summary>span{min-width:0}
+/* КАРТОЧКИ ДЕТАЛЕЙ
+   Редкость должна читаться с расстояния — она идёт фоном, а не тонкой полоской сверху.
+   Установленное видно рамкой и галочкой в углу, уровень — крупно в другом углу. */
+.part-tile.owned{background:linear-gradient(170deg,color-mix(in srgb,var(--rarity) 52%,#1e221d),color-mix(in srgb,var(--rarity) 22%,#1b1f1b) 58%,color-mix(in srgb,var(--rarity) 8%,#171a16));
+ border:1px solid color-mix(in srgb,var(--rarity) 60%,#2b2f2a);border-top:3px solid var(--rarity);
+ /* Высоту держим числом: сетка меряет карточку по неперенесённому тексту и занижает строку. */
+ min-height:0}
+.part-tile.owned strong{text-shadow:0 1px 3px #0009}
+.part-tile.owned.mounted{border-color:color-mix(in srgb,var(--rarity) 60%,#2b2f2a)}
+.part-tile.owned.selected,.part-tile.owned.mounted.selected{outline:2px solid #fff3d0;outline-offset:-2px}
+.part-select{position:relative}
+.part-rank{position:absolute;left:6px;top:4px;z-index:2;display:flex;align-items:baseline;gap:1px;
+ font:500 11px/1 Oswald,sans-serif;color:#0000;color:color-mix(in srgb,var(--rarity) 55%,#ffffff);
+ text-shadow:0 1px 3px #000a}
+.part-rank i{font:700 21px/1 Oswald,sans-serif;font-style:normal;color:#fff6dd;text-shadow:0 2px 4px #000c}
+.part-check{position:absolute;right:5px;top:4px;z-index:2;display:grid;place-items:center;width:20px;height:20px;
+ border-radius:50%;background:#f0d98c;color:#171a14;font:700 12px/1 Arial,sans-serif;box-shadow:0 2px 6px #0008}
+.part-tile.owned .rarity-label{color:color-mix(in srgb,var(--rarity) 75%,#ffffff);font-weight:600}
+.part-tile.owned.locked{filter:saturate(.5) brightness(.8)}
+.part-tile.upgrade-card .part-rank{display:none}
+
+/* Состояния, которых не видно по карточке: допуск гаража и «стоит на другой машине». */
+.part-lock,.part-elsewhere{position:absolute;right:5px;top:4px;z-index:2;padding:4px 7px;border-radius:3px;
+ background:#0e120fe0;font:600 11px/1 Oswald,sans-serif;letter-spacing:.8px;text-shadow:none;white-space:nowrap}
+.part-lock{color:#e9c078}
+.part-elsewhere{color:#9fb0a4}
+.part-tile.owned .part-select{grid-template-rows:55px auto 1fr}
+/* Нижняя строка мастерской: числа прироста и кнопки читаются с рук, а не с лупой. */
+#custom-info{font:14px/1.35 Arial;color:#d3ccb8}
+#custom-info .tune-preview{font:600 13px/1.35 Arial;color:#c7d1b4}
+.custom-buttons button{min-height:50px;font:600 18px/1.15 Oswald}
+#custom-action small,#custom-secondary small{display:block;margin-top:3px;font:500 12px/1.2 Arial}
+/* Мастерская компактная: воздух между шапкой, вкладками и списком — минимальный. */
+.custom-sheet{gap:3px;padding-top:5px}
+.custom-header{min-height:30px}
+.custom-header h2{font:500 13px Oswald;letter-spacing:.6px}
+.custom-header>button{min-height:30px;padding:5px 9px;font:500 12px Oswald}
+#custom-groups button{min-height:32px;font:500 15px Oswald}
+#custom-categories button{min-height:34px}
+#custom-categories .part-icon{width:22px;height:22px}
+#custom-options{gap:6px;padding:1px 1px 5px}
+.part-tile.owned .part-select{grid-template-rows:44px auto;align-content:start;padding:3px 6px 2px;gap:1px}
+.part-select img{height:44px!important}
+.part-tile.owned strong{font:500 14px/1.15 Oswald}
+
+.part-rank i{font-size:19px}
+.part-check{width:18px;height:18px;right:4px;top:3px;font-size:11px}
+#custom-footer{padding-top:3px;gap:5px;min-height:32px}
+/* Карточка примерки выезжает прямо из плитки детали: без слова «примерка», одни цифры. */
+.part-tile{position:relative}
+#custom-options{position:relative}
+.tune-card{position:absolute;left:1px;right:1px;z-index:6;display:flex;flex-wrap:wrap;gap:3px 18px;padding:9px 12px;margin-top:3px;
+ border:1px solid color-mix(in srgb,var(--rarity,#8f9788) 55%,#2b2f2a);border-radius:5px;
+ background:#1b1f1a;box-shadow:0 10px 20px #000a;
+ animation:tune-card-in .2s ease-out both;transform-origin:top center}
+/* Уголок смотрит на ту плитку, о которой цифры. */
+.tune-card::before{content:'';position:absolute;top:-6px;left:var(--notch,50%);width:12px;height:12px;margin-left:-6px;
+ background:#1b1f1a;border-left:1px solid color-mix(in srgb,var(--rarity,#8f9788) 55%,#2b2f2a);
+ border-top:1px solid color-mix(in srgb,var(--rarity,#8f9788) 55%,#2b2f2a);transform:rotate(45deg)}
+.tune-card span{display:flex;flex-direction:column;gap:1px}
+.tune-card i{font:500 9px/1 Arial,sans-serif;letter-spacing:.6px;color:#98a091;font-style:normal;text-transform:uppercase}
+.tune-card b{font:600 15px/1.1 Oswald,sans-serif;color:#e7dcbb;white-space:nowrap}
+@keyframes tune-card-in{from{opacity:0;transform:scaleY(.4) translateY(-8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.tune-card{animation-duration:.01s}}
+/* Апгрейды: два ряда сразу — без длинного пояснения и с той же компактной плиткой. */
+#custom-options[data-kind="upgrades"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+.part-tile.upgrade-card{min-height:0}
+.part-tile.owned,.part-tile.stock-tile{height:118px;min-height:0}
+.part-tile.upgrade-card .part-select{grid-template-rows:44px auto auto}
+.part-tile.upgrade-card .upgrade-art{height:44px}
+.part-tile.upgrade-card .part-select{grid-template-rows:38px auto auto;align-content:start;padding:3px 7px 2px}
+.part-tile.upgrade-card .upgrade-art{height:38px}
+.part-tile.upgrade-card .upgrade-note{display:none}
+.part-tile.upgrade-card .rarity-label{font:600 10px/1.2 Arial;color:#efd9a6}
+/* ГАРАЖ — одна панель, а не две строки. Своя тёплая подложка: это про стройку, а не про заезд. */
+.garage-status{padding:0;background:none;border:0}
+.garage-upgrade{display:grid!important;grid-template-columns:34px 1fr auto;align-items:center;gap:10px;width:100%;
+ height:100%;padding:6px 12px;border:0;border-top:1px solid #e6bc6333;border-radius:0;text-align:left;
+ background:linear-gradient(100deg,#2e2718,#221f16 55%,#1d1f18)}
+.garage-upgrade .garage-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:6px;
+ background:#0000001f;border:1px solid #00000033;color:inherit;font-size:21px;line-height:1}
+.garage-lines{display:flex;flex-direction:column;gap:1px;min-width:0}
+.garage-now{display:flex;align-items:baseline;gap:6px;min-width:0}
+.garage-now b{font:600 14px/1 Oswald,sans-serif;letter-spacing:1.2px;color:inherit}
+.garage-now span{font:400 13px/1 Arial,sans-serif;color:inherit;opacity:.72;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#garage-upgrade-title{font:600 20px/1.15 Oswald,sans-serif;letter-spacing:.6px;color:inherit}
+#garage-upgrade-desc{font:400 13px/1.25 Arial,sans-serif;color:#9aa291;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.garage-meta{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+#garage-cost{font:600 17px/1 Oswald,sans-serif;color:inherit;opacity:.8;white-space:nowrap}
+#garage-spaces{font:400 13px/1 Arial,sans-serif;font-style:normal;color:inherit;opacity:.72;white-space:nowrap}
+.garage-upgrade.locked #garage-upgrade-title{color:inherit}
+.garage-upgrade:disabled{opacity:.75}
+/* Действия детали живут внизу: установить, улучшить, разобрать — одной строкой. */
+#custom-salvage{background:#2a2e27;color:#c9d2bb;border:1px solid #ffffff18;box-shadow:none;max-width:120px}
+#custom-salvage.confirm{background:#70432c;border-color:#d2a060;color:#ffe4ad}
+#custom-salvage small{display:block;margin-top:2px;font:500 11px/1 Arial}
+.part-tile.upgrade-card .part-select{grid-template-rows:38px auto}
+/* Плитка краски: подпись и статус не влезали в 89px и наезжали друг на друга. */
+.paint-tile{min-height:118px}
+.decal-tile{min-height:118px}
+@media(max-height:700px){.paint-tile,.decal-tile{min-height:108px}}
+/* Один размер у всего: детали, апгрейды, краски, декали — плитка одна и та же. */
+#custom-options{align-items:start}
+.part-tile.owned .upgrade-stats{display:flex;flex-wrap:wrap;gap:3px;margin-top:2px}
+.part-tile.owned .upgrade-stats b{font:500 9px/1.25 Arial,sans-serif;color:#e7dec0;background:#00000038;border-radius:3px;padding:2px 5px;white-space:nowrap}
+.paint-tile,.decal-tile{height:118px;min-height:0;position:relative;grid-template-rows:1fr auto}
+.paint-tile i,.decal-tile i{height:100%}
+.paint-tile strong,.decal-tile strong{font:500 13px/1.15 Oswald,sans-serif;color:#e7dec0}
+.paint-tile.mounted,.decal-tile.mounted{border-color:color-mix(in srgb,var(--rarity,#8f9788) 60%,#2b2f2a)}
+/* Гараж переехал в шапку: значок, уровень и точка, когда есть что качнуть. Всё остальное — в попапе. */
+.garage-chip{display:flex;align-items:center;gap:6px;position:relative;margin-left:auto;padding:5px 9px;
+ border:1px solid #ffffff18;border-radius:5px;background:#23261f;color:#d9d2bb}
+.garage-chip-icon{display:grid;place-items:center;width:20px;height:20px;border-radius:4px;
+ background:#e6bc6318;border:1px solid #e6bc6340;color:#efd9a6;font-size:13px;line-height:1}
+#garage-chip-level{font:600 12px/1 Oswald,sans-serif;letter-spacing:1px;color:#e0d6bb;white-space:nowrap}
+.garage-chip-dot{position:absolute;right:-3px;top:-3px;width:9px;height:9px;border-radius:50%;background:#e6bc63;
+ box-shadow:0 0 0 2px #1a1d17,0 0 8px #e6bc63aa;animation:garage-dot 1.8s ease-in-out infinite}
+.garage-chip-dot[hidden]{display:none}
+@keyframes garage-dot{0%,100%{opacity:1}50%{opacity:.45}}
+#garage-screen[data-panel=custom] .garage-chip{opacity:.5}
+#game[data-screen=race] .garage-chip{display:none}
+#garage-dialog{width:min(420px,94vw);padding:0}
+.garage-body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:10px}
+#garage-perks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+#garage-perks li{display:grid;grid-template-columns:1fr auto auto;align-items:baseline;gap:8px;
+ padding:7px 10px;border-radius:5px;background:#20241f;border:1px solid #ffffff10}
+#garage-perks span{font:400 15px/1.25 Arial,sans-serif;color:#b3baa9}
+#garage-perks b{font:600 19px/1 Oswald,sans-serif;color:#e7dec0}
+#garage-perks i{font:600 19px/1 Oswald,sans-serif;font-style:normal;color:#efd9a6}
+.garage-condition{margin:0;font:400 14px/1.35 Arial,sans-serif;color:#e2bf7d}
+.garage-condition:empty{display:none}
+#garage-dialog .primary{min-height:54px;font:600 18px/1.1 Oswald,sans-serif}
+#garage-dialog .primary small{display:block;margin-top:3px;font:500 13px/1 Arial,sans-serif;opacity:.85}
+#garage-dialog .primary:disabled{opacity:.6}
+.garage-note{margin:0;font:400 13px/1.35 Arial,sans-serif;color:#9aa291;text-align:center}
+.garage-note:empty{display:none}
+/* Картинка детали — главное на карточке: она занимает всё место, имя прижато к низу. */
+.part-tile.owned .part-select,.part-tile.stock-tile{grid-template-rows:1fr auto auto;align-content:stretch;padding:5px 7px 6px;gap:2px}
+.part-tile.owned .part-select img,.part-tile.stock-tile img,.part-tile.owned .upgrade-art{width:100%;height:100%!important;min-height:0;align-self:center;object-fit:contain}
+.part-tile.owned strong,.part-tile.stock-tile strong{align-self:end;font:500 14px/1.1 Oswald,sans-serif;text-shadow:0 1px 3px #000a}
+.part-tile.stock-tile{display:grid;position:relative;height:118px}
+.part-tile.stock-tile small,.part-tile.stock-tile span{display:none}
+.part-tile.owned .upgrade-stats{align-self:end}
+/* НАГРАДЫ И ЯЩИКИ — те же карточки, что в мастерской: редкость фоном, картинка крупно, имя внизу.
+   Игрок видит одну и ту же плитку и в отчёте о заезде, и при открытии ящика, и в гараже. */
+:is(.reward-cell,.loot-tile,.part-card){
+ background:linear-gradient(170deg,color-mix(in srgb,var(--rarity,#8f9788) 52%,#1e221d),color-mix(in srgb,var(--rarity,#8f9788) 22%,#1b1f1b) 58%,color-mix(in srgb,var(--rarity,#8f9788) 8%,#171a16));
+ border:1px solid color-mix(in srgb,var(--rarity,#8f9788) 60%,#2b2f2a);border-top:3px solid var(--rarity,#8f9788);border-radius:5px}
+:is(.reward-cell,.loot-tile) b{align-self:end;justify-self:start;text-align:left;width:100%;
+ font:500 clamp(10px,2.8vw,13px)/1.15 Arial,sans-serif;color:#eee6cf;text-shadow:0 1px 3px #000a}
+:is(.reward-cell,.loot-tile) .reward-art,:is(.reward-cell,.loot-tile)>img{flex:1 1 auto;min-height:0}
+.reward-cell .reward-art img{height:100%;width:100%;object-fit:contain}
+.loot-tile img{width:100%;height:100%;object-fit:contain}
+.loot-tile .crate-art{width:100%;height:auto;flex:0 1 auto;min-height:0;aspect-ratio:1.1}
+.reward-cell>strong{align-self:start;font:600 13px/1 Oswald,sans-serif;color:#efd9a6}
+/* В гараже слово «ГАРАЖ» слева дублирует значок справа — оставляем только значок и делаем его заметным. */
+#game[data-screen=garage] #screen-title{display:none}
+#game[data-screen=garage] .brand{justify-content:center}
+.garage-chip{padding:6px 11px;border:1px solid #e6bc6366;background:linear-gradient(150deg,#3a3120,#272319);
+ box-shadow:inset 0 1px #ffffff12,0 2px 6px #0007}
+.garage-chip:active{transform:translateY(1px)}
+.garage-chip-icon{width:22px;height:22px;background:#e6bc6326;border-color:#e6bc6366;font-size:14px}
+#garage-chip-level{font-size:14px;color:#f3e3bd;letter-spacing:1.2px}
+.garage-chip-dot{width:10px;height:10px;right:-4px;top:-4px}

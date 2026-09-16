@@ -1,0 +1,4 @@
+import * as T from 'three';
+// Small shared non-colour textures add aggregate relief and broken wet reflections.
+export function asphaltDetail(wet=0){const n=128,norm=new Uint8Array(n*n*4),rough=new Uint8Array(n*n*4);for(let y=0;y<n;y++)for(let x=0;x<n;x++){const i=(y*n+x)*4,grain=Math.sin(x*127.1+y*311.7)*43758.5453,f=grain-Math.floor(grain),p=Math.sin(x*.12)*Math.cos(y*.15);norm[i]=128+(f-.5)*(wet?15:32);norm[i+1]=128+Math.sin(grain)* (wet?7:16);norm[i+2]=254;norm[i+3]=255;const r=wet?90+f*50+p*28:190+f*60;rough[i]=rough[i+1]=rough[i+2]=r;rough[i+3]=255;}
+const normal=new T.DataTexture(norm,n,n),roughness=new T.DataTexture(rough,n,n);for(const t of [normal,roughness]){t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(4,110);t.magFilter=T.LinearFilter;t.minFilter=T.LinearMipmapLinearFilter;t.generateMipmaps=true;t.needsUpdate=true;}return {normal,roughness};}

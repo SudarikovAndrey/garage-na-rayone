@@ -1,0 +1,96 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Звук мотора — стенд</title>
+<link rel="stylesheet" href="style.css?v=027e2d9"><link rel="stylesheet" href="ui-surfaces.css?v=027e2d9">
+<style>
+ body{margin:0;background:#14161300;color:#e6e2d2;font:14px/1.4 Arial,sans-serif}
+ main{max-width:520px;margin:0 auto;padding:14px 14px 40px}
+ h1{font:600 22px/1.1 Oswald,sans-serif;letter-spacing:1px;margin:6px 0 2px}
+ .note{color:#9aa091;font-size:12px;margin:0 0 14px}
+ fieldset{border:1px solid #ffffff1a;border-radius:8px;margin:0 0 12px;padding:10px 12px 12px}
+ legend{font:600 11px/1 Oswald,sans-serif;letter-spacing:2px;color:#c9a96b;padding:0 6px}
+ .rack{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+ .chip{display:flex;flex-direction:column;gap:2px;padding:9px 10px;border:1px solid #ffffff1f;border-radius:6px;
+  background:#20241f;color:#cdd3c2;text-align:left;cursor:pointer}
+ .chip.on{border-color:#e6bc6377;background:#2c2a1d;color:#f0dcab}
+ .chip b{font:600 14px/1.1 Oswald,sans-serif;letter-spacing:.4px}
+ .chip small{font-size:10px;color:#93998b}
+ .chip.on small{color:#bfae82}
+ label.row{display:flex;align-items:center;gap:10px;margin:8px 0}
+ label.row span{min-width:96px;font:600 11px/1 Oswald,sans-serif;letter-spacing:1.4px;color:#b6bcac}
+ input[type=range]{flex:1;accent-color:#e6bc63}
+ output{min-width:74px;text-align:right;font:600 13px/1 Oswald,sans-serif;color:#efd9a6}
+ .keys{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+ .keys button{min-height:40px;padding:0 14px;border-radius:6px;border:1px solid #ffffff22;background:#2b2e26;
+  color:#e8e2cc;font:600 12px/1 Oswald,sans-serif;letter-spacing:1.4px;cursor:pointer}
+ .keys button.primary{background:#e6bc63;color:#14170f;border-color:#e6bc63}
+ .mix{font:11px/1.5 Arial;color:#8f978a;margin:10px 0 0;white-space:pre-wrap}
+</style></head><body><main>
+<h1>ЗВУК МОТОРА · СТЕНД</h1>
+<p class="note">Включай железо и слушай, что оно добавляет. Слои считает тот же код, что и в заезде.</p>
+<fieldset><legend>ЖЕЛЕЗО</legend><div class="rack" id="rack"></div>
+ <label class="row"><span>УРОВЕНЬ МОТОРА</span><input type="range" id="engine" min="0" max="15" step="1" value="8"><output id="engine-out"></output></label>
+ <p class="mix" id="mix"></p>
+</fieldset>
+<fieldset><legend>МОТОР</legend>
+ <label class="row"><span>ОБОРОТЫ</span><input type="range" id="rpm" min="900" max="7400" step="20" value="1200"><output id="rpm-out"></output></label>
+ <label class="row"><span>ГАЗ</span><input type="range" id="load" min="0" max="100" step="1" value="0"><output id="load-out"></output></label>
+ <div class="keys">
+  <button id="run" class="primary">ЗАПУСТИТЬ</button>
+  <button id="pull">ГАЗ В ПОЛ ДО ОТСЕЧКИ</button>
+  <button id="blip">ПЕРЕГАЗОВКА</button>
+  <button id="shift">ПЕРЕКЛЮЧИТЬ</button>
+  <button id="nitro">НИТРО</button>
+ </div>
+</fieldset>
+</main>
+<script type="module">
+import {EngineAudio} from './engine-audio.js';
+import {mixFor,LAYERS} from './engine-voice.js';
+import {UPGRADES} from './upgrades.js';
+const $=s=>document.querySelector(s);
+const on=new Set();
+let ctx,engine,car={gear:2,maxGear:5,carId:'samara',redline:7200,boost:0},running=false,auto=null;
+$('#rack').innerHTML=UPGRADES.map(u=>`<button class="chip" data-u="${u.id}"><b>${u.name}</b><small>${Object.keys(u.sound||{}).join(' · ')||'без звука'}</small></button>`).join('');
+function voice(){return mixFor(UPGRADES.filter(u=>on.has(u.id)),[Number($('#engine').value),0,0]);}
+function paint(){
+ for(const b of document.querySelectorAll('[data-u]'))b.classList.toggle('on',on.has(b.dataset.u));
+ $('#engine-out').textContent=$('#engine').value;
+ $('#rpm-out').textContent=$('#rpm').value+' об';
+ $('#load-out').textContent=$('#load').value+' %';
+ const mix=voice();
+ $('#mix').textContent=LAYERS.map(k=>k+' '+mix[k].toFixed(2)).join('   ');
+ engine?.setVoice(mix);
+}
+function start(){
+ if(running)return;
+ ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();
+ ctx.resume?.();
+ if(!engine){const out=ctx.createGain();out.gain.value=.9;out.connect(ctx.destination);engine=new EngineAudio(ctx,out);}
+ running=true;$('#run').textContent='ЗАГЛУШИТЬ';paint();tick();
+}
+function stop(){running=false;$('#run').textContent='ЗАПУСТИТЬ';engine?.silence(car);cancelAnimationFrame(auto);}
+function tick(){
+ if(!running)return;
+ engine.update(car,Number($('#rpm').value),Number($('#load').value)/100,.45);
+ auto=requestAnimationFrame(tick);
+}
+$('#run').onclick=()=>running?stop():start();
+$('#rack').onclick=e=>{const b=e.target.closest('[data-u]');if(!b)return;on.has(b.dataset.u)?on.delete(b.dataset.u):on.add(b.dataset.u);paint();};
+for(const id of ['#rpm','#load','#engine'])$(id).oninput=paint;
+// Плавные сценарии: ползунки едут сами, чтобы слышать наддув и отсечку так же, как в заезде.
+function ramp(from,to,ms,load,after){
+ start();const t0=performance.now();
+ (function step(now=performance.now()){
+  const k=Math.min(1,(now-t0)/ms);
+  $('#rpm').value=Math.round(from+(to-from)*k);
+  if(load!==undefined)$('#load').value=load;
+  paint();
+  if(k<1)requestAnimationFrame(step);else after?.();
+ })();
+}
+$('#pull').onclick=()=>ramp(1100,7350,2600,100,()=>setTimeout(()=>{$('#load').value=0;paint();},1400));
+$('#blip').onclick=()=>ramp(1000,4200,260,100,()=>ramp(4200,1100,650,0));
+$('#shift').onclick=()=>{start();car={...car,gear:Math.min(car.maxGear,car.gear+1)};$('#rpm').value=Math.max(1100,Number($('#rpm').value)-1800);paint();setTimeout(()=>{car={...car,gear:2};},400);};
+$('#nitro').onclick=()=>{start();car={...car,boost:1};paint();setTimeout(()=>{car={...car,boost:0};paint();},900);};
+paint();
+</script></body></html>

@@ -1,0 +1,8 @@
+/* Small static signals: no extra plates or animation in the race HUD. */
+.notice-host{position:relative}
+.notice-mark{position:absolute!important;right:6px!important;top:6px!important;z-index:4;display:flex!important;align-items:center;justify-content:center;width:10px!important;height:10px!important;min-width:10px;padding:0!important;border:2px solid #17201e;border-radius:50%;background:#ffd480!important;box-shadow:0 0 0 1px #ffd480;color:#17201e!important;font:900 9px/1 sans-serif!important;pointer-events:none}
+.notice-mark:not(:empty){width:16px!important;height:16px!important}
+#custom-groups .notice-mark{right:7px!important;top:4px!important}
+.part-select>.notice-mark,.paint-tile>.notice-mark,.decal-tile>.notice-mark,.fleet-tile>.notice-mark{right:9px!important;top:9px!important}
+#game[data-screen=race] .topbar .notice-mark{display:none!important}
+[inert] .notice-mark,[aria-hidden="true"] .notice-mark,[hidden] .notice-mark{display:none!important}

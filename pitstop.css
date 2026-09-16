@@ -1,0 +1,133 @@
+/* Graphite + amber. The scene carries the atmosphere; the HUD stays light. */
+:root{--hud:#171a19;--hud-raised:#242725;--line:#44453e;--ink:#f3e8d2;--accent:#efb95e;--muted:#afa996}
+html,body{background:#101312;color:var(--ink)}body{background:radial-gradient(ellipse at 50% 30%,#282c28,#0c100f 80%)}
+#game{max-width:480px;border:0;border-radius:0;background:var(--hud);box-shadow:0 12px 70px #0008;color:var(--ink)}
+.topbar{height:48px;padding:6px 12px;gap:9px;background:#181c1a;border:0;border-bottom:1px solid #ffffff0c}
+.brand{min-width:0}.brand #screen-title{font:600 22px/1 Oswald,sans-serif;letter-spacing:.2px;color:#f1e5cb}
+#profile-button,#sound,.switch-car{width:34px;height:34px;flex-shrink:0;flex-basis:34px;padding:6px;border:0;border-radius:4px;box-shadow:none;background:#ffffff06;color:#d3c5a7}
+#help{display:none}.wallet,.hard-wallet{height:30px;display:flex;align-items:center;gap:5px;padding:2px 3px;background:none;border:0;border-radius:0;box-shadow:none;font:500 15px/1 Oswald,sans-serif;color:#e5d7b8;white-space:nowrap}.hard-wallet{color:#bfc7b2}.hard-wallet b{font-weight:500}.coin{width:auto;height:auto;background:none;border:0;color:#e8b75e;font:500 16px Oswald}
+#game>.screen{height:calc(100% - 48px)}#garage-screen{--home-height:190px;--custom-height:min(350px,48dvh)}
+.garage-car-label{position:absolute;top:12px;left:14px;right:14px;height:35px;padding:0;background:none;border:0;pointer-events:none}
+.garage-car-label .car-heading{height:35px;gap:9px}.garage-car-label .car-heading>div{gap:10px;display:flex;flex:1;min-width:0;text-shadow:0 2px 8px #000}
+.garage-car-label .car-heading h1{font:600 23px/1 Oswald;letter-spacing:.3px;color:#ffefd1}.garage-car-label .power-badge{font:500 12px/1 Oswald;color:#f2c87e;padding:4px 6px;background:#151c18aa;border:0;border-radius:2px;white-space:nowrap}
+.garage-car-label .switch-car{pointer-events:auto;margin-left:auto;width:32px;height:32px;background:#151c18aa;border:0;border-radius:3px;color:#e7d8b8}
+#garage-view.scene-wrap{margin-bottom:var(--home-height);border:0;box-shadow:none}
+.bottom-sheet{background:#1b201d;border:0;border-top:1px solid #7c6c4944;border-radius:0;box-shadow:none;padding:9px 12px max(8px,env(safe-area-inset-bottom))}
+.home-sheet{display:flex;flex-direction:column;gap:7px;overflow:visible}
+.pitstop-keys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;min-height:53px}
+.pitstop-keys>button,.pitstop-launch>button:not(.primary){position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;min-width:0;width:auto;height:auto;padding:5px 3px;border:0;border-radius:4px;background:#2b302b;color:#ddd3bd;box-shadow:inset 0 1px #ffffff08,0 2px #0c110e;font:500 14px/1.1 Oswald;letter-spacing:.5px}
+.pitstop-icon{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.pitstop-keys #boxes-count{position:absolute;top:4px;right:8px;color:#f2bc63;font:600 12px Arial}.pitstop-keys #rank-count{display:none}
+.pitstop-launch{display:grid;grid-template-columns:1fr 2.15fr 1fr;gap:7px;min-height:47px}.pitstop-launch:has(#event-button[hidden]){grid-template-columns:1fr 3.15fr}.pitstop-launch>button:not(.primary){font-size:12px}.pitstop-launch .pitstop-icon{width:20px;height:20px}#event-progress{display:none}
+#game .primary{background:#eab45b;color:#27271e;border:0;border-radius:4px;box-shadow:inset 0 1px #ffe3a344,0 3px #956c35;text-shadow:none;transition:transform 90ms,background 120ms,box-shadow 90ms}
+#home-sheet #race-button{min-height:47px;padding:0 12px;justify-content:center;gap:9px;font:600 25px/1 Oswald;letter-spacing:1px}#home-sheet #race-button>span+span{font:400 30px/1 Oswald;color:#594428}
+#garage-radio{position:relative;order:0;flex:0 0 28px;height:28px;min-height:28px;max-height:28px;padding:0 3px;gap:7px;background:none;border:0;border-top:1px solid #ffffff0c;box-shadow:none}
+#garage-radio .radio-cassette{width:23px;height:17px;stroke:#a19172}#garage-radio .radio-title{font:12px/1 Oswald;color:#b8b29c}#garage-radio .radio-count{display:none}#garage-radio button{width:32px;height:26px;border:0;border-radius:2px;background:none;color:#b7b4a0;padding:5px}#garage-radio button[data-radio=play]{color:#eabd6d}
+#game[data-screen=race]>.topbar{display:none}#game[data-screen=race]>#race-screen{height:100%}#game[data-screen=race] #garage-radio{display:none}
+#race-screen::before{content:'';position:absolute;top:0;left:0;right:0;height:115px;background:linear-gradient(#0a16117a,transparent);z-index:1;pointer-events:none}
+.race-top{top:10px;left:12px;right:12px;min-height:34px;padding:0;gap:9px;border:0;border-radius:0;background:none;box-shadow:none;z-index:3;filter:drop-shadow(0 2px 4px #0007)}
+.race-top .icon-button,.race-top #sound{width:34px;height:34px;flex-shrink:0;border:0;border-radius:4px;background:#101b17a6;color:#e8dec9;box-shadow:none}.race-top>div{min-width:0;flex:1}.race-top h2{font:500 17px/1.2 Oswald;margin:0;color:#fff0d4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.race-top .tiny-label,.race-distance{display:none}
+.race-progress{top:53px;left:14px;right:14px;z-index:3}.track{height:2px;background:#ffffff27;box-shadow:none}.track span{display:none}.track i{width:6px;height:6px;top:-2px;border-radius:50%;box-shadow:0 0 0 1px #0007;background:#ffc46b}.track #opponent-marker{top:4px;width:4px;height:4px;background:#f09162}
+.race-bottom{padding:26px 16px max(15px,env(safe-area-inset-bottom));background:linear-gradient(transparent,#0c1812ab 35%,#0c1812de);border:0;border-radius:0;box-shadow:none;z-index:3;isolation:isolate}
+.dashboard,#game[data-drift=true] .dashboard{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:0;margin:0 0 8px}
+.dashboard>div{border:0;border-radius:0;background:none;box-shadow:none;min-height:0;height:auto;padding:0;gap:2px;display:flex;flex-direction:row;align-items:baseline;text-shadow:0 2px 5px #0008}
+.dashboard .speed b{font:500 30px/1 Oswald;color:#f7e7c8;letter-spacing:0;padding:0;margin:0;background:none;text-shadow:0 2px 4px #0006;min-width:0}.dashboard span{font:11px/1.2 Oswald;letter-spacing:.4px;color:#c2bea9}.dashboard .speed>span{margin:0}.dashboard .gear>span{display:none}.dashboard .gear b,#game[data-drift=true] .dashboard .gear b{font:500 22px/1 Oswald;color:#d9caab}.dashboard .time b{font:500 19px/1 Oswald;color:#d9caab}.dashboard .time>span{order:0}
+.rpm{display:block;margin:21px 0 15px}.feedback{font:12px/1.2 Oswald;letter-spacing:.4px;min-height:0;height:auto;margin:0 0 5px;text-align:center;color:#d9caab}.feedback:empty{display:none}
+#game .shift{min-height:49px;margin:0;padding:0 16px;font:600 22px/1 Oswald}#game .shift>span+span{color:inherit;font-size:24px}
+#game .shift[data-shift-cue=perfect]:not(:disabled){background:#bed581;box-shadow:0 3px #65814b,0 0 16px #bfdf7733}#game .shift[data-shift-cue=late]:not(:disabled){background:#dc9861}
+#game[data-drift=true] .dashboard>.time{display:none}.pitstop-multiplier{display:none!important}#game[data-drift=true] .pitstop-multiplier{display:flex!important;gap:0}.pitstop-multiplier>span{display:none}.pitstop-multiplier b{font:500 22px/1 Oswald;color:#edbe6b}
+#game[data-drift=true] .ridge-controls{position:absolute;bottom:100%;left:16px;right:16px;padding:0;margin:0 0 -15px;background:none;border:0;box-shadow:none;pointer-events:none}
+#game[data-drift=true] .ridge-warning{justify-content:center;margin:0;gap:0;text-shadow:0 2px 7px #000}#game[data-drift=true] .ridge-warning b{font:500 13px/1.3 Oswald;color:#f0d19d}#game[data-drift=true] .ridge-warning span,.drift-angle,.drift-scale{display:none}
+#game[data-drift=true] .ridge-controls:not([data-action=danger]){display:none}
+.drift-steering{padding:0}.drift-steering-labels{display:none}.drift-steering-rail{height:49px;border:0;border-radius:5px;background:#17221cc9;box-shadow:inset 0 1px #ffffff0c}
+.drift-steering-rail>i{inset:23px 24px;border:0;border-radius:1px;background:linear-gradient(90deg,#bb8554,#dcbd79 20%,#747c67 30% 70%,#dcbd79 80%,#bb8554)}.drift-steering-rail>i:after{top:-5px;bottom:-5px;width:1px;background:#beba9c}
+#drift-steer{height:49px}#drift-steer::-webkit-slider-runnable-track{height:43px}#drift-steer::-webkit-slider-thumb{width:48px;height:43px;border:0;border-radius:4px;background:linear-gradient(90deg,transparent 47%,#6b5537 47% 49%,#ead3a2 49% 51%,#6b5537 51% 53%,transparent 53%),#cfb786;box-shadow:inset 0 1px #fff5,0 2px 3px #0008}
+#drift-steer::-moz-range-track{height:43px;background:transparent}#drift-steer::-moz-range-thumb{width:48px;height:43px;border:0;border-radius:4px;background:linear-gradient(90deg,#cfb786 47%,#6b5537 47% 53%,#cfb786 53%);box-shadow:inset 0 1px #fff5,0 2px 3px #0008}
+.pitstop-scores{display:none;position:absolute;top:65px;left:50%;transform:translateX(-50%);gap:28px;pointer-events:none;z-index:2;text-shadow:0 2px 5px #0008}
+#game[data-drift=true] .pitstop-scores{display:flex}.pitstop-scores>div{display:flex;align-items:baseline;gap:6px;white-space:nowrap;background:none;border:0;border-radius:0;box-shadow:none;padding:0}.pitstop-scores span{font:11px/1 Oswald;letter-spacing:.4px;color:#d2c9b4}.pitstop-scores b{font:500 23px/1 Oswald;color:#f5dfb4}.pitstop-scores>div:last-child b{color:#eca675}
+#game[data-race-film=true] .pitstop-scores{opacity:0}.race-callout{top:28%}.race-callout strong{font-style:italic;color:#ffe2a5}
+/* Companion screens use the same restrained palette; rarity still carries meaning. */
+dialog,#duel-dialog{background:#1e2520;color:#e7dfcb;border:1px solid #827453;border-radius:7px;box-shadow:0 25px 90px #0008}.meta-header{background:#191f1b;border-color:#60594044;color:#e4d7ba}.meta-header small{color:#b3ad98}.custom-header h2{color:#c8c0a7}.custom-header>button{color:#eec27b;background:#343a2e;border:0}.secondary{color:#c9bfa5}#custom-info{color:#bab39c}.result-card>p,.result-times span{color:#bab39c}.result-reward b{color:#efbf71}
+button{transition:transform 90ms,box-shadow 90ms,filter 120ms}button:focus-visible,#drift-steer:focus-visible{outline:2px solid #efc77f;outline-offset:3px}
+#game button:active:not(:disabled),#game button.pitstop-pressed:not(:disabled){transform:translateY(2px);filter:brightness(1.1);box-shadow:inset 0 1px 3px #0004}
+#game button:disabled{opacity:.45;transform:none;filter:saturate(.5)}
+/* A single large result over the track, before the reward details. */
+.finish-banner{position:absolute;inset:18% 0 auto;z-index:7;pointer-events:none;text-align:center;filter:drop-shadow(0 5px 18px #000b)}
+.finish-banner[hidden]{display:none}.finish-number{display:block;font:650 italic clamp(78px,25vw,120px)/1 Oswald;color:#ffe0a1;letter-spacing:-3px}.finish-unit{display:block;font:500 15px/1.4 Oswald;letter-spacing:3px;color:#f0dfba}.finish-note{display:block;font:500 15px/1.5 Oswald;letter-spacing:1px;color:#e7d9bf}
+#game[data-finish=true] .race-callout,#game[data-finish=true] .race-bottom,#game[data-finish=true] .pitstop-scores{opacity:0;pointer-events:none}
+.finish-banner[data-kind=place] .finish-number{font-size:clamp(130px,45vw,208px)}.finish-banner[data-kind=crash] .finish-number{font-size:clamp(60px,19vw,90px);letter-spacing:-1px}
+.finish-banner .finish-number,.finish-banner .finish-unit,.finish-banner .finish-note{text-shadow:0 3px 20px #06140de0,0 1px 3px #0008}
+.finish-banner:not([hidden]){animation:finish-arrive .6s cubic-bezier(.16,1,.3,1) both}.finish-banner::after{content:'';display:block;width:48px;height:2px;background:#eabd70;margin:14px auto 0}
+@keyframes finish-arrive{from{opacity:0;transform:translateY(18px) scale(1.15);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
+#result-dialog{width:min(440px,calc(100% - 24px));max-height:94dvh;border:0;background:#101a15e8;box-shadow:none;border-radius:5px}#result-dialog::backdrop{background:#07110b55}
+#game:has(#result-dialog[open]) :is(.race-top,.race-progress,.race-callout,.race-bottom,.pitstop-scores){opacity:0;pointer-events:none}
+#result-dialog .result-card{padding:18px 18px 12px;max-height:94dvh}#result-dialog .finish-outcome{text-align:center;padding:4px 0 12px;border-bottom:1px solid #d9bd7733;margin-bottom:10px}#result-dialog .finish-number{font-size:90px}#result-dialog .finish-outcome[data-kind=place] .finish-number{font-size:124px}#result-dialog .finish-outcome[data-kind=crash] .finish-number{font-size:62px;letter-spacing:-1px}#result-dialog .finish-unit{font-size:13px;letter-spacing:2px}
+#result-dialog .tiny-label{display:block;text-align:center;font-size:11px;color:#c7bda2}#result-dialog h2{font:500 22px/1.2 Oswald;text-align:center;margin:10px 0}#result-dialog .result-times{margin:8px 0;padding:9px 0}#result-dialog .result-times b{font-size:24px}#result-dialog .result-reward b{font-size:27px}
+@media(max-height:720px){#garage-screen{--home-height:179px}.home-sheet{gap:5px}.pitstop-keys{min-height:49px}.pitstop-launch,#home-sheet #race-button{min-height:44px}.topbar{height:44px}#game>.screen{height:calc(100% - 44px)}#garage-radio{min-height:26px;height:26px;max-height:26px;flex-basis:26px}.race-bottom{padding-top:21px;padding-bottom:max(12px,env(safe-area-inset-bottom))}#result-dialog .finish-number{font-size:78px}#result-dialog .finish-outcome[data-kind=place] .finish-number{font-size:104px}}
+@media(max-width:359px){.topbar{gap:6px;padding-inline:9px}.brand #screen-title{font-size:20px}.garage-car-label .car-heading h1{font-size:20px}.garage-car-label .power-badge{font-size:11px}.race-top h2{font-size:16px}.pitstop-scores{gap:20px}.pitstop-scores b{font-size:21px}.pitstop-scores span{font-size:10px}.finish-number{font-size:76px}}
+@media(prefers-reduced-motion:reduce){button{transition:none!important}.finish-banner:not([hidden]){animation:none}#game button:active:not(:disabled),#game button.pitstop-pressed:not(:disabled){transform:none}}
+#driving-lesson:not([data-mode=drift])[data-step="1"] .lesson-tach{display:block}
+#driving-lesson:not([data-mode=drift])[data-step="1"] .lesson-demo{display:block}
+#driving-lesson:not([data-mode=drift])[data-step="1"] .lesson-road{display:none}
+#driving-lesson:not([data-mode=drift])[data-step="1"] .lesson-action{background:#eab45b;color:#252c1f;border:0;border-radius:4px;box-shadow:0 3px #956c35}
+#driving-lesson:not([data-mode=drift])[data-step="1"] .lesson-action[data-shift-cue=perfect]{background:#bed581;box-shadow:0 3px #65814b,0 0 18px #bfdf7733}
+/* Steering has a neutral manoeuvring range and two explicit drift zones. */
+#game[data-drift=true] .drift-steering-rail>i{inset:23px 24px;background:linear-gradient(90deg,#efb95e 0 14%,#80917e 14% 86%,#efb95e 86% 100%);height:3px}
+#game[data-drift=true] .drift-steering-labels{display:flex;font:500 10px/1 Oswald;margin:0 4px 6px;color:#cbb68f;letter-spacing:.7px}
+#game[data-drift=true] .drift-steering-labels span{font-size:0}#game[data-drift=true] .drift-steering-labels span::after{content:'ДРИФТ';font-size:10px}
+#game[data-drift=true] .drift-steering-labels b{font-size:0}#game[data-drift=true] .drift-steering-labels b::after{content:'ПОДРУЛИВАНИЕ';font:500 10px Oswald;color:#aabb9e}
+#game[data-drift=true] .race-callout{top:50%;transform:translateY(-50%);z-index:3}#game[data-drift=true] .race-callout strong{font-size:clamp(46px,14vw,70px)}
+.drift-live{position:absolute;left:16px;right:16px;top:113px;text-align:center;pointer-events:none;color:#ffdc91;text-shadow:0 2px 8px #000b;z-index:2}
+.drift-live-label{font:600 14px/1.2 Oswald;letter-spacing:1.5px}.drift-live-numbers{display:flex;align-items:center;justify-content:center;gap:13px;margin:3px 0}
+.drift-live-numbers b{font:600 45px/1.1 Oswald;font-variant-numeric:tabular-nums;letter-spacing:.5px}.drift-live-numbers strong{font:600 29px/1 Oswald;color:#ffac59}
+.drift-live-meter{width:126px;height:3px;background:#ffffff24;margin:6px auto}.drift-live-meter i{display:block;height:100%;background:#ffd282}
+.drift-live small{font:12px/1.3 Oswald;letter-spacing:.3px;color:#f0dfb8}
+.drift-live[data-state=idle]{opacity:.7}.drift-live[data-state=idle] .drift-live-numbers,.drift-live[data-state=idle] .drift-live-meter{display:none}
+.drift-live[data-state=broken]{color:#f2a072}.drift-live[data-state=banked]{color:#d0e7a3}
+#game[data-drift=true] .pitstop-scores b{font-size:27px}#game[data-drift=true] .pitstop-multiplier{display:none!important}
+#game[data-race-film=true] .drift-live,#game[data-finish=true] .drift-live,#game:has(#result-dialog[open]) .drift-live{display:none}
+@media(max-height:650px){.drift-live{top:102px}.drift-live-numbers b{font-size:37px}.drift-live-label{font-size:12px}.drift-live small{font-size:11px}}
+
+#driving-lesson[data-mode=drift] .lesson-steering input{background:linear-gradient(90deg,#d39d49 0 14%,#526652 14% 86%,#d39d49 86%)}
+
+/* Timing is readable before the button turns green; no large tachometer panel. */
+.rpm .rpm-labels,.rpm .rpm-help{display:none}
+.rpm-track{height:16px;border:1px solid #727c6580;border-right:3px solid #cf8756;border-radius:3px;background:repeating-linear-gradient(90deg,#586650 0 2px,#17231de0 2px 10px);box-shadow:inset 0 2px 4px #0007}
+.rpm-track .perfect-zone{background:#a4ce70;box-shadow:0 0 9px #b3df7540}
+.rpm-track .perfect-zone::before{content:'ИДЕАЛЬНО';top:-18px;bottom:auto;left:50%;right:auto;transform:translateX(-50%);background:none;color:#d3ee9a;font:500 10px/1 Oswald;letter-spacing:.5px;white-space:nowrap}
+.rpm-track #rpm-needle{width:5px;height:28px;top:-7px;transform:translateX(-50%);background:#fff3d5;border:1px solid #3b392b;border-radius:2px;box-shadow:0 0 0 1px #ffedc44d,0 2px 5px #0009;transition:none}
+.race-bottom:has(#shift-button:disabled) .perfect-zone{opacity:.3;box-shadow:none}
+.race-bottom:has(#shift-button:disabled) .perfect-zone::before{content:none}
+/* Стрелка — не рядовая кнопка меню: она слева от заезда и заметна цветом. */
+#challenge-button{background:linear-gradient(160deg,#4a3a20,#2c2a1c)!important;color:#f0d9a4!important;
+ box-shadow:inset 0 1px #ffffff12,0 2px #0c110e,inset 0 0 0 1px #e6bc6340!important}
+#challenge-button .pitstop-icon{stroke:#e6bc63}
+#challenge-button[data-busy]{opacity:.6}
+/* Стрелка и заезд — одна вёрстка, один размер, один шрифт. Разные только цвет и световая волна. */
+.pitstop-launch:not(:has(#event-button:not([hidden]))){grid-template-columns:1fr 1fr}
+#home-sheet .pitstop-launch>button{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:9px}
+#challenge-button{position:relative;overflow:hidden}
+#home-sheet #challenge-button,#home-sheet #race-button{min-height:52px;font:600 21px/1 Oswald;letter-spacing:1px;padding:8px 10px;border-radius:5px}
+#challenge-button span:last-child,#race-button span:last-child{font-size:19px;opacity:.85}
+#challenge-button::after{content:'';position:absolute;inset:-40% -60%;pointer-events:none;
+ background:linear-gradient(105deg,#0000 42%,#ffe9b84d 50%,#0000 58%);
+ transform:translateX(-120%);animation:challenge-sweep 3.6s ease-in-out infinite}
+@keyframes challenge-sweep{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+@media(prefers-reduced-motion:reduce){#challenge-button::after{animation:none;opacity:0}}
+/* Нитро: своя кнопка рядом с переключением, с запасом азота. Появляется, только если баллон стоит. */
+.race-actions{display:flex;align-items:stretch;gap:8px}
+.race-actions>.shift{flex:1}
+#nitro-button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+ flex:0 0 96px;min-height:56px;padding:6px 8px;border:1px solid #7fd8ff66;border-radius:6px;
+ background:linear-gradient(160deg,#13384a,#0d1f2a);color:#d8f2ff;
+ font:600 14px/1 Oswald,sans-serif;letter-spacing:1.4px;box-shadow:inset 0 1px #ffffff14,0 2px #06131a}
+#nitro-button[hidden]{display:none}
+#nitro-button:disabled{opacity:.45;box-shadow:none}
+#nitro-button.burning{background:linear-gradient(160deg,#1d6f92,#0f3d52);border-color:#bdefff;color:#fff;
+ box-shadow:inset 0 1px #ffffff2a,0 0 18px #7fd8ff55}
+.nitro-flame{font-size:11px;line-height:1;color:#8fe3ff}
+#nitro-button.burning .nitro-flame{animation:nitro-flicker .18s steps(2) infinite}
+.nitro-tank{display:block;width:100%;height:5px;border-radius:99px;background:#ffffff1f;overflow:hidden}
+.nitro-tank i{display:block;height:100%;width:100%;border-radius:99px;background:linear-gradient(90deg,#7fd8ff,#e6fbff)}
+@keyframes nitro-flicker{from{opacity:.55}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){#nitro-button.burning .nitro-flame{animation:none}}

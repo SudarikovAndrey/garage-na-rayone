@@ -1,0 +1,38 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Открытие машины — превью</title>
+<link rel="stylesheet" href="style.css?v=027e2d9"><link rel="stylesheet" href="progression-ui.css?v=027e2d9"><link rel="stylesheet" href="ui-surfaces.css?v=027e2d9">
+<style>
+ html,body{height:100%;margin:0;background:#0a0b0a}
+ #stage{position:relative;width:min(420px,100vw);height:100dvh;margin:0 auto;overflow:hidden;background:#111}
+ .bar{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:60;display:flex;gap:8px;align-items:center;
+  background:#1b1d19e8;border:1px solid #ffffff1f;border-radius:99px;padding:6px 10px}
+ .bar button{min-width:38px;min-height:32px;border-radius:99px;border:1px solid #ffffff22;background:#2b2e26;color:#e8e2cc;font:600 14px Oswald,sans-serif}
+ .bar b{font:600 12px/1 Oswald,sans-serif;color:#e8e2cc;letter-spacing:1px;padding:0 6px}
+</style></head><body>
+<div id="stage">
+ <div id="car-reveal" role="dialog" aria-labelledby="reveal-name">
+  <div class="reveal-fx" aria-hidden="true"></div>
+  <div class="reveal-stage"><span class="reveal-beam" aria-hidden="true"></span><span class="reveal-frame"><img id="reveal-photo" alt="" draggable="false" width="640" height="400"></span><span class="reveal-flash" aria-hidden="true"></span></div>
+  <div class="reveal-dust" aria-hidden="true"></div>
+  <div class="reveal-plate"><span class="tiny-label" id="reveal-kicker">ТВОЯ НОВАЯ ТАЧКА</span>
+   <h2 id="reveal-name"></h2><p id="reveal-model"></p><p class="reveal-specs" id="reveal-specs"></p>
+   <span class="reveal-cta">ПОСТАВИТЬ В ГАРАЖ</span></div>
+ </div>
+</div>
+<div class="bar"><button id="prev" aria-label="Предыдущая">◀</button><b id="who"></b><button id="next" aria-label="Следующая">▶</button><button id="again" aria-label="Повторить">↻</button></div>
+<script type="module">
+ import {CARS} from './fleet.js';
+ import {bindCarReveal} from './car-reveal.js';
+ const root=document.querySelector('#car-reveal');
+ // В превью оверлей не прячем по тапу — иначе нечего будет смотреть.
+ const reveal=bindCarReveal({root});
+ let at=0;
+ let run=0;
+ // Превью крутит показ по кругу: кадр сам гаснет через несколько секунд, и его надо запустить заново.
+ function play(){const my=++run;document.querySelector('#who').textContent=CARS[at].name;root.hidden=false;
+  reveal.show(at,[6,4,9]).then(()=>{if(my===run)setTimeout(()=>{if(my===run)play();},500);});}
+ document.querySelector('#prev').onclick=e=>{e.stopPropagation();at=(at+CARS.length-1)%CARS.length;play();};
+ document.querySelector('#next').onclick=e=>{e.stopPropagation();at=(at+1)%CARS.length;play();};
+ document.querySelector('#again').onclick=e=>{e.stopPropagation();play();};
+ play();
+</script></body></html>
