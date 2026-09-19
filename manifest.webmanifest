@@ -1,0 +1,40 @@
+{
+ "name": "Гараж на районе",
+ "short_name": "Гараж",
+ "description": "Собери свою тачку и забери улицу. Кампания на российских машинах.",
+ "lang": "ru",
+ "dir": "ltr",
+ "id": "garage-na-rayone",
+ "start_url": "./",
+ "scope": "./",
+ "display": "fullscreen",
+ "display_override": [
+  "fullscreen",
+  "standalone",
+  "minimal-ui"
+ ],
+ "orientation": "portrait",
+ "background_color": "#15150f",
+ "theme_color": "#20201b",
+ "categories": [
+  "games"
+ ],
+ "icons": [
+  {
+   "src": "assets/icons/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "assets/icons/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "assets/icons/icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}

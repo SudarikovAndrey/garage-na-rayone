@@ -1,0 +1,30 @@
+<!doctype html><meta charset="utf-8"><title>Иконки ресурсов</title>
+<!-- Страница обзора иконок валют: три ресурса в тех размерах, в которых они реально стоят —
+     верхняя панель (19px), цена на кнопке прокачки (17px) и мелкая подпись (13px), на тёмном
+     фоне панели и на золотой кнопке. Смотреть силуэт, а не цвет: пятно должно читаться. -->
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../ui-surfaces.css">
+<style>
+ body{margin:0;padding:24px;background:#12140f;color:#e9dfc8;font:14px Arial}
+ h2{font:500 14px Oswald;letter-spacing:.6px;color:#9aa38c;margin:26px 0 10px}
+ .row{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding:12px 14px;border-radius:8px;background:#1b1f1b;border:1px solid #ffffff14}
+ /* Фон настоящей кнопки прокачки: тёмное поле с золотой рамкой. */
+ .row.up{background:linear-gradient(#251a18,#170f0e);border-color:#e0b268}
+ .s19 .coin-box{font-size:19px}.s17 .coin-box{font-size:17px}.s13 .coin-box{font-size:13px}
+ .zoom{display:flex;gap:26px;align-items:flex-end;padding:16px}
+ .zoom i{width:96px;height:96px}
+ .zoom figure{margin:0;text-align:center;color:#9aa38c;font:12px Arial}
+</style>
+<h2>Верхняя панель · 19px</h2><div class="row s19" id="r19"></div>
+<h2>Цена на кнопке прокачки · 17px</h2><div class="row s17 up" id="r17"></div>
+<h2>Мелкая подпись · 13px</h2><div class="row s13" id="r13"></div>
+<h2>Силуэт под лупой</h2><div class="zoom" id="zoom"></div>
+<script type="module">
+ import {coin,coinIcon} from '../currency-icons.js';
+ const kinds=[['soft',14243],['hard',640],['parts',268],['power',382]];
+ for(const id of ['r19','r17','r13'])document.getElementById(id).innerHTML=kinds.map(([k,v])=>coin(k,v)).join('');
+ document.getElementById('zoom').innerHTML=kinds.map(([k])=>`<figure>${coinIcon(k)}<figcaption>${k}</figcaption></figure>`).join('');
+ // Проверка для агента: сколько обводок осталось в иконках (должно быть 0).
+ window.__audit=()=>({strokes:document.querySelectorAll('.coin-svg[stroke],.coin-svg *[stroke]').length,
+  icons:document.querySelectorAll('.coin-svg').length});
+</script>

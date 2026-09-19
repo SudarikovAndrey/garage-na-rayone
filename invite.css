@@ -1,0 +1,64 @@
+/* Поверхности призыва: баннер в гараже и плашка на экране результата. Отдельный файл, потому
+   что это одна тема — «позови кореша», — и её удобно выключить целиком, если надоест. */
+
+/* Баннер в гараже: арт ближайшей награды, выгода одной строкой с ценой в рублях, прогресс и
+   золотая кнопка. Раньше про корешей на главном экране не было ни слова. */
+/* Баннер стоит НАД нижним листом, а не внутри него: высота листа — фиксированная константа
+   (--home-height), и всё, что кладётся внутрь, отнимает место у кнопок. В первый раз я именно
+   так и срезал ряд «Стрелка / Заезд». Абсолютная привязка к листу (у него position:absolute и
+   overflow:visible) выносит баннер из потока: кнопки получают свою высоту обратно, а полоса
+   ложится на пустую часть кадра гаража.
+
+   Свёрнутое состояние — квадратный значок у правого края: кадр гаража освобождается целиком,
+   а предложение остаётся под рукой. Машину важнее показать, чем баннер. */
+.invite-banner{position:absolute;left:12px;right:12px;bottom:100%;margin:0 0 8px;
+ display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:stretch;
+ border-radius:9px;border:1px solid #d9b56a66;
+ background:linear-gradient(100deg,#2a2116f2,#1a1d16f2 62%);box-shadow:0 8px 20px #0006;
+ color:#e9dfc8;transition:right .18s ease,border-radius .18s ease}
+.invite-face{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;
+ padding:7px 0 7px 9px;background:none;border:0;text-align:left;color:inherit;min-width:0}
+.invite-banner .invite-art{display:block;width:44px;height:44px;flex:0 0 auto}
+.invite-banner .invite-art .crate-art,.invite-banner .invite-art .road-swatch{width:100%;height:100%}
+.invite-banner b{display:block;font:700 15px/1.1 Oswald,sans-serif;letter-spacing:.02em;color:#fff2d4}
+.invite-banner em{display:block;font-style:normal;font:400 11.5px/1.3 Arial;color:#c3b895}
+.invite-bar{display:block;height:5px;margin-top:5px;border-radius:99px;background:#ffffff1a;overflow:hidden}
+.invite-bar i{display:block;height:100%;background:linear-gradient(90deg,#f0c579,#eab45b)}
+.invite-go{align-self:center;padding:9px 12px;border:0;border-radius:7px;background:#eab45b;color:#241e15;
+ font:700 13px Oswald,sans-serif;letter-spacing:.03em;box-shadow:0 2px #876231}
+/* Крестик тихий: он нужен, но спорить с «позвать» ему нечем. */
+.invite-collapse{align-self:stretch;width:30px;padding:0;border:0;border-left:1px solid #ffffff10;
+ border-radius:0 8px 8px 0;background:none;color:#8d9482;font:400 14px/1 Arial}
+.invite-banner .invite-left{display:none}
+
+/* Свёрнуто: квадрат у левого края, внутри арт награды и число «сколько ещё звать».
+   Левый край, а не правый: справа внизу кадра живёт кнопка света, и значок садился прямо на неё. */
+.invite-banner[data-collapsed="true"]{right:auto;left:12px;width:52px;grid-template-columns:1fr;border-radius:10px}
+.invite-banner[data-collapsed="true"] .invite-text,
+.invite-banner[data-collapsed="true"] .invite-go,
+.invite-banner[data-collapsed="true"] .invite-collapse{display:none}
+.invite-banner[data-collapsed="true"] .invite-face{grid-template-columns:1fr;padding:4px;position:relative}
+.invite-banner[data-collapsed="true"] .invite-art{width:44px;height:44px;margin:0 auto}
+/* На значке — прогресс к ближайшей награде: «1 / 3» говорит, сколько уже привёл, а голое «3»
+   читалось как счётчик непрочитанного. Подложка тёмная: жёлтое пятно здесь означало бы «есть
+   что забрать», а это не так, пока ступень не закрыта. */
+.invite-banner[data-collapsed="true"] .invite-left{display:block;position:absolute;right:-6px;top:-7px;
+ min-width:30px;height:19px;padding:0 5px;border-radius:99px;background:#11140fee;border:1px solid #ffffff2b;
+ color:#e4dcc6;font:700 11px/17px Oswald,sans-serif;text-align:center;box-shadow:0 2px 6px #0008}
+/* Награда закрыта и ждёт — вот теперь это нотификатор: золотая окантовка и золотая плашка. */
+.invite-banner[data-ready="true"]{border-color:#eab45b;box-shadow:0 0 0 1px #eab45b55,0 8px 20px #0007}
+.invite-banner[data-ready="true"][data-collapsed="true"] .invite-left{background:#eab45b;border-color:#eab45b;
+ color:#241e15;box-shadow:0 2px 6px #0008}
+
+/* В мастерской баннер молчит: там человек занят машиной. */
+#garage-screen[data-panel="custom"] #invite-banner{display:none}
+
+/* Плашка на экране результата: узкая полоса, не модалка — она не должна закрывать «в гараж»
+   и «ещё раз». Просим на пике: после победы, рекорда или ящика, раз за сессию. */
+.result-invite{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;width:100%;
+ margin:10px 0 0;padding:9px 11px;border-radius:10px;border:1px solid #d9b56a55;
+ background:linear-gradient(100deg,#2a2116,#171a14);text-align:left;color:#e9dfc8}
+.result-invite .invite-art{display:block;width:44px;height:44px}
+.result-invite .invite-art .crate-art,.result-invite .invite-art .road-swatch{width:100%;height:100%}
+.result-invite b{display:block;font:600 14px Oswald,sans-serif;color:#fff1d2}
+.result-invite em{display:block;font-style:normal;font:400 11px Arial;color:#b8ad8d}

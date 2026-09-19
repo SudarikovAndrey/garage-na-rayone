@@ -1,0 +1,30 @@
+<!doctype html><meta charset="utf-8"><title>Иконки слотов — подбор</title>
+<style>
+ body{margin:0;padding:20px;background:#12140f;color:#e9dfc8;font:13px Arial}
+ h3{font:600 12px Oswald;letter-spacing:.1em;color:#8d9482;margin:16px 0 6px}
+ .row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+ .row b{width:70px;font:600 11px Oswald;color:#8d9482}
+ .cell{width:64px;height:46px;border:1px solid #ffffff1f;border-radius:8px;background:#171b14;display:grid;place-items:center;color:var(--tone,#e6dcc4)}
+ .cell.on{border-color:#eab45b;background:#2b2214;color:#ffd68a}
+ .cell.fill svg{fill:currentColor;stroke:none}
+</style>
+<div id="out"></div>
+<script type="module">
+ import {partIcon} from '../part-icons.js';
+ const shapes={
+  engine:'<path d="M12 12h7V8h13v4h7v6h5v12h-7l-4 5H17l-5-5H7V18h5z"/><path d="M23 4h6M26 4v4"/><path d="m27 17-5 8h7l-4 6"/>',
+  tires:'<ellipse cx="24" cy="21" rx="12" ry="16"/><ellipse cx="24" cy="21" rx="5" ry="8"/><path d="M21 5h-5C4 5 4 37 16 37h5"/>',
+  bumpers:'<path d="m6 11 5-5h26l5 5v9l-7 4H13l-7-4z"/><path d="M14 14h20"/><path d="M6 33l5-4h26l5 4v4H6z"/>',
+  spoiler:'<path d="m5 11 38-3 1 8-38 3z"/><path d="M14 19v11M34 17v11M9 33l26-3"/>',
+  rims:'<circle cx="24" cy="21" r="17"/><circle cx="24" cy="21" r="4"/><path d="M24 4v13M39 15l-11 4M35 35l-8-10M13 35l8-10M9 15l11 4"/>',
+ };
+ const keys=Object.keys(shapes);
+ const svg=(k,size,sw)=>`<svg viewBox="0 0 48 44" width="${size}" height="${Math.round(size*44/48)}" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round">${shapes[k]}</svg>`;
+ let html='';
+ html+='<h3>СЕЙЧАС В ИГРЕ · 24 px, штрих 2</h3><div class="row"><b>было</b>'+keys.map(k=>`<span class="cell"><span style="width:24px;height:22px;display:block">${partIcon(k)}</span></span>`).join('')+'</div>';
+ for(const [size,sw] of [[30,3.2],[34,3.6],[34,4.2],[38,4.6]]){
+  html+=`<h3>${size} px, штрих ${sw}</h3><div class="row"><b>тускло</b>`+keys.map(k=>`<span class="cell">${svg(k,size,sw)}</span>`).join('')+'</div>';
+  html+='<div class="row"><b>ярче</b>'+keys.map(k=>`<span class="cell" style="--tone:#f4ecd8">${svg(k,size,sw)}</span>`).join('')+`<span class="cell on">${svg('engine',size,sw)}</span></div>`;
+ }
+ document.querySelector('#out').innerHTML=html;
+</script>

@@ -1,0 +1,511 @@
+/* Progression UI: garage gate, locked parts, result tiers, celebration and boss intro.
+   Kept apart from style.css so concurrent edits to the base stylesheet never collide. */
+.garage-upgrade.locked{opacity:.78}
+.garage-upgrade.locked small{color:inherit}
+.garage-upgrade.locked strong{color:inherit}
+
+/* Workshop: owned parts the garage cannot mount yet */
+.part-tile.locked{filter:saturate(.55) brightness(.85)}
+.part-tile.locked span{color:#d9b874}
+
+/* Result tiers */
+#result-dialog .result-card{position:relative}
+#result-dialog[data-tier="series"] .result-card{border:2px solid #d8b56a;box-shadow:0 0 28px #d8b56a33}
+#result-dialog[data-tier="series"] h2{color:#f0cf7d}
+#result-dialog[data-tier="series"] .result-card::before{content:"СЕРИЯ";position:absolute;right:18px;top:14px;padding:3px 8px;border:2px solid #d8b56a;border-radius:3px;color:#d8b56a;font:700 11px/1 Arial,sans-serif;letter-spacing:2px;transform:rotate(8deg)}
+#result-dialog[data-tier="district"] .result-card,#result-dialog[data-tier="champion"] .result-card{border:2px solid #c091ed;box-shadow:0 0 28px #c091ed33}
+#result-dialog[data-tier="district"] h2,#result-dialog[data-tier="champion"] h2{color:#dcc2f5}
+.series-award{margin:6px 0 10px;padding:10px 12px;border:1px solid #d8b56a88;border-radius:6px;background:#3a3420;display:grid;gap:5px;text-align:left}
+.series-award .tiny-label{color:#d8b56a}
+.series-award b{font:500 24px/1.1 Oswald,sans-serif;color:#f0cf7d}
+.shard-bar{position:relative;height:18px;border-radius:9px;background:#1f2a27;overflow:hidden;font:600 10px/18px Arial,sans-serif;letter-spacing:1px;padding:0 8px;color:#e4ddc8}
+.shard-bar i{position:absolute;left:0;top:0;bottom:0;width:var(--p,0%);background:#6f8a4a}
+.shard-bar span{position:relative}
+
+/* Full-screen celebration before the result card */
+#celebration{position:absolute;inset:0;z-index:60;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 35%,#2b3a2fee,#0d1411f4 75%);padding:24px;text-align:center;color:#f2e5c3;cursor:pointer;overflow:auto}
+#celebration[hidden]{display:none}
+.celebration-card{display:grid;gap:10px;justify-items:center;animation:celebrate-in .6s cubic-bezier(.2,.9,.3,1.2)}
+.celebration-card .tiny-label{color:#d8b56a}
+.celebration-card h2{font:600 52px/1 Oswald,sans-serif;color:#f0cf7d;margin:0;text-shadow:0 4px 18px #000a}
+.celebration-card>p{font-size:15px;color:#d8d3bd;margin:0;max-width:300px}
+.celebrate-card{display:grid;justify-items:center;gap:3px;padding:10px;border:1px solid #d8b56a66;border-radius:8px;background:#1b2622;animation:celebrate-in .6s .25s both cubic-bezier(.2,.9,.3,1.2)}
+.celebrate-card img{width:240px;max-width:70vw;height:auto;border-radius:4px}
+.celebrate-card.car img{width:260px}
+.celebrate-card b{font:500 22px Oswald,sans-serif}
+.celebrate-card small{font-size:11px;color:#a6b596}
+.celebrate-crate{display:flex;align-items:center;gap:10px;font:500 16px Oswald,sans-serif;animation:celebrate-in .6s .45s both}
+.celebrate-crate .crate-art.glow{filter:drop-shadow(0 0 14px #c091ed)}
+.celebrate-crate small{color:#8cddba}
+.celebrate-hint{font-size:11px;color:#8d9b88;margin-top:8px}
+@keyframes celebrate-in{from{opacity:0;transform:translateY(24px) scale(.92)}to{opacity:1;transform:none}}
+
+/* Boss and captain intro */
+/* Заставка перед заездом идёт в два шага. Первый: портрет во всю ширину и реплика в облачке —
+   на лица есть что посмотреть, поэтому фигура не мельчится. Второй, по тапу: машина соперника и её мощь. */
+/* Фон заставки — живая сцена заезда: машина соперника стоит прямо за ним. Лёгкое размытие и притемнение
+   отделяют фигуру от дороги, но оставляют понятным, где мы и на чём он приехал. */
+/* Первый шаг — только человек: сцену заезда и машину не показываем вовсе, фон глухой.
+   Экран висит, пока игрок не тапнет. Машину показываем вторым шагом, тогда фон и открывается. */
+#boss-intro{position:absolute;inset:0;z-index:120;padding:0;cursor:pointer;overflow:hidden;
+ -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+ background:radial-gradient(120% 80% at 50% 12%,#20242a,#0b0d0c 62%,#070807)}
+/* Фон — ночная мокрая трасса (макет Андрея, 17 сентября). Лежит с запасом по краям и едет за
+   гироскопом меньше всех слоёв (см. intro-parallax.js); без файла остаётся градиент выше. */
+.intro-bg{position:absolute;inset:-6%;z-index:0;pointer-events:none;
+ background:url(assets/intro-bg.webp) center 38%/cover no-repeat;
+ transform:translate3d(calc(var(--par-x,0)*7px),calc(var(--par-y,0)*5px),0);will-change:transform}
+#boss-intro[data-step="2"] .intro-bg{opacity:.55;transition:opacity .35s}
+/* Земля под фигурой: мягкая тень отделяет её от асфальта. */
+#boss-intro.with-portrait::after{content:'';position:absolute;left:50%;bottom:0;width:84%;height:12%;
+ transform:translateX(-50%);pointer-events:none;z-index:2;
+ background:radial-gradient(50% 50% at 50% 50%,#000000a6,#00000060 52%,#0000 78%)}
+#boss-intro[data-step="2"]{background:linear-gradient(#0000 40%,#000000cc)}
+/* Портрет во всю ширину, прижат к нижнему краю: кадр задал художник, мы его не масштабируем и не обрезаем.
+   Облачко лежит в той же колонке прямо над головой, поэтому хвостик всегда смотрит на говорящего. */
+/* Вся высота разложена: плашка сверху, реплика под ней, портрет забирает остальное и стоит на нижнем краю. */
+/* Верхний отступ считает Telegram: в полном экране над игрой его шапка и системные часы,
+   и без этого кикер с именем попадали под них. Вне Telegram переменные равны нулю. */
+.intro-stack{position:absolute;left:0;right:0;top:0;bottom:0;z-index:4;display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch;
+ padding-top:calc(max(3.5dvh,18px) + var(--tg-top,0px))}
+/* В заставке перед заездом колонка держит только текст: портрет — отдельный слой под ней,
+   поэтому колонка не должна занимать высоту и перехватывать место у фигуры. */
+#boss-intro .intro-stack{bottom:auto;pointer-events:none}
+/* Портрет живой: внутри контейнера канвас с оживлением (live-portrait.js) и слой дыма и бликов поверх.
+   Фигура вписана по ширине и стоит на нижнем краю контейнера — так же, как раньше стоял <img>. */
+#intro-portrait,#rival-line #line-portrait{display:block;position:absolute;left:-15%;right:-15%;bottom:0;height:56%;z-index:3;
+ pointer-events:none;filter:drop-shadow(0 10px 34px #000c) contrast(1.05);
+ animation:portrait-in .6s cubic-bezier(.16,.9,.24,1) both,portrait-drift 7s ease-out .6s both}
+#intro-portrait>canvas,#intro-portrait>img,#line-portrait>canvas,#line-portrait>img{display:block;width:100%;height:100%;
+ transform:translate3d(calc(var(--par-x,0)*16px),calc(var(--par-y,0)*9px + var(--face-shift,0px)),0);will-change:transform}
+#intro-portrait[hidden],#line-portrait[hidden]{display:none}
+@keyframes portrait-in{from{opacity:0;transform:translateY(9%) scale(1.04)}to{opacity:1;transform:none}}
+@keyframes portrait-drift{from{transform:none}to{transform:translateY(-1%) scale(1.015)}}
+/* Тёплый ореол за фигурой отделяет её от ночной трассы. */
+.intro-glow{position:absolute;left:50%;bottom:0;width:130%;height:56%;transform:translateX(-50%);pointer-events:none;z-index:2;
+ background:radial-gradient(52% 50% at 50% 42%,#d8b56a30,#d8b56a10 55%,transparent 74%);animation:glow-in .8s ease both}
+#boss-intro:not(.with-portrait) .intro-glow{display:none}
+@keyframes glow-in{from{opacity:0}to{opacity:1}}
+/* Читаемость поверх фигуры: тень сверху под облачко и снизу под имя. */
+/* Атмосфера целиком за персонажем (решение Андрея): фигура остаётся чистой, а глубину дают разные
+   скорости и размеры внутри самого фона — дальние росчерки медленные и тусклые, ближние быстрые и яркие.
+   Наполняет слои dist/intro-atmosphere.js, параметры приходят inline, поэтому здесь только поведение.
+   Анимируются лишь transform и opacity: фильтров размытия нет, иначе заставка просядет на телефоне. */
+.intro-fx,.reveal-fx{position:absolute;inset:-4%;overflow:hidden;pointer-events:none;z-index:2;
+ transform:translate3d(calc(var(--par-x,0)*11px),calc(var(--par-y,0)*7px),0)}
+.intro-dust,.reveal-dust{position:absolute;inset:-4%;overflow:hidden;pointer-events:none;z-index:3;
+ transform:translate3d(calc(var(--par-x,0)*14px),calc(var(--par-y,0)*8px),0)}
+.intro-fx i,.intro-dust i,.reveal-fx i,.reveal-dust i{position:absolute;display:block}
+
+/* Свет проезжающей машины ползёт поперёк кадра и гаснет. */
+.fx-beam{top:var(--top);left:-55%;width:76%;height:var(--h);border-radius:50%;
+ background:radial-gradient(closest-side,color-mix(in srgb,var(--tint) 55%,transparent),
+  color-mix(in srgb,var(--tint) 22%,transparent) 45%,transparent 74%);
+ animation:fx-beam var(--dur) linear var(--delay) infinite}
+@keyframes fx-beam{0%{transform:translateX(0) scaleX(.9);opacity:0}
+ 12%{opacity:1}68%{opacity:.8}100%{transform:translateX(215%) scaleX(1.25);opacity:0}}
+
+/* Дым поднимается и расходится. */
+.fx-smoke{bottom:-16%;left:var(--left);width:var(--w);height:var(--h);border-radius:50%;
+ background:radial-gradient(closest-side,#d5dbdd4d,#aab6bb26 48%,transparent 76%);
+ animation:fx-smoke var(--dur) ease-in-out var(--delay) infinite}
+@keyframes fx-smoke{0%{transform:translate(0,8%) scale(.8);opacity:0}
+ 18%{opacity:.9}70%{opacity:.45}100%{transform:translate(var(--drift),-36%) scale(1.45);opacity:0}}
+
+/* Росчерки — световые следы машин. Дальние длинные и тусклые, ближние короткие, яркие и быстрые. */
+.fx-streak{top:var(--top);left:-70%;width:var(--len);height:var(--thick);border-radius:99px;
+ background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--tint) 85%,transparent) 62%,var(--tint));
+ opacity:0;animation:fx-streak var(--dur) cubic-bezier(.35,0,.2,1) var(--delay) infinite}
+.fx-streak-near{filter:drop-shadow(0 0 6px #ffd89b66)}
+@keyframes fx-streak{0%{transform:translateX(0) scaleX(.7);opacity:0}
+ 14%{opacity:var(--alpha)}72%{opacity:var(--alpha)}100%{transform:translateX(255%) scaleX(1.15);opacity:0}}
+
+/* Пыль в луче. */
+.fx-dust{left:var(--left);bottom:var(--bottom);width:var(--size);height:var(--size);border-radius:50%;
+ background:#fff1d6;box-shadow:0 0 9px #ffd89bcc;opacity:0;
+ animation:fx-dust var(--dur) linear var(--delay) infinite}
+@keyframes fx-dust{0%{transform:translate(0,0);opacity:0}
+ 15%{opacity:.9}60%{opacity:.6}100%{transform:translate(var(--side),var(--rise));opacity:0}}
+
+/* Искры из-под колёс: резкий вылет и быстрое затухание. */
+.fx-spark{left:var(--left);bottom:6%;width:var(--size);height:var(--size);border-radius:50%;
+ background:#ffd79a;box-shadow:0 0 10px #ff9d3ccc;opacity:0;
+ animation:fx-spark var(--dur) cubic-bezier(.1,.7,.3,1) var(--delay) infinite}
+@keyframes fx-spark{0%{transform:translate(0,0) scale(1);opacity:0}
+ 10%{opacity:1}100%{transform:translate(var(--side),var(--rise)) scale(.3);opacity:0}}
+
+#boss-intro[data-step="2"] .intro-fx,#boss-intro[data-step="2"] .intro-dust{opacity:0;transition:opacity .35s}
+@media(prefers-reduced-motion:reduce){.intro-fx i,.intro-dust i,.reveal-fx i,.reveal-dust i{animation:none;opacity:.35}}
+
+/* Одна непрерывная растяжка на весь экран: две полосы давали видимую ступеньку на уровне груди. */
+#boss-intro::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+ background:linear-gradient(#000000e0 0%,#000000b0 22%,#00000070 42%,#00000090 64%,#000000e8 88%,#000000f2 100%)}
+/* Виньетка: края тёмные, центр чуть светлее — фигура выходит из темноты, как в макете. */
+.intro-bg::after{content:'';position:absolute;inset:0;
+ background:radial-gradient(118% 76% at 50% 34%,#0000 38%,#00000075 76%,#000000b5 100%)}
+
+.intro-bubble{position:relative;z-index:2;margin:12px 18px 0;
+ filter:drop-shadow(0 10px 24px #000b);animation:bubble-in .42s cubic-bezier(.2,.9,.25,1) .18s both}
+/* «Кожа» — золотая заливка с обрезанными углами, внутри тёмная панель с тем же контуром на пиксель
+   меньше: так получается рамка в 1px на любом углу, border со срезом не умеет. */
+.bubble-skin{padding:1px;background:#d9b56a;
+ clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px)}
+.bubble-skin p,.intro-bubble>p{margin:0;background:#0b0e10ec;padding:12px 14px 13px;
+ font:500 clamp(15px,4vw,17px)/1.3 Oswald,sans-serif;color:#f3e9d2;
+ clip-path:polygon(15px 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%,0 15px)}
+/* Хвостик — треугольник вниз-влево, к голове говорящего; тёмный внутри, золотой по краю. */
+.intro-bubble::after{content:'';position:absolute;left:34px;bottom:-12px;width:24px;height:13px;
+ background:#d9b56a;clip-path:polygon(0 0,100% 0,0 100%)}
+.intro-bubble::before{content:'';position:absolute;left:35px;bottom:-9px;width:19px;height:10px;z-index:1;
+ background:#0b0e10;clip-path:polygon(0 0,100% 0,0 100%)}
+@keyframes bubble-in{from{opacity:0;transform:translateY(-10px) scale(.97)}to{opacity:1;transform:none}}
+
+/* Имя стоит над облаком, в пустой верхней части кадра: поверх портрета оно тонуло в ярких куртках. */
+.intro-plate{position:relative;z-index:2;padding:0 20px 6px;color:#f2e5c3;
+ filter:drop-shadow(0 2px 12px #000e);animation:intro-in .5s ease both;border:0}
+/* Имя и подпись: кикер въезжает слева, имя открывается шторкой снизу вверх, под ним растёт линейка,
+   последней проявляется роль. На втором шаге блок уходит тем же порядком, только быстрее. */
+.intro-plate .tiny-label{display:block;color:#d9b56a;font:700 12px/1 Oswald,sans-serif;letter-spacing:.3em;text-transform:uppercase;
+ animation:kicker-in .42s cubic-bezier(.2,.9,.25,1) .1s both}
+.intro-plate h2{font:700 clamp(38px,12.4vw,62px)/.94 Oswald,sans-serif;margin:8px 0 0;letter-spacing:-.005em;color:#f1e6cc;
+ text-shadow:0 2px 0 #00000066,0 12px 30px #000000b0;
+ clip-path:inset(0 0 0 0);animation:name-in .52s cubic-bezier(.16,.9,.24,1) .16s both}
+/* Линейка как в макете: золотой отрезок, разрыв, серый хвост. */
+.intro-rule{display:block;height:3px;width:0;margin:10px 0 9px;border-radius:2px;
+ background:linear-gradient(90deg,#d9b56a 0,#d9b56a 58%,transparent 58%,transparent 62%,#8a8578 62%,#8a857800 100%);
+ animation:rule-in .5s ease .42s both}
+.intro-power{margin:14px 0 0;display:inline-grid;grid-template-columns:auto auto auto;align-items:center;gap:0 16px;
+ width:max-content;max-width:100%;padding:9px 14px 8px;border:1px solid #d9b56a80;border-radius:10px;background:#090c0ed9;
+ box-shadow:inset 0 1px #ffffff0a,0 6px 16px #00000059}
+.power-side{display:flex;flex-direction:column;gap:3px;min-width:0;text-align:center}
+.power-side b{font:500 11px/1.2 Oswald,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#cfc4ab;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.power-side em{font:700 clamp(24px,6.4vw,30px)/1 Oswald,sans-serif;font-style:normal;color:#f1e6cc;font-variant-numeric:tabular-nums}
+/* Сильная сторона видна сразу, без чтения цифр. */
+.power-side.lead em{color:#f2c14e;text-shadow:0 0 18px #f2c14e66}
+.power-vs{font:600 10px/1 Oswald,sans-serif;font-style:normal;letter-spacing:.2em;color:#a68f5c;text-transform:uppercase;align-self:end;padding-bottom:5px}
+.intro-role{margin:0;font:500 clamp(15px,4vw,18px)/1.2 Oswald,sans-serif;letter-spacing:.02em;color:#efe6d3;
+ animation:role-in .44s ease .5s both}
+@keyframes kicker-in{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+@keyframes name-in{from{opacity:0;clip-path:inset(100% 0 0 0);transform:translateY(10px)}
+ to{opacity:1;clip-path:inset(-20% 0 -20% 0);transform:none}}
+@keyframes rule-in{from{width:0;opacity:0}to{width:72%;opacity:1}}
+@keyframes role-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+#boss-intro[data-step="2"] .intro-plate{display:block;animation:plate-out .3s ease both;pointer-events:none}
+@keyframes plate-out{from{opacity:1}to{opacity:0;transform:translateY(10px)}}
+
+/* Второй шаг: фигура уходит, остаётся машина и её мощь. */
+.intro-car{position:absolute;left:0;right:0;bottom:7%;z-index:2;padding:0 18px;color:#f2e5c3;display:none}
+.intro-car .tiny-label{color:#d8b56a;font-size:11px;letter-spacing:1.6px}
+.intro-car h3{font:600 34px/1 Oswald,sans-serif;margin:4px 0 6px}
+.intro-car p{margin:0;font-size:14px;color:#c9c3ad;letter-spacing:.4px}
+#boss-intro[data-step="2"] .intro-bubble{animation:bubble-out .3s ease both}
+@keyframes bubble-out{from{opacity:1}to{opacity:0;transform:translateY(-12px)}}
+#boss-intro[data-step="2"] .intro-stack{animation:portrait-out .38s ease both}
+#boss-intro[data-step="2"] .intro-glow{opacity:0;transition:opacity .3s}
+#boss-intro[data-step="2"] .intro-car{display:block;animation:intro-in .42s ease both}
+#boss-intro[data-step="2"]::before{background:linear-gradient(#0000 38%,#000000cc)}
+@keyframes portrait-out{from{opacity:1}to{opacity:0;transform:translateY(7%)}}
+@media(max-height:720px){.intro-plate h2{font-size:36px}.intro-bubble p{font-size:15px}}
+/* Низкий экран (Яндекс Игры, альбомная ориентация, окно в полполосы): фигура во всю ширину туда уже не влезает,
+   а имя сверху отъедает последние проценты высоты. Решение по правилу Андрея: портрет ужимаем по высоте и
+   ставим по центру, облако остаётся сверху, а текстовый блок уезжает в самый низ на собственную подложку. */
+@media(max-height:560px),(orientation:landscape) and (max-height:680px){
+ .intro-stack{padding-top:0}
+ /* Оставляем сверху место под облако: иначе фигура выдавливает его за кадр. */
+ #intro-portrait{left:-12%;right:-12%;bottom:0;height:70%}
+ .intro-bubble{order:-1;margin:10px 14px 0}
+ .intro-plate{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:26px 18px 12px;
+  background:linear-gradient(#0000,#000000e0 42%);animation:intro-in .45s ease both}
+ .intro-plate h2{font-size:34px;margin-top:4px}
+ .intro-plate .tiny-label{font-size:10px;letter-spacing:2px}
+ .intro-rule{height:2px;margin:6px 0 5px}
+ .intro-role{font-size:13px}
+ .intro-car{bottom:10px}
+}
+@media(prefers-reduced-motion:reduce){#intro-portrait,.intro-glow,.intro-bubble,.intro-plate,.intro-car{animation:none}}
+.intro-plate small{display:block;margin-top:8px;font-size:11px;color:#8d9b88}
+@keyframes intro-in{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.celebration-card,.celebrate-card,.celebrate-crate,.intro-plate{animation:none}}
+
+/* Decals live inside the Цвет tab, under the paints */
+.custom-subhead{grid-column:1/-1;margin:8px 0 0;font:500 12px/1.2 Oswald,sans-serif;letter-spacing:1px;color:#d8b56a;text-transform:uppercase}
+/* Weekly goals block in the career card */
+.weekly-goals{margin:8px 0 12px;padding:10px 12px;border:1px solid #6f8f7a66;border-radius:10px;background:#141c19cc;display:grid;gap:8px}
+.goals-head{display:flex;justify-content:space-between;align-items:baseline}
+.goals-head b{font:500 15px Oswald,sans-serif;letter-spacing:.06em;color:#d8b56a}
+.goals-head small{font-size:11px;color:#8aa08f}
+.goal-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:6px 0;border-top:1px solid #ffffff12}
+.goal-row>div{display:grid;gap:3px;position:relative}
+.goal-row b{font:500 14px Oswald,sans-serif;color:#efe9d3}
+.goal-row small{font-size:11px;color:#a6b596}
+.goal-row i{display:block;height:4px;border-radius:2px;background:#233029;overflow:hidden;position:relative}
+.goal-row i::after{content:"";position:absolute;inset:0;width:var(--p,0%);background:linear-gradient(90deg,#8fc47b,#d8b56a)}
+.goal-row.done i::after{background:#f0cf7d}
+.goal-row>span{font-size:11px;color:#d9b874;text-align:right;max-width:110px}
+.goal-row.claimed{opacity:.55}
+.goal-row.claimed>span{color:#8fc47b;font-size:18px}
+.goal-row button{font:500 13px Oswald,sans-serif;letter-spacing:.06em;padding:8px 12px;border-radius:8px;border:1px solid #f0cf7d;background:#f0cf7d22;color:#f0cf7d;animation:goalPulse 1.6s ease-in-out infinite}
+@keyframes goalPulse{50%{background:#f0cf7d44}}
+/* Premium paints in the shop */
+.paint-tile .paint-swatch,.hero-swatch{display:block;width:64px;height:64px;margin:6px auto 4px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffffaa,var(--paint) 45%,#00000066 100%);box-shadow:0 0 0 2px var(--rarity),0 6px 14px #0008}
+.hero-swatch{width:120px;height:120px}
+.paint-tile.owned{opacity:.6}
+.paint-detail b{display:block;margin:8px 0;color:#8fc47b;font:500 16px Oswald,sans-serif;letter-spacing:.06em}
+/* Drift stages inside the campaign */
+.career-rival.drift{border-color:#7aa7b3;background:linear-gradient(135deg,#1b2a2e,#1e2b26)}
+.career-rival.drift small{color:#9fd3e0}
+.career-rival.drift p{grid-column:1/-1}
+.route-ladder i.drift{border-style:dashed}
+.route-ladder i.drift.current{color:#9fd3e0;border-color:#9fd3e0}
+.route-stop[disabled]{cursor:default;opacity:.45}
+/* What a part gives now → after the next level (customizer footer) */
+.tune-preview{display:block;margin-top:3px;font-size:12px;line-height:1.35;color:#b9c8a4}
+.tune-preview:empty{display:none}
+/* Ideal rpm inside the green shift window: the window is symmetric around the sweet spot */
+.perfect-zone{overflow:visible}
+.perfect-zone::after{content:'';position:absolute;left:50%;top:-4px;bottom:-4px;width:2px;transform:translateX(-50%);background:#f6ffd6;box-shadow:0 0 6px #ffffffaa}
+.perfect-zone::before{content:'';position:absolute;left:35%;right:35%;top:0;bottom:0;background:#c9e08a66}
+
+/* «Новое» — spокойная карточка о новой механике, не праздник */
+#celebration.unlock .celebration-card{max-width:340px;padding:18px 20px;border:1px solid #9fb864aa;background:#141c19f2}
+#celebration.unlock .celebration-card .tiny-label{color:#9fb864}
+#celebration.unlock .celebration-card h2{font:600 30px/1.05 Oswald,sans-serif;color:#efe9d3;margin:4px 0}
+#celebration.unlock .celebration-card p{font-size:15px;line-height:1.35;color:#d8d3bd;max-width:300px}
+#celebration.unlock .unlock-tap{font-size:11px;color:#8aa08f;letter-spacing:.06em;text-transform:uppercase}
+/* Fleet ladder: side views, silhouettes for locked cars, class badges */
+.fleet-ladder{display:grid;gap:8px}
+.fleet-ladder .fleet-tile{display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 12px;padding:8px 12px;border:1px solid #4b5150;border-radius:8px;background:#161d1a;text-align:left}
+.fleet-ladder .fleet-tile img{grid-column:1/-1;width:100%;height:auto;aspect-ratio:12/5;object-fit:contain;filter:drop-shadow(0 6px 8px #0008)}
+.fleet-ladder .fleet-tile.active{border-color:#d8b56a;background:#1f261f}
+.fleet-ladder .fleet-tile.locked{opacity:.85}
+.fleet-ladder .fleet-tile.locked img{filter:none;opacity:.9}
+.fleet-ladder .fleet-tile.locked b{color:#8f9a8a}
+.fleet-ladder .fleet-tile.classout{border-style:dashed}
+.fleet-ladder .fleet-tile small{color:#a6b596;font-size:12px}
+.fleet-ladder .class-badge{font:500 11px Oswald,sans-serif;letter-spacing:.06em;padding:2px 7px;border-radius:10px;border:1px solid #6f8f7a;color:#c9d9b0}
+.fleet-ladder .unlock-hint{grid-column:1/-1;font-size:12px;color:#d9b874}
+.fleet-district{margin:10px 0 2px;font:500 13px Oswald,sans-serif;letter-spacing:.1em;color:#d8b56a}
+.switch-car.has-silhouette{background-size:contain;background-repeat:no-repeat;background-position:center;font-size:0;width:64px!important;height:28px!important;border-radius:4px}
+
+/* Share played stats */
+.share-stats{margin-top:10px;opacity:.85}
+.stats-text{width:100%;box-sizing:border-box;font:12px/1.4 ui-monospace,Menlo,monospace;color:#d8d3bd;background:#0f1512;border:1px solid #4b5150;border-radius:6px;padding:10px;margin:12px 0 8px;white-space:pre;overflow:auto;text-align:left}
+/* Profiles — same language as the event card: graphite, amber, Oswald */
+.profiles .profile-new{display:grid;gap:8px;width:100%;margin:6px 0 10px}
+.profiles .profile-new label{font:500 12px Oswald,sans-serif;letter-spacing:.14em;color:#d8b56a;text-align:left}
+.profiles .profile-new input{width:100%;box-sizing:border-box;padding:12px 14px;border-radius:6px;border:1px solid #4b5150;background:#0f1512;color:#efe9d3;font:500 18px Oswald,sans-serif;letter-spacing:.04em}
+.profiles .profile-new .primary{width:100%}
+.profile-list{display:grid;gap:8px;width:100%;margin:4px 0 10px}
+.profile-row{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;width:100%;padding:10px 12px;border:1px solid #4b5150;border-radius:6px;background:#161d1a;color:#efe9d3;text-align:left;cursor:pointer}
+.profile-row:hover{border-color:#d8b56a}
+.profile-row-emblem{display:grid;place-items:center;width:44px;height:44px;border-radius:6px;background:#1f261f;color:#d8b56a}
+.profile-row-emblem svg{width:26px;height:26px}
+.profile-row-text b{display:block;font:500 18px/1.1 Oswald,sans-serif;letter-spacing:.04em}
+.profile-row-text small{display:block;margin-top:2px;font-size:12px;color:#a6b596}
+.profile-row-go{font:500 13px Oswald,sans-serif;letter-spacing:.14em;color:#d8b56a}
+
+/* Первый запуск: окно позывного без крестика, поле крупное, список «уже играл» ниже формы. */
+.profiles-required{padding-bottom:18px}
+.profiles-required .profile-new{margin-top:14px}
+.profiles-required .profile-new input{font-size:18px;text-align:center}
+.profiles-required .crate-note{margin:18px 0 6px}
+.profiles-required .profile-list{margin-top:0}
+
+/* Кнопка смены машины: два силуэта внахлёст по эскизу Андрея (14.09) вместо значка ⇄. Шире, чем круглые кнопки рядом. */
+.garage-car-label .switch-car{width:58px!important;height:32px!important;flex-basis:58px;padding:4px 5px;display:flex;align-items:center;justify-content:center}
+.switch-car .switch-car-icon{width:100%;height:100%;display:block;background:currentColor;-webkit-mask:url('assets/icons/switch-car.png') center/contain no-repeat;mask:url('assets/icons/switch-car.png') center/contain no-repeat}
+
+/* Загрузочный экран: арт во весь кадр. Низ не затемняем — тачка на нём главная;
+   вместо этого снизу идёт полоса загрузки, а короткая строка держится на собственной тени. */
+#loading{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;justify-content:flex-end;
+ align-items:center;gap:10px;padding:0 0 max(18px,env(safe-area-inset-bottom));text-align:center;background:#0c0e0b;
+ background-image:url('assets/splash.webp');background-size:cover;background-position:center top;background-repeat:no-repeat}
+#loading[hidden]{display:none}
+#loading .loading-line{margin:0;font:600 14px/1.2 Oswald,sans-serif;letter-spacing:1.6px;text-transform:uppercase;
+ color:#f3e7c8;text-shadow:0 1px 3px #000,0 3px 14px #000c}
+.loading-bar{width:min(78%,420px);height:6px;border-radius:99px;overflow:hidden;
+ background:#0b0d0a66;box-shadow:0 1px 10px #0009,inset 0 0 0 1px #ffffff1f}
+.loading-bar>i{display:block;height:100%;width:var(--progress,0%);border-radius:99px;
+ background:linear-gradient(90deg,#c9913f,#f0cd7c 70%,#fff0cf);
+ box-shadow:0 0 12px #e6bc6399;transition:width .18s linear}
+/* Широкий экран: арт вертикальный, вписываем целиком. */
+@media(min-aspect-ratio:1/1){#loading{background-size:contain}}
+
+/* Апгрейды показываем такими же карточками, как детали: картинка, имя, редкость, параметры.
+   Отличие одно — вместо слота кнопка «поставить/снять», потому что стоять могут сразу несколько. */
+#custom-options[data-kind="upgrades"]{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.part-tile.upgrade-card .part-select{grid-template-rows:55px auto auto auto auto}
+.upgrade-art{display:block;width:100%;height:55px;color:#e6c98b;opacity:.92}
+.part-tile.upgrade-card.selected .upgrade-art{color:#f4dba4;opacity:1}
+.part-tile.upgrade-card .upgrade-stats{display:flex;flex-wrap:wrap;gap:3px;margin-top:1px}
+.part-tile.upgrade-card .upgrade-stats b{font:500 9px/1.25 Arial,sans-serif;color:#e7dec0;background:#ffffff14;border-radius:3px;padding:2px 5px;white-space:nowrap}
+.part-tile.upgrade-card .upgrade-note{font:400 10px/1.3 Arial,sans-serif;color:#9ba396}
+.part-tile.upgrade-card 
+/* Высоту задаём числом: сетка меряет карточку по неперенесённому тексту и занижает строку,
+   поэтому длинное пояснение иначе вылезает за рамку. Три строки — и хватает, и не врёт. */
+.part-tile.upgrade-card{min-height:206px}
+.part-tile.upgrade-card .upgrade-note{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+@media(max-height:700px){.part-tile.upgrade-card{min-height:196px}.part-tile.upgrade-card .part-select{grid-template-rows:48px auto auto auto auto}.upgrade-art{height:48px}}
+
+/* ОТКРЫТИЕ НОВОЙ МАШИНЫ
+   Машина въезжает на весь экран: свет, вспышка, тень под колёсами и табличка с именем.
+   Кадр держится, пока не тапнут, но сам гаснет — это награда, а не диалог. */
+#car-reveal{position:absolute;inset:0;z-index:31;display:flex;flex-direction:column;justify-content:center;
+ overflow:hidden;cursor:pointer;background:radial-gradient(120% 75% at 50% 42%,#1d2229,#0a0c0b 60%,#060706)}
+#car-reveal[hidden]{display:none}
+.reveal-stage{position:relative;z-index:2;flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+ height:min(46dvh,320px);margin-top:6dvh}
+/* Картинка и тень живут в одной рамке с пропорциями исходника: тень всегда под колёсами,
+   на какой бы высоте экрана ни оказалась сцена. */
+.reveal-frame{position:relative;z-index:2;display:block;width:min(96%,560px);max-height:100%;aspect-ratio:640/400}
+#reveal-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+ filter:drop-shadow(0 10px 14px #0009);opacity:0;transform:scale(.72) translateY(26px)}
+#car-reveal[data-state="in"] #reveal-photo{animation:reveal-car .86s cubic-bezier(.16,1.02,.3,1) .12s both}
+/* Луч сверху: он же объясняет, откуда падает тень. */
+.reveal-beam{position:absolute;left:50%;top:-52%;width:min(130%,640px);height:168%;transform:translateX(-50%);
+ background:linear-gradient(#ffe7b845,#ffe7b81c 46%,#ffe7b800 82%);
+ clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);filter:blur(7px);opacity:0}
+#car-reveal[data-state="in"] .reveal-beam{animation:reveal-beam 1.1s ease-out both}
+.reveal-flash{position:absolute;inset:0;background:radial-gradient(45% 40% at 50% 52%,#fff6dd,#fff0 70%);opacity:0;pointer-events:none}
+#car-reveal[data-state="in"] .reveal-flash{animation:reveal-flash .5s ease-out .74s both}
+.reveal-plate{position:relative;z-index:3;padding:18px 20px max(18px,env(safe-area-inset-bottom));text-align:center}
+.reveal-plate .tiny-label{display:block;color:#e7c88b;letter-spacing:3px;font-size:11px}
+#car-reveal[data-state="in"] .reveal-plate .tiny-label{animation:kicker-in .5s ease .5s both}
+#reveal-name{margin:2px 0 0;font:700 clamp(34px,10vw,54px)/1 Oswald,sans-serif;letter-spacing:1px;color:#fdf6e4;
+ text-shadow:0 3px 18px #000a}
+#car-reveal[data-state="in"] #reveal-name{animation:name-in .56s cubic-bezier(.2,.9,.25,1) .58s both}
+#reveal-model{margin:5px 0 0;font:400 13px/1.3 Arial,sans-serif;color:#b3b7ab;letter-spacing:.6px}
+#car-reveal[data-state="in"] #reveal-model{animation:role-in .44s ease .72s both}
+.reveal-specs{display:flex;justify-content:center;gap:10px;margin:12px 0 0;padding:0;flex-wrap:wrap}
+.reveal-specs span{display:flex;flex-direction:column;gap:2px;min-width:78px;padding:7px 12px;border-radius:6px;
+ background:#ffffff0f;border:1px solid #ffffff14}
+.reveal-specs i{font:400 9px/1 Arial,sans-serif;letter-spacing:1.6px;color:#9aa091;font-style:normal}
+.reveal-specs b{font:600 16px/1.1 Oswald,sans-serif;color:#efd9a6}
+#car-reveal[data-state="in"] .reveal-specs{animation:role-in .5s ease .86s both}
+.reveal-cta{display:inline-block;margin-top:16px;padding:9px 20px;border-radius:99px;border:1px solid #e6bc6355;
+ background:#e6bc6314;color:#efd9a6;font:600 11px/1 Oswald,sans-serif;letter-spacing:2.4px}
+#car-reveal[data-state="in"] .reveal-cta{animation:role-in .5s ease 1.15s both}
+@keyframes reveal-car{from{opacity:0;transform:scale(.72) translateY(26px)}60%{opacity:1}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes reveal-beam{from{opacity:0;transform:translateX(-50%) scaleY(.6)}to{opacity:1;transform:translateX(-50%) scaleY(1)}}
+@keyframes reveal-flash{from{opacity:0}35%{opacity:.75}to{opacity:0}}
+/* Низкий экран (Яндекс Игры): текстовый блок уезжает вниз, машине остаётся всё остальное. */
+@media(max-height:620px){
+ .reveal-stage{height:40dvh;margin-top:2dvh}
+ .reveal-plate{padding-top:8px}
+ #reveal-name{font-size:clamp(26px,7vw,36px)}
+ .reveal-specs{margin-top:8px}
+ .reveal-specs span{min-width:0;padding:5px 9px}
+ .reveal-cta{margin-top:9px}
+}
+@media(prefers-reduced-motion:reduce){
+ #car-reveal[data-state="in"] :is(#reveal-photo,.reveal-beam,.reveal-plate .tiny-label,#reveal-name,#reveal-model,.reveal-specs,.reveal-cta){animation-duration:.01s;animation-delay:0s}
+ #car-reveal[data-state="in"] .reveal-flash{animation:none;opacity:0}
+}
+
+/* АВТОПАРК: лестница целиком — своё сверху, дальше закрытые с подписью «откуда». */
+.fleet-ladder .fleet-tile small{grid-column:1/-1}
+.fleet-ladder .fleet-tile .car-shards{grid-column:1/-1;padding:6px 0 0}
+.fleet-ladder .fleet-tile.locked img{filter:grayscale(.75) brightness(.5);opacity:.85}
+.fleet-ladder .fleet-tile.locked.fragment img{filter:grayscale(.4) brightness(.72);opacity:.95}
+/* Закрытая машина занимает меньше места: это ещё не выбор, а цель. */
+.fleet-ladder .fleet-tile.locked img{width:64%;justify-self:center}
+.fleet-ladder .fleet-subtitle{grid-column:1/-1;margin:14px 0 2px}
+
+/* УРОВЕНЬ МАШИНЫ
+   Рядом с именем: уровень, полоска чертежей и точка, когда можно поднять. */
+.car-level b,.car-level em{white-space:nowrap}
+.car-level{display:inline-flex;align-items:center;gap:6px;position:relative;margin-left:8px;padding:3px 8px;
+ border:1px solid #ffffff1f;border-radius:4px;background:#00000059;color:#d9d2bb;vertical-align:middle}
+.car-level b{font:600 13px/1 Oswald,sans-serif;letter-spacing:.8px;color:#e9dcb8}
+.car-level-bar{display:block;width:34px;height:4px;border-radius:99px;background:#ffffff1f;overflow:hidden}
+.car-level-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#8fd7ff,#d9f2ff)}
+.car-level em{font:600 12px/1 Oswald,sans-serif;font-style:normal;color:#b0c0b3;white-space:nowrap}
+.car-level.ready{border-color:#8fd7ff77;background:#12313d99;box-shadow:0 0 10px #8fd7ff33}
+.car-level.ready b{color:#d9f2ff}
+.car-level-dot{position:absolute;right:-4px;top:-4px;width:9px;height:9px;border-radius:50%;background:#8fd7ff;
+ box-shadow:0 0 0 2px #14171399,0 0 8px #8fd7ffaa;animation:garage-dot 1.6s ease-in-out infinite}
+.car-level-dot[hidden]{display:none}
+
+/* Повышение уровня: вспышка, искры и крупная цифра. */
+#car-levelup{position:absolute;inset:0;z-index:33;display:grid;place-items:center;overflow:hidden;cursor:pointer;
+ background:radial-gradient(120% 70% at 50% 45%,#0d2a3699,#05070ae6 70%)}
+#car-levelup[hidden]{display:none}
+.levelup-fx,.levelup-dust{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.levelup-fx{z-index:1}.levelup-dust{z-index:3}
+.levelup-fx i,.levelup-dust i{position:absolute;display:block}
+.levelup-burst{position:absolute;left:50%;top:50%;width:min(160vw,900px);aspect-ratio:1;transform:translate(-50%,-50%) scale(.2);
+ background:conic-gradient(from 0deg,#8fd7ff00 0deg,#8fd7ff3d 6deg,#8fd7ff00 12deg,#8fd7ff00 30deg,#d9f2ff33 36deg,#8fd7ff00 42deg);
+ border-radius:50%;opacity:0;z-index:2}
+#car-levelup[data-state="in"] .levelup-burst{animation:levelup-burst 1.5s cubic-bezier(.12,.8,.3,1) both}
+.levelup-plate{position:relative;z-index:4;display:flex;flex-direction:column;align-items:center;gap:2px;
+ padding:0 20px;text-align:center;color:#eaf6ff}
+.levelup-plate .tiny-label{font:600 12px/1 Oswald,sans-serif;letter-spacing:3px;color:#9fd8f0}
+#car-levelup[data-state="in"] .levelup-plate .tiny-label{animation:kicker-in .5s ease .25s both}
+.levelup-word{font:600 15px/1 Oswald,sans-serif;letter-spacing:6px;color:#bfe6f7;margin-top:10px}
+#car-levelup[data-state="in"] .levelup-word{animation:kicker-in .5s ease .38s both}
+#levelup-level{font:700 clamp(84px,30vw,150px)/.9 Oswald,sans-serif;color:#fff;
+ text-shadow:0 0 26px #8fd7ffaa,0 8px 30px #000a}
+#car-levelup[data-state="in"] #levelup-level{animation:levelup-number .7s cubic-bezier(.16,1.1,.3,1) .42s both}
+#levelup-gains{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+#levelup-gains li{font:500 13px/1.25 Arial,sans-serif;color:#cfe6f2;background:#ffffff12;border:1px solid #ffffff1a;
+ border-radius:99px;padding:6px 14px}
+#car-levelup[data-state="in"] #levelup-gains{animation:role-in .5s ease .85s both}
+@keyframes levelup-burst{0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(0)}18%{opacity:.85}100%{opacity:0;transform:translate(-50%,-50%) scale(1.25) rotate(28deg)}}
+@keyframes levelup-number{from{opacity:0;transform:scale(2.2);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@media(prefers-reduced-motion:reduce){
+ #car-levelup[data-state="in"] :is(.levelup-burst,#levelup-level,.levelup-word,.levelup-plate .tiny-label,#levelup-gains){animation-duration:.01s;animation-delay:0s}
+ .levelup-fx i,.levelup-dust i{animation:none;opacity:.35}
+}
+
+/* Реплика после заезда: тот же кадр, что у знакомства, но фон говорит об исходе — золото победы или
+   багровый проигрыш. Показывается после карточки места и до окна результата, каждая один раз. */
+#rival-line{position:absolute;inset:0;z-index:121;padding:0;cursor:pointer;overflow:hidden;
+ background:radial-gradient(120% 80% at 50% 12%,#3d3316,#171308 60%,#0a0905)}
+#rival-line[data-outcome="lose"]{background:radial-gradient(120% 80% at 50% 12%,#43161b,#180a0c 60%,#0a0506)}
+#rival-line[hidden]{display:none}
+#rival-line{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+#rival-line .intro-stack{animation:intro-in .42s ease both}
+#rival-line .intro-glow{display:block;background:radial-gradient(52% 50% at 50% 42%,#e2bd6a3a,#e2bd6a12 55%,transparent 74%)}
+#rival-line[data-outcome="lose"] .intro-glow{background:radial-gradient(52% 50% at 50% 42%,#d9504f36,#d9504f10 55%,transparent 74%)}
+#rival-line .intro-rule{background:linear-gradient(90deg,#e2bd6a 0,#e2bd6a 58%,transparent 58%,transparent 62%,#8a8578 62%,#8a857800 100%)}
+#rival-line[data-outcome="lose"] .intro-rule{background:linear-gradient(90deg,#d9504f 0,#d9504f 58%,transparent 58%,transparent 62%,#8a7878 62%,#8a787800 100%)}
+#rival-line[data-outcome="lose"] .intro-plate .tiny-label{color:#f0938f}
+#rival-line[data-outcome="lose"] .bubble-skin{background:#d9504f}
+#rival-line[data-outcome="lose"] .intro-bubble::after{background:#d9504f}
+#rival-line #line-portrait{left:-26%;right:-26%;height:68%}
+#rival-line[data-outcome="lose"] #line-portrait{filter:drop-shadow(0 10px 34px #000c) saturate(.82)}
+/* Колонка держит только текст: фигура — отдельный слой под ней. */
+#rival-line .intro-stack{bottom:auto;pointer-events:none}
+/* Фон тот же, что в заставке, но подкрашен исходом: тёплый при победе, красный при поражении. */
+#rival-line .intro-bg::before{content:'';position:absolute;inset:0;background:#e2bd6a1f;mix-blend-mode:overlay}
+#rival-line[data-outcome="lose"] .intro-bg::before{background:#d9504f2b}
+#rival-line::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+ background:linear-gradient(#000000e0 0%,#000000b0 22%,#00000070 42%,#00000090 64%,#000000e8 88%,#000000f2 100%)}
+#rival-line.with-portrait::after{content:'';position:absolute;left:50%;bottom:0;width:84%;height:12%;
+ transform:translateX(-50%);pointer-events:none;z-index:2;
+ background:radial-gradient(50% 50% at 50% 50%,#000000a6,#00000060 52%,#0000 78%)}
+/* Кнопка «Дальше» лежит на самом верхнем слое, иначе фигура её перекрывает. */
+#rival-line .line-next{z-index:5}
+/* Кнопка «Дальше» — для тех, кто не догадался тапнуть по экрану; тап по любому месту делает то же. */
+.line-next{position:absolute;left:18px;right:18px;width:auto;bottom:calc(max(18px,env(safe-area-inset-bottom)) + 10px + var(--tg-bottom,0px));z-index:4;
+ min-height:52px;font:600 18px/1 Oswald,sans-serif;letter-spacing:.14em;text-transform:uppercase;
+ color:#f1e6cc;background:#0b0e10d9;border:1px solid #d9b56a;border-radius:0;box-shadow:0 8px 22px #00000066;
+ clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px)}
+#rival-line[data-outcome="lose"] .line-next{background:#140a0bd9;border-color:#d9504f;color:#f6dcd6}
+/* Окно результата подсказывает исход цветом верхней кромки и подложки, не только словом. */
+#result-dialog[data-outcome="win"]{border-top:3px solid #d8b56a}
+#result-dialog[data-outcome="lose"]{border-top:3px solid #a8383d}
+#result-dialog[data-outcome="lose"] .result-card{background:linear-gradient(#2a1719,#1b1c1a 46%)}
+#result-dialog[data-outcome="win"] .result-card{background:linear-gradient(#2a2414,#1b1c1a 46%)}
+/* Лестница рубежей за корешей: закрытые ступени притушены, готовая к получению — подсвечена. */
+.mates-ladder{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.mates-ladder li{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:10px;padding:8px 10px;border:1px solid #ffffff14;border-radius:5px;background:#ffffff06;color:#cfc9b6}
+.mates-ladder li>b{font:500 19px/1 Oswald,sans-serif;color:#8e8d80;text-align:center}
+.mates-ladder li>span{font:13px/1.25 Arial,sans-serif}
+.mates-ladder li.done{opacity:.55}
+.mates-ladder li.done>b{color:#9fba86}
+.mates-ladder li.ready{border-color:#e6bc63;background:#e6bc6314;color:#f3e6c4}
+.mates-ladder li.ready>b{color:#f0c65f}
+.mates-ladder li>em{font:11px/1 Arial,sans-serif;color:#8e8d80;font-style:normal}
+.mates-ladder li>button{min-height:30px;padding:0 12px;border:0;border-radius:4px;background:#e6bc63;color:#221d12;font:600 12px Arial,sans-serif}

@@ -1,0 +1,57 @@
+/* Панель тюнинга: карточки деталей, строка подвала и слоты.
+ *
+ * Отдельный файл, потому что ui-surfaces.css занят соседней сессией. Когда освободится,
+ * эти правила надо перенести туда и удалить отсюда — держать вид карточки в двух местах нельзя.
+ *
+ * Что чинится. Раньше редкость заливала карточку целиком, и синие с фиолетовыми плитки
+ * перекрикивали саму деталь, а рамка означала то редкость, то выбор, то установку. Теперь
+ * языки разделены: рамка — только состояние (золотая — стоит на машине, светлая — выбрана),
+ * редкость — свечение снизу и полоса под карточкой.
+ */
+#custom-options .part-tile{position:relative;border:1px solid #ffffff14;border-radius:10px;overflow:hidden;
+ background:radial-gradient(135% 85% at 50% 122%,var(--rarity,#8f9788) 42%,transparent 76%),#12150f}
+#custom-options .part-tile:after{content:'';position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--rarity,#8f9788)}
+#custom-options .part-tile.selected{border-color:#ffffff40;background:radial-gradient(135% 85% at 50% 122%,var(--rarity,#8f9788) 48%,transparent 78%),#191d16}
+#custom-options .part-tile.mounted{border-color:#eab45b;box-shadow:0 0 0 1px #eab45b55}
+#custom-options .part-tile.locked{opacity:.55}
+/* Уровень — тёмная плашка, как на значке призыва. Золото на карточке значит одно: стоит на машине. */
+#custom-options .part-rank{position:absolute;left:6px;top:6px;z-index:2;padding:1px 6px;border-radius:99px;
+ background:#11140fe6;border:1px solid #ffffff24;color:#e4dcc6;font:700 10px/16px Oswald,sans-serif}
+#custom-options .part-rank i{font-style:normal}
+#custom-options .part-check{position:absolute;right:5px;top:5px;z-index:2;width:19px;height:19px;border-radius:50%;
+ background:#eab45b;color:#241e15;font:700 11px/19px Arial;text-align:center}
+/* Имя — одна строка: «Морда с противотуманками» ломалась и обрезалась на полуслове. */
+#custom-options .part-tile strong{display:block;padding:4px 8px 8px;font:500 11px/1.2 Oswald,sans-serif;color:#e4dcc6;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
+#custom-options .part-tile img{display:block;width:100%;height:56px;object-fit:contain}
+#custom-options .part-tile .rarity-label{display:none}
+/* «На другой машине» — значок, а не слово: оно налезало на уровень и требовало чтения. */
+#custom-options .part-elsewhere{position:absolute;right:5px;top:5px;z-index:2;width:22px;height:22px;border-radius:6px;
+ background:#11140fe6;border:1px solid #ffffff24;display:grid;place-items:center;font-size:0}
+#custom-options .part-elsewhere svg{width:14px;height:10px;fill:#cfc8b6}
+/* Пустая категория: место под будущие детали видно, читать нечего. */
+#custom-options .part-empty{display:block;min-height:96px;border:1px dashed #ffffff1f;background:none;opacity:.5}
+#custom-options .part-empty:after{display:none}
+
+/* Строка подвала: имя, уровень и что деталь даёт. Одна строка вместо подписи, пузыря и дубля. */
+#custom-info{display:flex;align-items:baseline;gap:8px;min-height:20px;font:400 12px Arial;color:#9aa38c}
+#custom-info b{font:600 14px/1.1 Oswald,sans-serif;color:#fff1d2;text-transform:uppercase;letter-spacing:.02em}
+#custom-info .info-lv{font:600 11px Oswald,sans-serif;color:#9aa38c;letter-spacing:.04em}
+#custom-info .info-gain{margin-left:auto;display:flex;gap:10px;font:600 12px Oswald,sans-serif;color:#cfc8b6;white-space:nowrap}
+#custom-info .info-gain em{font-style:normal}
+
+/* Слоты: иконка 30 px и плотный штрих — тонкая линия на тёмном пропадает первой.
+   Размер подобран на dist/dev/icon-probe.html. */
+#custom-categories button{min-height:46px;border:1px solid #ffffff1f;border-radius:8px;background:#171b14;color:#f4ecd8}
+#custom-categories button.active{border-color:#eab45b;background:#2b2214;color:#ffd68a;box-shadow:inset 0 0 0 1px #eab45b33}
+#custom-categories .part-icon{width:30px;height:28px}
+
+/* Стрелка прокачки: значок вместо треугольника сбоку. Кнопку рисует upgrade-button.js, но
+   вид стрелки живёт здесь же, где остальная панель. */
+.upgrade-btn .up-arrow{width:26px;height:26px;border:0;border-radius:7px;background:#eab45b;color:#241e15;
+ display:grid;place-items:center;flex:0 0 auto;box-shadow:0 2px 0 #876231;animation:none}
+.upgrade-btn .up-arrow svg{width:16px;height:16px;fill:currentColor}
+.upgrade-btn[data-state="short"] .up-arrow{background:#8e4a43;color:#f3d9d4;box-shadow:0 2px 0 #5d2f2a}
+@media(prefers-reduced-motion:no-preference){
+ .upgrade-btn[data-state="ready"] .up-arrow{animation:up-bob 2.4s ease-in-out infinite}
+}

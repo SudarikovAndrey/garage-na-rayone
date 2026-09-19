@@ -1,0 +1,57 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Реплика после заезда — превью</title>
+<link rel="stylesheet" href="style.css?v=cd0c709"><link rel="stylesheet" href="progression-ui.css?v=cd0c709">
+<style>
+ html,body{margin:0;height:auto;background:#0d0f0d;font-family:Oswald,sans-serif;color:#e7d8b8;display:block!important}
+ .stage{position:relative;width:min(420px,100vw);height:min(760px,86svh);margin:0 auto;overflow:hidden;background:#0b0d0c}
+ #rival-line{cursor:default}
+ .bar{display:flex;gap:8px;justify-content:center;align-items:center;padding:12px}
+ .bar button{font:600 15px Oswald,sans-serif;background:#1c231f;color:#e7d8b8;border:1px solid #6d6a54;border-radius:6px;padding:9px 16px}
+ .bar b{min-width:170px;text-align:center}
+</style></head><body>
+<div class="stage">
+ <div id="rival-line" data-outcome="win" role="dialog">
+  <div class="intro-bg" aria-hidden="true"></div><div class="intro-glow" aria-hidden="true"></div>
+  <div class="intro-fx" aria-hidden="true"></div><div class="intro-dust" aria-hidden="true"></div>
+  <div class="intro-stack"><div class="intro-plate"><span class="tiny-label" id="line-kicker"></span><h2 id="line-name"></h2><i class="intro-rule" aria-hidden="true"></i><p class="intro-role" id="line-role"></p></div>
+  <div class="intro-bubble" id="line-bubble"><div class="bubble-skin"><p id="line-text"></p></div></div></div>
+  <div id="line-portrait"></div>
+  <button class="primary line-next" id="line-next">ДАЛЬШЕ</button>
+ </div>
+</div>
+<div class="bar"><button id="prev">◀</button><b id="who"></b><button id="next">▶</button><button id="flip">ИСХОД</button></div>
+<script type="module" src="rival-line-view.js?v=cd0c709"></script>
+<script type="module">
+// Превью экрана реплики: тот же модуль вида, что в игре, данные — из состава персонажей.
+import {CAST,resultLineFor} from './characters.js';
+const $=s=>document.querySelector(s);
+let i=0,won=true;
+function show(){
+ const c=CAST[i];
+ $('#line-kicker').textContent=won?'ПОСЛЕ ЗАЕЗДА · ТЫ ВЫВЕЗ':'ПОСЛЕ ЗАЕЗДА · ОН ВЫВЕЗ';
+ $('#line-name').textContent=c.name;
+ $('#line-role').textContent=c.role;
+ $('#line-text').textContent='«'+resultLineFor(c.name,won)+'»';
+ $('#who').textContent=c.name+(won?' · ты вывез':' · он вывез');
+ $('#rival-line').dataset.outcome=won?'win':'lose';
+ window.__lineView?.open();
+}
+$('#next').onclick=()=>{i=(i+1)%CAST.length;show();};
+$('#prev').onclick=()=>{i=(i+CAST.length-1)%CAST.length;show();};
+$('#flip').onclick=()=>{won=!won;show();};
+// Проверка по всему составу: лицо ниже облака, имя в одну строку.
+window.__audit=async()=>{
+ const rows=[];
+ for(let k=0;k<CAST.length;k++){
+  i=k;show();await new Promise(r=>setTimeout(r,700));
+  const box=$('#line-portrait').getBoundingClientRect(),bub=$('#line-bubble').getBoundingClientRect();
+  const lp=window.__lineLive,rig=lp?.rig;
+  rows.push({кто:CAST[k].name,
+   'лицо-облако':rig?Math.round(box.top+lp.mapUV(rig.eye1[0],rig.eye1[1]-1.5*rig.fu)[1]*box.height-bub.bottom):null,
+   'низ фигуры, %':Math.round((box.bottom-$('.stage').getBoundingClientRect().top)/$('.stage').getBoundingClientRect().height*100)});
+ }
+ console.table(rows);return rows;
+};
+show();
+</script></body></html>

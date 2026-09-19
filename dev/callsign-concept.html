@@ -1,0 +1,145 @@
+<!doctype html><meta charset="utf-8"><title>Экран позывного — выдача номеров</title>
+<!-- Макет на согласование: стартовый экран как выдача номера. В игру не подключено. -->
+<style>
+ @font-face{font-family:Oswald;src:url('../assets/oswald.woff2') format('woff2');font-weight:200 700;font-display:swap}
+ @font-face{font-family:'Russo One';src:url('../assets/fonts/RussoOne-Regular.ttf') format('truetype');font-display:swap}
+ *{box-sizing:border-box}
+ body{margin:0;padding:22px;background:#0f110c;color:#e9dfc8;font:14px/1.45 Oswald,Arial,sans-serif}
+ h1{font:600 24px/1.1 Oswald;margin:0 0 6px}
+ .sub{color:#8d9482;margin:0 0 22px;max-width:760px;font:400 13.5px/1.5 Arial}
+ section{display:grid;grid-template-columns:375px 1fr;gap:24px;align-items:start;padding:20px 0}
+ .note h2{font:600 17px/1.2 Oswald;margin:0 0 8px;color:#ffd68a}
+ .note p{margin:0 0 9px;font:400 13.5px/1.5 Arial;color:#cfc8b6;max-width:430px}
+ .note b{color:#e9dfc8}
+ .tag{display:inline-block;margin-bottom:9px;padding:2px 8px;border:1px solid #d9b56a99;border-radius:99px;font:600 11px/1.6 Oswald;letter-spacing:.08em;color:#ffd68a}
+
+ /* Экран */
+ .scr{--tg-top:54px;position:relative;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;width:375px;height:812px;border-radius:16px;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;padding:calc(var(--tg-top) + 18px) 18px 22px}
+ /* Стол: доски, волокно, царапины, лампа сверху */
+ .scr .wood{position:absolute;inset:0;background:
+   repeating-linear-gradient(90deg,#00000014 0 1px,transparent 1px 7px),
+   repeating-linear-gradient(0deg,#0000001a 0 2px,transparent 2px 118px),
+   linear-gradient(176deg,#6b4a2c,#4e351e 46%,#3a2716)}
+ .scr .grain{position:absolute;inset:0;opacity:.5;mix-blend-mode:overlay;filter:url(#grain)}
+ .scr .scratch{position:absolute;inset:0;pointer-events:none}
+ .scratch i{position:absolute;height:1px;background:linear-gradient(90deg,transparent,#ffffff2e 12%,#ffffff12 60%,transparent);transform-origin:left}
+ .scr .lamp{position:absolute;left:50%;top:-18%;width:130%;height:70%;transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(50% 50% at 50% 50%,#ffd9a336,transparent 72%)}
+ .scr .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 78% at 50% 34%,transparent 38%,#0b0703cc 100%)}
+ .scr>*{position:relative}
+ .logo{width:214px;margin:0 auto;filter:drop-shadow(0 10px 22px #0009)}
+ .ask{margin:auto 0 12px;font:600 13px Oswald;letter-spacing:.14em;color:#e8dcc0cc;text-shadow:0 2px 10px #000;text-transform:uppercase}
+
+ /* Номер по образцу настоящего знака: белая пластина, ОДНА чёрная рамка вокруг всего — вместе
+    с регионом, — внутренняя вертикальная черта перед регионом и выдавленные знаки. */
+ .plate-wrap{position:relative;width:100%;perspective:900px}
+ .plate-wrap:before{content:'';position:absolute;left:-14%;right:-14%;top:-120%;bottom:-90%;pointer-events:none;
+  background:radial-gradient(50% 50% at 50% 50%,#ffd9a32e,transparent 70%)}
+ .plate{position:relative;display:grid;grid-template-columns:1fr 104px;height:80px;border-radius:9px;
+  transform:rotateX(9deg);transform-style:preserve-3d;
+  background:linear-gradient(178deg,#ffffff 0%,#f7f5ee 42%,#e9e6dc 80%,#dcd9cd 100%);
+  box-shadow:0 2px 0 #b9b4a5,0 16px 26px #0009,0 30px 40px #0007,inset 0 1px 0 #fff}
+ /* Рамка — одна на весь знак, с лёгким тиснением: тонкая светлая подсветка снаружи линии. */
+ .plate .frame{position:absolute;inset:6px;border:2.5px solid #16160f;border-radius:5px;pointer-events:none;
+  box-shadow:0 1px 0 #ffffffbf,inset 0 1px 0 #ffffff8c}
+ /* Черта между позывным и регионом — часть той же рамки. */
+ .plate .split{position:absolute;top:6px;bottom:6px;right:104px;width:2.5px;background:#16160f;pointer-events:none;
+  box-shadow:1px 0 0 #ffffff8c}
+ .plate .gloss{position:absolute;inset:0;pointer-events:none;border-radius:9px;
+  background:linear-gradient(104deg,transparent 16%,#ffffff8c 30%,transparent 44%)}
+ /* Засечки крепежа, как на образце. */
+ .plate .bolt{position:absolute;width:9px;height:2px;background:#16160f2e;transform:rotate(-38deg);pointer-events:none}
+ .plate .bolt.l{left:13px;top:38px}
+ .plate .bolt.r{right:16px;bottom:24px}
+ /* Поле — настоящее: кегль подбирается под длину, но не больше десяти знаков. */
+ .plate .val{width:100%;height:100%;padding:0 10px 0 20px;border:0;outline:0;background:none;text-align:center;
+  font:400 44px/1 'Russo One',Oswald;color:#15150e;letter-spacing:.06em;text-transform:uppercase;
+  -webkit-user-select:text;user-select:text;
+  text-shadow:0 -1px 0 #ffffffe6,0 1px 0 #00000047,0 2px 2px #00000026}
+ .plate .val::placeholder{color:#15150e2e;text-shadow:0 1px 0 #ffffffa6}
+ .plate .val:focus{outline:0}
+ /* Регион вписывается так же, как позывной: поле на три цифры. Без RUS — игрок может быть
+    не из России, и код остаётся просто числом. Поля дышат: цифры не упираются в рамку. */
+ .plate .reg{width:100%;height:100%;padding:0 16px;border:0;outline:0;background:none;text-align:center;
+  font:400 40px/1 'Russo One',Oswald;color:#15150e;letter-spacing:.02em;-webkit-user-select:text;user-select:text;
+  text-shadow:0 -1px 0 #ffffffe6,0 1px 0 #00000047,0 2px 2px #00000026}
+ .plate .reg::placeholder{color:#15150e26;text-shadow:0 1px 0 #ffffffa6}
+ .plate .reg::-webkit-outer-spin-button,.plate .reg::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+ .swipe{display:flex;align-items:center;justify-content:flex-end;margin-top:9px;padding-right:38px;
+  font:600 10px Oswald;letter-spacing:.12em;color:#e8dcc073}
+ .swipe svg{width:12px;height:16px;fill:none;stroke:#e8dcc073;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+ .go{margin-top:20px;width:100%;padding:16px;border:0;border-radius:10px;background:linear-gradient(#f2c87d,#e0a63f);
+  color:#241e15;font:700 19px Oswald;letter-spacing:.06em;box-shadow:0 4px 0 #8a6529,0 12px 26px #0009;
+  display:flex;align-items:center;justify-content:center;gap:10px}
+ .go svg{width:18px;height:18px;fill:currentColor}
+ .hint{margin:10px 0 auto;text-align:center;font:400 11px Arial;color:#e8dcc066}
+ .who{display:flex;gap:8px;margin-top:26px;align-items:center;overflow-x:auto;scrollbar-width:none;width:100%}
+ .who .lbl{font:600 10px Oswald;letter-spacing:.12em;color:#e8dcc059;flex:0 0 auto}
+ .chip{flex:0 0 auto;display:flex;align-items:center;gap:7px;padding:4px 11px 4px 4px;border:1px solid #ffffff21;border-radius:99px;background:#1b130acc;white-space:nowrap}
+ .chip i{width:22px;height:22px;border-radius:50%;background:#33261a;display:grid;place-items:center;font:600 11px Oswald;color:#c7b79c;font-style:normal}
+ .chip b{font:600 12px Oswald;color:#e9dfc8}
+</style>
+<svg width="0" height="0" style="position:absolute"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9 0.04" numOctaves="3" seed="7"/><feColorMatrix type="saturate" values="0"/></filter></svg>
+<h1>Экран позывного — выдача номера</h1>
+<p class="sub">Стол с поцарапанной древесиной, пустой номер, логотип по центру. Ничего лишнего.</p>
+<div id="frames"></div>
+<script type="module">
+ const chips=[['А','Андрей3'],['C','claude-test'],['К','К']];
+ const scratches=[[6,14,62,-1.2],[22,58,38,.6],[48,8,80,-.4],[63,40,54,1.1],[74,16,46,-.8],[86,62,40,.5],[35,74,66,-.6],[12,86,52,.9]]
+  .map(([t,l,w,r])=>`<i style="top:${t}%;left:${l}%;width:${w}%;transform:rotate(${r}deg)"></i>`).join('');
+ const frames=[
+ {tag:'ВЫДАЧА НОМЕРА',title:'Пустой номер на столе',
+  html:`<div class="scr">
+   <div class="wood"></div><div class="grain"></div><div class="scratch">${scratches}</div>
+   <div class="lamp"></div><div class="vign"></div>
+   <img class="logo" src="../assets/logo-garage.png" alt="Гараж на районе">
+   <p class="ask">Впиши позывной</p>
+   <div class="plate-wrap"><div class="plate">
+     <input class="val" maxlength="10" placeholder="АНДРЕЙ" autocomplete="off" spellcheck="false">
+     <input class="reg" maxlength="3" inputmode="numeric" placeholder="63" autocomplete="off">
+     <i class="gloss"></i><i class="frame"></i><i class="split"></i><i class="bolt l"></i><i class="bolt r"></i>
+   </div></div>
+   <div class="swipe">РЕГИОН</div>
+   <button class="go">В ГАРАЖ <svg viewBox="0 0 24 24"><path d="M4 11h11l-4-4 1.5-1.5L20 12l-7.5 6.5L11 17l4-4H4z"/></svg></button>
+   <p class="hint">Позывной вместо пароля — вход с любого телефона</p>
+   <div class="who"><span class="lbl">УЖЕ ИГРАЛ?</span>${chips.map(([l,n])=>`<span class="chip"><i>${l}</i><b>${n}</b></span>`).join('')}</div>
+  </div>`,
+  note:`<p><b>Экран про одно: тебе выдают номер.</b> Стол с волокном и царапинами, лампа сверху, на столе — пустая пластина. Ни персонажа, ни улицы.</p>
+   <p><b>Номер по образцу:</b> одна чёрная рамка вокруг всего знака — вместе с регионом, — внутренняя черта перед кодом, засечки крепежа, косой блик по пластине. Знаки выдавлены: светлая грань сверху, тёмная снизу. Пластина лежит с наклоном и отбрасывает тень на доски.</p>
+   <p><b>Позывной — до десяти знаков,</b> и кегль подбирается под длину: короткое имя набрано крупно, длинное ужимается, но всегда в одну строку и без обрезки. Текст при перетаскивании не выделяется — экран этого не даёт, поле остаётся исключением.</p>
+   <p><b>Регион вписывается так же, как позывной</b> — поле на три цифры с числовой клавиатурой. Блок стал шире, цифры больше не упираются в рамку. «RUS» убран: игрок может быть не из России, и код остаётся просто числом.</p>
+   <p><b>Логотип по центру</b>, верх экрана начинается ниже шапки Telegram — отступ берётся из <b>--tg-top</b>, поэтому часы мессенджера ничего не перекроют.</p>`},
+ ];
+
+ // Кегль подбираем замером: длинное имя ужимается, но не переносится и не обрезается.
+ // Десять знаков — предел: дальше буквы становятся мельче подписи под номером.
+ function fitName(input){
+  const max=44,min=22;
+  input.style.fontSize=max+'px';
+  for(let size=max;size>=min;size-=1){
+   input.style.fontSize=size+'px';
+   if(input.scrollWidth<=input.clientWidth)break;
+  }
+ }
+ const only=new URLSearchParams(location.search).get('only');
+ const shown=only?[frames[Number(only)]].filter(Boolean):frames;
+ if(only){document.querySelector('h1').remove();document.querySelector('.sub').remove();
+  document.body.style.cssText+=';padding:18px 22px;min-height:100vh;display:grid;align-content:center';}
+ document.querySelector('#frames').innerHTML=shown.map(f=>`<section><div>${f.html}</div>
+  <div class="note"><span class="tag">${f.tag}</span><h2>${f.title}</h2>${f.note}</div></section>`).join('');
+
+ for(const scr of document.querySelectorAll('.scr')){
+  for(const field of scr.querySelectorAll('.val,.reg')){
+   field.addEventListener('input',()=>fitName(field));
+   fitName(field);
+  }
+  // Регион — только цифры: с телефона придёт числовая клавиатура, с ноутбука можно набрать что угодно.
+  const reg=scr.querySelector('.reg');
+  reg.addEventListener('input',()=>{reg.value=reg.value.replace(/\D/g,'').slice(0,3);fitName(reg);});
+  // Значение можно задать из адреса: ?name=КОРОТКОЕ — удобно снимать состояния.
+  const preset=new URLSearchParams(location.search).get('name');
+  if(preset){const input=scr.querySelector('.val');input.value=preset;fitName(input);}
+ }
+</script>

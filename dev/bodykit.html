@@ -1,0 +1,111 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Обвес — обзор</title>
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js","three/addons/":"../vendor/addons/"}}</script>
+<style>
+@font-face{font-family:Oswald;src:url('../assets/oswald.woff2')}
+:root{color-scheme:dark}
+body{margin:0;background:#15171a;color:#e8e0c8;font:14px/1.4 Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:12px 18px;background:#1c1f23;border-bottom:1px solid #ffffff14}
+header h1{margin:0;font:600 20px Oswald,Arial,sans-serif;letter-spacing:.5px}
+header label{display:flex;align-items:center;gap:6px;color:#b8b39f}
+select,button{font:inherit;color:#e8e0c8;background:#262a2f;border:1px solid #ffffff22;border-radius:4px;padding:5px 8px}
+button{cursor:pointer}
+.rows{display:grid;gap:14px;padding:14px 18px}
+.row{background:#1d2024;border:1px solid #ffffff12;border-left:4px solid var(--rarity,#777);border-radius:6px;overflow:hidden}
+.row h3{margin:0;padding:8px 12px;font:600 16px Oswald,Arial,sans-serif}.row h3 small{color:#a9a48f;font:12px Arial}
+.views{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:2px;background:#000}
+.views canvas{display:block;width:100%;background:#2a2e33}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,192px);gap:10px;padding:14px 18px}
+.tiles figure{margin:0;background:#1d2024;border:1px solid #ffffff12}.tiles canvas{display:block;width:192px;height:128px;background:repeating-conic-gradient(#333 0 25%,#222 0 50%) 0 0/16px 16px}
+.tiles figcaption{padding:4px 6px;color:#a9a48f;font-size:12px}
+.status{color:#a9a48f;margin-left:auto}
+#orbit{padding:0 18px 18px}#orbit p{color:#a9a48f;margin:10px 0}#orbit canvas{display:block;width:100%;border-radius:6px;background:#2a2e33;cursor:grab;touch-action:none}
+</style></head><body>
+<header><h1>Обвес · обзор</h1>
+<label>Машина <select id="car"></select></label>
+<label>Краска <select id="paint"></select></label>
+<label>Стиль <select id="style"></select></label>
+<label>Слот <select id="slot"><option value="all">весь обвес</option><option value="fenders">крылья</option><option value="skirts">юбки</option><option value="bumpers">бамперы</option><option value="spoiler">спойлер</option><option value="rims">диски</option></select></label>
+<label>Редкость <select id="rarity"><option value="">сток</option><option value="0">обычная</option><option value="1">редкая</option><option value="2">эпическая</option><option value="3" selected>легендарная</option><option value="4">уникальная</option></select></label>
+<button id="mode">3D · покрутить</button> <button id="redraw">Перерисовать</button>
+<span class="status" id="status">…</span></header>
+<div id="orbit" hidden><p>Тяни мышью — вращение, колесо — приближение. Ракурс держится при смене машины и редкости.</p></div>
+<div class="rows" id="rows"></div>
+<div class="tiles" id="tiles"></div>
+<script type="module">
+import * as T from 'three';
+import {createGLTFLoader} from '../gltf.js';
+import {CARS} from '../fleet.js';
+import {PAINTS} from '../paints.js';
+import {RARITIES,SLOTS,KIT_STYLES,BODY_SLOTS,partId} from '../progression.js';
+import {applyCustomization,disposeCustomizedCar} from '../car-customization.js';
+import {pbrMaterial,outdoorEnvironment} from '../pbr-renderer.js';
+
+const $=s=>document.querySelector(s),q=new URLSearchParams(location.search);
+const carSel=$('#car'),paintSel=$('#paint'),slotSel=$('#slot'),raritySel=$('#rarity'),styleSel=$('#style'),rows=$('#rows'),tiles=$('#tiles'),status=$('#status'),orbitBox=$('#orbit'),modeBtn=$('#mode');
+carSel.innerHTML=CARS.map((c,i)=>`<option value="${i}">${c.name} (${c.id})</option>`).join('');
+paintSel.innerHTML=PAINTS.map(p=>`<option value="${p.id}">${p.name} · ${p.finish}</option>`).join('');
+styleSel.innerHTML=KIT_STYLES.map(s=>`<option value="${s.id||''}">${s.name}</option>`).join('');styleSel.value=q.get('style')||'';
+carSel.value=String(Math.max(0,CARS.findIndex(c=>c.id===(q.get('car')||'kopeyka'))));
+paintSel.value=q.get('paint')||'bright-white';slotSel.value=q.get('slot')||'all';
+const tileMode=q.get('tiles')==='1';let orbitMode=q.get('orbit')==='1';if(q.get('rarity')!==null)raritySel.value=q.get('rarity');
+const W=900,SIDE_H=400,Q_H=520;
+const renderer=new T.WebGLRenderer({antialias:true,preserveDrawingBuffer:true,alpha:true});renderer.setPixelRatio(1);renderer.setSize(W,Q_H,false);renderer.outputColorSpace=T.SRGBColorSpace;renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;renderer.shadowMap.enabled=true;
+const env=outdoorEnvironment(renderer,{sky:0x9fb4c8,fog:0xd8d3c4,sun:0xfff0d0,intensity:1,id:'review'});
+const scene=new T.Scene();window.__scene=scene;/* для отладки материалов из консоли */scene.background=new T.Color(0x2a2e33);scene.environment=env.texture;scene.environmentIntensity=.9;
+scene.add(new T.HemisphereLight(0xe8eef6,0x4a453b,1.6));const key=new T.DirectionalLight(0xfff0d8,3.2);key.position.set(-4,7,6);key.castShadow=true;key.shadow.mapSize.set(1024,1024);Object.assign(key.shadow.camera,{left:-4,right:4,top:4,bottom:-4,near:1,far:30});scene.add(key);
+const rim=new T.DirectionalLight(0xb8d0ee,1.2);rim.position.set(5,3,-5);scene.add(rim);
+const ground=new T.Mesh(new T.CircleGeometry(6,48),new T.MeshStandardMaterial({color:0x3a3f45,roughness:.9}));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
+const models=new Map();
+async function base(i){if(models.has(i))return models.get(i);const gltf=await createGLTFLoader().loadAsync(`../assets/cars/${CARS[i].id}.glb`);const car=gltf.scene;car.userData.fit=CARS[i];car.traverse(o=>{if(o.isMesh){o.castShadow=true;o.material=pbrMaterial(o.material,true);}});models.set(i,car);return car;}
+const KIT=['bumpers','skirts','fenders','spoiler','rims'];
+function equipment(rarity,slot,style=styleSel.value||null){if(rarity===null)return{};const slots=slot==='all'?KIT:[slot];return Object.fromEntries(slots.map(s=>[s,partId(s,rarity,BODY_SLOTS.includes(s)?style:null)]));}
+function instance(i,paint,rarity,slot){const root=new T.Group(),car=models.get(i).clone(true);root.add(car);Object.assign(root.userData,{carLength:CARS[i].length,carWidth:CARS[i].width,wheelbase:CARS[i].wheelbase,axleOffset:CARS[i].axleOffset||0,wheelRadius:CARS[i].radius,wheels:[]});applyCustomization(root,car,equipment(rarity,slot),paint,null);return root;}
+function shoot(cam,canvas){renderer.setSize(canvas.width,canvas.height,false);renderer.render(scene,cam);canvas.getContext('2d').drawImage(renderer.domElement,0,0);}
+function side(root,canvas){const L=root.userData.carLength,H=CARS[carSel.value].height||1.5,cw=canvas.width,ch=canvas.height;const cam=new T.OrthographicCamera(-L*.58,L*.58,L*.58*ch/cw,-L*.58*ch/cw,.1,50);cam.position.set(0,H*.5+.6,8);cam.lookAt(0,H*.5-.1,0);shoot(cam,canvas);}
+function quarter(root,canvas,front){const L=root.userData.carLength;const cam=new T.PerspectiveCamera(30,canvas.width/canvas.height,.1,60);cam.position.set(front?-L*1.05:L*1.05,1.25,L*.95);cam.lookAt(0,.5,0);shoot(cam,canvas);}
+function row(rarity){const el=document.createElement('article');el.className='row';el.style.setProperty('--rarity',rarity===null?'#666':RARITIES[rarity].color);
+ el.innerHTML=`<h3>${rarity===null?'Сток':RARITIES[rarity].name} <small>${rarity===null?'':SLOTS.filter(s=>KIT.includes(s.id)).map(s=>s.name).join(' · ')}</small></h3><div class="views"><canvas width="${W}" height="${SIDE_H}"></canvas><canvas width="${Q_H}" height="${SIDE_H}"></canvas><canvas width="${Q_H}" height="${SIDE_H}"></canvas></div>`;return el;}
+let busy=false;
+async function draw(){if(busy)return;busy=true;const i=Number(carSel.value),paint=paintSel.value,slot=slotSel.value;status.textContent='грузим модель…';await base(i);rows.innerHTML='';tiles.innerHTML='';
+ if(tileMode){await drawTiles(i,paint);busy=false;return;}
+ const list=[null,0,1,2,3],cards=list.map(r=>{const c=row(r);rows.append(c);return c;});
+ for(const [k,r] of list.entries()){status.textContent=`рисуем ${k+1}/${list.length}`;await new Promise(x=>setTimeout(x,0))/* не rAF: в скрытой панели кадры не приходят */;const root=instance(i,paint,r,slot);scene.add(root);const [s,f,b]=cards[k].querySelectorAll('canvas');side(root,s);quarter(root,f,true);quarter(root,b,false);scene.remove(root);disposeCustomizedCar(root);}
+ status.textContent=`${CARS[i].name} · ${paint} · ${slot}`;busy=false;}
+// Плитки: одна деталь, остальное скрыто, прозрачный фон, камера на деталь.
+async function drawTiles(i,paint){scene.background=null;ground.visible=false;
+ for(const slot of KIT.filter(s=>s!=='rims'))for(const rarity of [0,1,2,3,4]){const fig=document.createElement('figure');fig.innerHTML=`<canvas width="384" height="256"></canvas><figcaption>${partId(slot,rarity,styleSel.value||null)}</figcaption>`;tiles.append(fig);await new Promise(x=>setTimeout(x,0))/* не rAF: в скрытой панели кадры не приходят */;
+  const root=instance(i,paint,rarity,slot);scene.add(root);root.updateMatrixWorld(true);
+  // Одна деталь крупно: передний бампер, правая передняя арка, правая юбка; крыло целиком.
+  const keep=new Set();root.traverse(o=>{let p=o;while(p){if(p.name===(slot==='bumpers'?'Kit_bumpers_front':'Kit_'+slot))keep.add(o);p=p.parent;}});
+  root.traverse(o=>{if(!o.isMesh)return;if(!keep.has(o)){o.visible=false;return;}if(slot==='fenders'||slot==='skirts'){const c=new T.Box3().setFromObject(o).getCenter(new T.Vector3());if(c.z<0||(slot==='fenders'&&c.x>0))o.visible=false;}});
+  const box=new T.Box3();root.traverse(o=>{if(o.isMesh&&o.visible)box.expandByObject(o);});const c=box.getCenter(new T.Vector3()),size=box.getSize(new T.Vector3()),r=Math.max(size.x,size.y,size.z);
+  const cam=new T.PerspectiveCamera(28,1.5,.05,60);const dir=slot==='bumpers'?new T.Vector3(-1,.5,.75):slot==='spoiler'?new T.Vector3(.9,.55,1):slot==='skirts'?new T.Vector3(-.35,.55,1):new T.Vector3(-.5,.45,1);
+  cam.position.copy(c).add(dir.normalize().multiplyScalar(r*1.35+.35));cam.lookAt(c);
+  shoot(cam,fig.querySelector('canvas'));scene.remove(root);disposeCustomizedCar(root);}
+ status.textContent='плитки готовы';}
+// --- Интерактивный режим: живой канвас, орбита мышью/пальцем.
+const orbit={yaw:Number(q.get('yaw')??-.75),pitch:Number(q.get('pitch')??.32),dist:Number(q.get('dist')??6.4),target:new T.Vector3(0,.62,0)},orbitCam=new T.PerspectiveCamera(30,16/9,.1,80);let liveRoot=null,dragging=null,raf=0;
+function orbitSize(){const w=Math.min(orbitBox.clientWidth-36,1400),h=Math.round(w*9/16);renderer.setSize(w,h,false);renderer.domElement.style.width=w+'px';renderer.domElement.style.height=h+'px';orbitCam.aspect=w/h;orbitCam.updateProjectionMatrix();}
+function orbitFrame(){if(!orbitMode)return;const {yaw,pitch,dist,target}=orbit;orbitCam.position.set(target.x+dist*Math.cos(pitch)*Math.sin(yaw),target.y+dist*Math.sin(pitch),target.z+dist*Math.cos(pitch)*Math.cos(yaw));orbitCam.lookAt(target);renderer.render(scene,orbitCam);raf=requestAnimationFrame(orbitFrame);}
+const refModel=q.get('model');let refRoot=null;
+async function loadReference(){if(refRoot)return refRoot;const gltf=await createGLTFLoader().loadAsync(`../assets/reference/${refModel}.glb`);const m=gltf.scene;m.updateMatrixWorld(true);const bb=new T.Box3().setFromObject(m),size=bb.getSize(new T.Vector3()),c=bb.getCenter(new T.Vector3());
+ // Длинная ось модели — вдоль X игры (нос −X), низ на землю, длина по параметру len (по умолчанию как у Копейки).
+ const longZ=size.z>size.x,len=Number(q.get('len')||4.073),scale=len/(longZ?size.z:size.x);const g=new T.Group();g.add(m);m.position.set(-c.x,-bb.min.y,-c.z);if(longZ)g.rotation.y=Math.PI/2;if((q.get('flip')??'1')==='1')g.rotation.y+=Math.PI;/* у classic-race нос в +Z */g.scale.setScalar(scale);
+ m.traverse(o=>{if(o.isMesh){o.castShadow=true;o.material=pbrMaterial(o.material,true);}});const root=new T.Group();root.add(g);refRoot=root;return root;}
+async function liveDraw(){if(refModel){status.textContent='грузим референс…';const r=await loadReference();if(liveRoot&&liveRoot!==r)scene.remove(liveRoot);liveRoot=r;scene.add(r);status.textContent=refModel+' · референс';return;}
+ const i=Number(carSel.value);status.textContent='грузим модель…';await base(i);if(liveRoot){scene.remove(liveRoot);disposeCustomizedCar(liveRoot);}const r=raritySel.value===''?null:Number(raritySel.value);liveRoot=instance(i,paintSel.value,r,slotSel.value);scene.add(liveRoot);orbit.target.y=(CARS[i].height||1.4)*.42;status.textContent=CARS[i].name+' · '+(r===null?'сток':RARITIES[r].name)+' · '+(KIT_STYLES.find(s=>(s.id||'')===styleSel.value)?.name)+' · '+slotSel.value;}
+function setMode(on){orbitMode=on;orbitBox.hidden=!on;rows.hidden=on;tiles.hidden=on;modeBtn.textContent=on?'Карточки':'3D · покрутить';cancelAnimationFrame(raf);
+ if(on){scene.background=new T.Color(0x2a2e33);ground.visible=true;if(!renderer.domElement.parentNode||renderer.domElement.parentNode!==orbitBox)orbitBox.append(renderer.domElement);orbitSize();liveDraw().then(orbitFrame);}
+ else{renderer.domElement.remove();draw();}}
+const el=renderer.domElement;
+el.addEventListener('pointerdown',e=>{dragging={x:e.clientX,y:e.clientY};el.setPointerCapture(e.pointerId);el.style.cursor='grabbing';});
+el.addEventListener('pointermove',e=>{if(!dragging)return;orbit.yaw-=(e.clientX-dragging.x)*.007;orbit.pitch=Math.max(.04,Math.min(1.25,orbit.pitch+(e.clientY-dragging.y)*.005));dragging={x:e.clientX,y:e.clientY};});
+el.addEventListener('pointerup',()=>{dragging=null;el.style.cursor='grab';});el.addEventListener('pointercancel',()=>{dragging=null;});
+el.addEventListener('wheel',e=>{e.preventDefault();orbit.dist=Math.max(2.8,Math.min(12,orbit.dist*(1+e.deltaY*.0012)));},{passive:false});
+window.addEventListener('resize',()=>{if(orbitMode)orbitSize();});
+modeBtn.onclick=()=>setMode(!orbitMode);
+const onChange=()=>orbitMode?liveDraw():draw();
+carSel.onchange=paintSel.onchange=slotSel.onchange=raritySel.onchange=styleSel.onchange=onChange;$('#redraw').onclick=onChange;
+if(orbitMode)setMode(true);else draw();
+</script></body></html>

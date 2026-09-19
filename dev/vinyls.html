@@ -1,0 +1,89 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Винилы — обзор</title>
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js","three/addons/":"../vendor/addons/"}}</script>
+<style>
+@font-face{font-family:Oswald;src:url('../assets/oswald.woff2')}
+@font-face{font-family:'Russo One';src:url('../assets/fonts/RussoOne-Regular.ttf')}
+:root{color-scheme:dark}
+body{margin:0;background:#15171a;color:#e8e0c8;font:14px/1.4 Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:12px 18px;background:#1c1f23;border-bottom:1px solid #ffffff14}
+header h1{margin:0;font:600 20px Oswald,Arial,sans-serif;letter-spacing:.5px}
+header label{display:flex;align-items:center;gap:6px;color:#b8b39f}
+select,button,textarea{font:inherit;color:#e8e0c8;background:#262a2f;border:1px solid #ffffff22;border-radius:4px;padding:5px 8px}
+button{cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(500px,1fr));gap:16px;padding:16px 18px}
+.card{background:#1d2024;border:1px solid #ffffff12;border-top:3px solid var(--rarity,#777);border-radius:6px;overflow:hidden}
+.card canvas{display:block;width:100%;background:#2a2e33}
+.card .views{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#000}.card .views canvas:nth-child(3),.card .views canvas:nth-child(4){grid-column:1/-1}body.big .grid{grid-template-columns:1fr}
+.card .meta{display:grid;grid-template-columns:80px 1fr auto;gap:12px;align-items:start;padding:10px 12px}
+.tile{width:80px;height:58px;border-radius:4px;border:1px solid #ffffff30;background-size:cover;background-position:center}
+.meta h3{margin:0;font:600 18px Oswald,Arial,sans-serif}
+.meta small{color:#a9a48f}
+.meta p{margin:4px 0 0;color:#cfc8b0}
+.choice{display:flex;flex-direction:column;gap:4px}
+.choice button[aria-pressed=true]{background:#d8b56a;color:#1a1408;border-color:#d8b56a}
+.choice button[data-v=drop][aria-pressed=true]{background:#a8383d;color:#fff;border-color:#a8383d}
+.choice button[data-v=redo][aria-pressed=true]{background:#3d6fa8;color:#fff;border-color:#3d6fa8}
+.summary{padding:0 18px 24px}
+textarea{width:100%;min-height:120px;box-sizing:border-box}
+.status{color:#a9a48f;margin-left:auto}
+</style></head><body>
+<header><h1>Винилы · обзор</h1>
+<label>Машина <select id="car"></select></label>
+<label>Краска <select id="paint"></select></label>
+<label>Обвес <select id="kit"><option value="full">полный (3 ред.)</option><option value="none">сток</option></select></label>
+<button id="redraw">Перерисовать</button>
+<span class="status" id="status">…</span></header>
+<div class="grid" id="grid"></div>
+<div class="summary"><h2 style="font:600 16px Oswald,Arial">Решения</h2><p style="color:#a9a48f">Отметь на карточках: оставить / убрать / переделать. Текст ниже можно скопировать и прислать.</p><textarea id="summary" readonly></textarea></div>
+<script type="module">
+import * as T from 'three';
+import {createGLTFLoader} from '../gltf.js';
+import {CARS} from '../fleet.js';
+import {PAINTS} from '../paints.js';
+import {DECALS} from '../decals.js';
+import {RARITIES} from '../progression.js';
+import {applyCustomization,disposeCustomizedCar} from '../car-customization.js';
+import {pbrMaterial,outdoorEnvironment} from '../pbr-renderer.js';
+import {liveryPreview} from '../decal-liveries.js';
+
+const $=s=>document.querySelector(s);
+const carSel=$('#car'),paintSel=$('#paint'),kitSel=$('#kit'),grid=$('#grid'),status=$('#status');
+carSel.innerHTML=CARS.map((c,i)=>`<option value="${i}">${c.name} (${c.id})</option>`).join('');
+paintSel.innerHTML=PAINTS.map(p=>`<option value="${p.id}">${p.name} · ${p.finish}</option>`).join('');
+paintSel.value=new URLSearchParams(location.search).get('paint')||'cherry';
+const FINISH_NAME={matte:'матовая плёнка',satin:'сатин',gloss:'глянцевая плёнка',chrome:'хром'};
+const KEY='vinyl-review-v1';const review=JSON.parse(localStorage.getItem(KEY)||'{}');
+const only=new URLSearchParams(location.search).get('only')?.split(',').filter(Boolean);const big=!!only;const W=big?900:560,SIDE_H=big?420:280,Q_H=big?520:280;
+const renderer=new T.WebGLRenderer({antialias:true,preserveDrawingBuffer:true,alpha:false});renderer.setPixelRatio(1);renderer.setSize(W,Q_H,false);renderer.outputColorSpace=T.SRGBColorSpace;renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;renderer.shadowMap.enabled=true;
+const env=outdoorEnvironment(renderer,{sky:0x9fb4c8,fog:0xd8d3c4,sun:0xfff0d0,intensity:1,id:'review'});
+const scene=new T.Scene();scene.background=new T.Color(0x2a2e33);scene.environment=env.texture;scene.environmentIntensity=.9;
+scene.add(new T.HemisphereLight(0xe8eef6,0x4a453b,1.6));const key=new T.DirectionalLight(0xfff0d8,3.2);key.position.set(-4,7,6);key.castShadow=true;key.shadow.mapSize.set(1024,1024);Object.assign(key.shadow.camera,{left:-4,right:4,top:4,bottom:-4,near:1,far:30});scene.add(key);
+const rim=new T.DirectionalLight(0xb8d0ee,1.2);rim.position.set(5,3,-5);scene.add(rim);
+const ground=new T.Mesh(new T.CircleGeometry(6,48),new T.MeshStandardMaterial({color:0x3a3f45,roughness:.9}));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
+const models=new Map();
+async function base(i){if(models.has(i))return models.get(i);const gltf=await createGLTFLoader().loadAsync(`../assets/cars/${CARS[i].id}.glb`);const car=gltf.scene;car.userData.fit=CARS[i];car.traverse(o=>{if(o.isMesh){o.castShadow=true;const old=o.material;o.material=pbrMaterial(old,true);}});models.set(i,car);return car;}
+function instance(i,paint,decal){const root=new T.Group(),car=models.get(i).clone(true);root.add(car);Object.assign(root.userData,{carLength:CARS[i].length,carWidth:CARS[i].width,wheelbase:CARS[i].wheelbase,axleOffset:CARS[i].axleOffset||0,wheelRadius:CARS[i].radius,wheels:[]});applyCustomization(root,car,kitSel.value==='none'?{}:{bumpers:'bumpers-3',skirts:'skirts-3',fenders:'fenders-3',spoiler:'spoiler-3',rims:'rims-3'},paint,decal);return root;}
+// Два ракурса: борт целиком (ортографика, чуть сверху) и три четверти спереди-сбоку.
+function shootSide(root,canvas){const L=root.userData.carLength,H=CARS[carSel.value].height||1.5;const cam=new T.OrthographicCamera(-L*.6,L*.6,L*.6*SIDE_H/W,-L*.6*SIDE_H/W,.1,50);cam.position.set(0,H*.55+1.2,8);cam.lookAt(0,H*.5,0);renderer.setSize(W,SIDE_H,false);renderer.render(scene,cam);canvas.getContext('2d').drawImage(renderer.domElement,0,0);}
+function shootTop(root,canvas){const L=root.userData.carLength;const cw=canvas.width,ch=canvas.height;const hh=(root.userData.carWidth||1.7)*.62,hw=hh*cw/ch;const cam=new T.OrthographicCamera(-hw,hw,hh,-hh,.1,50);cam.position.set(0,9,0);cam.up.set(0,0,-1);cam.lookAt(0,0,0);renderer.setSize(cw,ch,false);renderer.render(scene,cam);canvas.getContext('2d').drawImage(renderer.domElement,0,0);}
+// Левый борт: у асимметричных ливрей он другой.
+function shootLeft(root,canvas){const L=root.userData.carLength,H=CARS[carSel.value].height||1.5;const cw=canvas.width,ch=canvas.height;const cam=new T.OrthographicCamera(-L*.6,L*.6,L*.6*ch/cw,-L*.6*ch/cw,.1,50);cam.position.set(0,H*.55+1.2,-8);cam.lookAt(0,H*.5,0);renderer.setSize(cw,ch,false);renderer.render(scene,cam);canvas.getContext('2d').drawImage(renderer.domElement,0,0);}
+function shootQuarter(root,canvas){const L=root.userData.carLength;const cam=new T.PerspectiveCamera(30,W/Q_H,.1,60);cam.position.set(-L*1.05,1.35,L*.95);cam.lookAt(0,.55,0);renderer.setSize(W,Q_H,false);renderer.render(scene,cam);canvas.getContext('2d').drawImage(renderer.domElement,0,0);}
+function card(d){const el=document.createElement('article');el.className='card';el.style.setProperty('--rarity',RARITIES[d.rarity].color);el.dataset.id=d.id;
+ 
+ el.innerHTML=`<div class="views"><canvas width="${W}" height="${SIDE_H}"></canvas><canvas width="${W}" height="${Q_H}"></canvas>${big?`<canvas width="${W*2+2}" height="${Q_H}"></canvas><canvas width="${W*2+2}" height="${SIDE_H}"></canvas>`:''}</div>
+ <div class="meta"><i class="tile" style="background:${liveryPreview(d.id,PAINTS.find(p=>p.id===paintSel.value)?.color)||d.preview}"></i><div><h3>${d.name} <small>· ${d.id}${d.personal?' · именная: '+d.personal:''}</small></h3><small>${RARITIES[d.rarity].name} · ${FINISH_NAME[d.finish]} </small><p>${d.description}</p></div>
+ <div class="choice">${[['keep','Оставить'],['drop','Убрать'],['redo','Переделать']].map(([v,t])=>`<button data-v="${v}" aria-pressed="${review[d.id]===v}">${t}</button>`).join('')}</div></div>`;
+ el.querySelector('.choice').onclick=e=>{const b=e.target.closest('button');if(!b)return;review[d.id]=review[d.id]===b.dataset.v?undefined:b.dataset.v;localStorage.setItem(KEY,JSON.stringify(review));for(const x of el.querySelectorAll('.choice button'))x.setAttribute('aria-pressed',String(review[d.id]===x.dataset.v));summary();};
+ return el;}
+function summary(){const by=v=>DECALS.filter(d=>review[d.id]===v).map(d=>`${d.name} (${d.id})`).join(', ')||'—';$('#summary').value=`Машина: ${CARS[carSel.value].name}, краска: ${paintSel.value}\nОставить: ${by('keep')}\nУбрать: ${by('drop')}\nПеределать: ${by('redo')}\nБез решения: ${DECALS.filter(d=>!review[d.id]).map(d=>d.id).join(', ')||'—'}`;}
+let busy=false;
+async function draw(){if(busy)return;busy=true;const i=Number(carSel.value),paint=paintSel.value;status.textContent='грузим модель…';await base(i);grid.innerHTML='';const ordered=[...DECALS].filter(d=>!only||only.includes(d.id)).sort((a,b)=>a.rarity-b.rarity);if(big)document.body.classList.add('big');const cards=ordered.map(d=>{const c=card(d);grid.append(c);return c;});
+ for(const [k,d] of ordered.entries()){status.textContent=`рисуем ${k+1}/${ordered.length}: ${d.name}`;await new Promise(r=>requestAnimationFrame(r));const root=instance(i,paint,d.id);scene.add(root);const [side,quarter,topC,leftC]=cards[k].querySelectorAll('canvas');shootSide(root,side);shootQuarter(root,quarter);if(topC)shootTop(root,topC);if(leftC)shootLeft(root,leftC);scene.remove(root);disposeCustomizedCar(root);}
+ status.textContent=`${DECALS.length} винилов · ${CARS[i].name} · ${paint}`;summary();busy=false;}
+carSel.onchange=paintSel.onchange=kitSel.onchange=draw;$('#redraw').onclick=draw;
+// Шрифт ливрей может подъехать позже первого кадра: перерисуем, когда он готов.
+Promise.all([document.fonts.load('400 40px "Russo One"'),document.fonts.load('700 40px Oswald')]).then(()=>{if(!busy)draw();}).catch(()=>{});
+draw();
+</script></body></html>
