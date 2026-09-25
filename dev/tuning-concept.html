@@ -1,0 +1,196 @@
+<!doctype html><meta charset="utf-8"><title>Панель тюнинга — макеты</title>
+<!-- Макеты на согласование: как переделать панель тюнинга. В игру не подключено. -->
+<style>
+ @font-face{font-family:Oswald;src:url('../assets/oswald.woff2') format('woff2');font-weight:200 700;font-display:swap}
+ .coin{display:inline-flex;flex:0 0 auto;width:1.15em;height:1.15em}
+ .coin-svg{width:100%;height:100%;fill:currentColor;stroke:none}
+ .coin-soft{color:#ffbe1a}.coin-hard{color:#00e6c4}.coin-parts{color:#e6eefb}.coin-power{color:#ffd15c}
+ :root{--bg:#12140f;--panel:#171a14;--line:#ffffff14;--gold:#eab45b;--gold-soft:#ffd68a;--ink:#e9dfc8;--mute:#8d9482}
+ *{box-sizing:border-box}
+ body{margin:0;padding:22px;background:var(--bg);color:var(--ink);font:14px/1.45 Oswald,Arial,sans-serif}
+ h1{font:600 24px/1.1 Oswald;margin:0 0 6px}
+ .sub{color:var(--mute);margin:0 0 22px;max-width:760px;font:400 13.5px/1.5 Arial}
+ section{display:grid;grid-template-columns:375px 1fr;gap:24px;align-items:start;padding:20px 0}
+ #frames.multi section+section{border-top:1px solid var(--line)}
+ .note h2{font:600 17px/1.2 Oswald;margin:0 0 8px;color:var(--gold-soft)}
+ .note p{margin:0 0 9px;font:400 13.5px/1.5 Arial;color:#cfc8b6;max-width:430px}
+ .note b{color:var(--ink)}
+ .tag{display:inline-block;margin-bottom:9px;padding:2px 8px;border:1px solid var(--line);border-radius:99px;font:600 11px/1.6 Oswald;letter-spacing:.08em;color:var(--mute)}
+ .tag.rec{border-color:#d9b56a99;color:var(--gold-soft)}
+ /* Панель */
+ .panel{width:375px;background:var(--panel);border:1px solid #2a2f26;border-radius:14px;overflow:hidden}
+ .head{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line)}
+ .chip{display:flex;align-items:center;gap:7px;padding:5px 9px;border:1px solid var(--line);border-radius:7px;font:600 12px Oswald;color:#d8ccb2}
+ .chip .bar{width:34px;height:5px;border-radius:99px;background:#ffffff14;overflow:hidden}
+ .chip .bar i{display:block;height:100%;width:66%;background:linear-gradient(90deg,#8fd7ff,#65d6c0)}
+ .chip em{font-style:normal;color:#9fb4cf;font-size:11px}
+ .pow{margin-left:auto;display:flex;align-items:center;gap:5px;padding:5px 10px;border:1px solid #d9b56a99;border-radius:7px;background:#0d100dcc;color:var(--gold-soft);font:700 16px Oswald}
+ .done{padding:6px 10px;border:1px solid var(--line);border-radius:7px;background:#302c23;color:var(--gold);font:600 12px Oswald}
+ .tabs{display:flex;gap:16px;padding:6px 12px 0;border-bottom:1px solid var(--line)}
+ .tabs span{padding:7px 0;font:600 13px Oswald;letter-spacing:.06em;color:#8d9482}
+ .tabs span.on{color:var(--gold-soft);box-shadow:inset 0 -2px var(--gold)}
+ .slots{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:9px 12px}
+ .slots i{height:48px;border:1px solid #ffffff1f;border-radius:8px;background:#171b14;display:grid;place-items:center;color:#f4ecd8}
+ .slots i.on{border-color:#eab45b;background:#2b2214;color:#ffd68a;box-shadow:inset 0 0 0 1px #eab45b33}
+ .slots svg{width:24px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6}
+ /* Сетка деталей */
+ .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:2px 12px 10px}
+ .card{position:relative;border:1px solid var(--line);border-radius:10px;background:#12150f;overflow:hidden;padding:7px 7px 0}
+ .card .art{height:52px;display:grid;place-items:center}
+ .card .art img{max-width:92%;max-height:52px;display:block}
+ .card .nm{display:block;padding:5px 1px 7px;font:500 11px/1.15 Oswald;color:#cfc8b6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .card .lvl{position:absolute;left:6px;top:6px;padding:1px 5px;border-radius:99px;background:#11140fe6;border:1px solid #ffffff24;font:700 10px/15px Oswald;color:#e4dcc6}
+ .card .rar{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--rar)}
+ .card.on{border-color:#eab45b;box-shadow:0 0 0 1px #eab45b55}
+ .card.on .chk{position:absolute;right:5px;top:5px;width:18px;height:18px;border-radius:50%;background:var(--gold);color:#241e15;font:700 11px/18px Arial;text-align:center}
+ .card.sel{border-color:#ffffff40;background:#191d16}
+ .card.busy{opacity:.5}
+ .card .away{position:absolute;right:5px;top:5px;width:20px;height:20px;border-radius:5px;background:#11140fe6;border:1px solid #ffffff24;display:grid;place-items:center}
+ .card .away svg{width:13px;height:9px;fill:#cfc8b6}
+ .card.empty{border-style:dashed;background:none;opacity:.45}
+ .card.empty img{display:none}
+ .card.empty .art{height:52px}
+ .card.empty .nm{color:transparent}
+ /* Редкость — тон в карточке, а не рамка: рамка занята состоянием (стоит / выбрана). */
+ .card.tone{background:radial-gradient(120% 78% at 50% 118%,var(--rar) 26%,transparent 72%),#12150f}
+ .card.tone .rar{height:4px}
+ .rowcmp{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#12150f;margin-bottom:8px}
+ .rowcmp .cap{font:600 10.5px Oswald;letter-spacing:.12em;color:var(--mute);width:58px;flex:0 0 auto}
+ .rowcmp .ico{display:flex;gap:7px}
+ .rowcmp .ico i{width:40px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:7px;background:#14170f;color:#cfc8b6}
+ .rowcmp .ico i.on{border-color:#d9b56a88;background:#241d12;color:var(--gold-soft)}
+ .rowcmp svg{display:block;width:100%;height:100%}
+ /* Кнопка прокачки: стрелка становится знаком, а не галочкой сбоку. */
+ .up-badge{width:26px;height:26px;border-radius:7px;background:#eab45b;color:#241e15;display:grid;place-items:center;flex:0 0 auto;box-shadow:0 2px 0 #876231}
+ .up-badge svg{width:16px;height:16px;fill:currentColor}
+ .btn.go2{display:flex;align-items:center;gap:9px;justify-content:center}
+
+ /* Нижняя панель */
+ .foot{border-top:1px solid var(--line);background:#14170f;padding:9px 12px 12px}
+ .fline{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+ .fline b{font:600 14px Oswald;color:#fff1d2}
+ .fline .lv{font:600 11px Oswald;color:#9aa38c}
+ .fline .gain{margin-left:auto;display:flex;align-items:center;gap:10px;font:600 12.5px Oswald;color:#cfc8b6}
+ .fline .gain span{display:inline-flex;align-items:center;gap:4px}
+ .fline .gain .coin{width:13px;height:13px}
+ .acts{display:grid;grid-template-columns:1fr 1.2fr;gap:7px}
+ .btn{padding:11px;border:1px solid var(--line);border-radius:8px;background:#23271f;color:#d9d1bd;font:600 13px Oswald;text-align:center}
+ .btn.go{border-color:#e0b268;background:linear-gradient(#2a2116,#1a1d16);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;gap:8px}
+ .btn.go .up{width:0;height:0;border:5px solid transparent;border-bottom:7px solid var(--gold)}
+ .btn.go .coin{width:14px;height:14px}
+ .btn.wide{grid-column:1/-1}
+ .btn.off{opacity:.45}
+</style>
+<h1>Панель тюнинга — макеты на согласование</h1>
+<p class="sub">Арт деталей и цвета редкостей настоящие, из игры. Экраны не подключены: это картинка для решения.</p>
+<div id="frames"></div>
+<script type="importmap">{"imports":{"/garage-na-rayone/analytics.js":"/garage-na-rayone/analytics.js?v=1ed9a3b","/garage-na-rayone/app-shell.js":"/garage-na-rayone/app-shell.js?v=1ed9a3b","/garage-na-rayone/avatar.js":"/garage-na-rayone/avatar.js?v=1ed9a3b","/garage-na-rayone/beat-clock.js":"/garage-na-rayone/beat-clock.js?v=1ed9a3b","/garage-na-rayone/body-profiles.js":"/garage-na-rayone/body-profiles.js?v=1ed9a3b","/garage-na-rayone/bumper-kit.js":"/garage-na-rayone/bumper-kit.js?v=1ed9a3b","/garage-na-rayone/callsign.js":"/garage-na-rayone/callsign.js?v=1ed9a3b","/garage-na-rayone/campaign-config.js":"/garage-na-rayone/campaign-config.js?v=1ed9a3b","/garage-na-rayone/campaign-texts.js":"/garage-na-rayone/campaign-texts.js?v=1ed9a3b","/garage-na-rayone/campaign-tuning.js":"/garage-na-rayone/campaign-tuning.js?v=1ed9a3b","/garage-na-rayone/car-classes.js":"/garage-na-rayone/car-classes.js?v=1ed9a3b","/garage-na-rayone/car-customization.js":"/garage-na-rayone/car-customization.js?v=1ed9a3b","/garage-na-rayone/car-driver.js":"/garage-na-rayone/car-driver.js?v=1ed9a3b","/garage-na-rayone/car-lamps.js":"/garage-na-rayone/car-lamps.js?v=1ed9a3b","/garage-na-rayone/car-levels.js":"/garage-na-rayone/car-levels.js?v=1ed9a3b","/garage-na-rayone/car-levelup.js":"/garage-na-rayone/car-levelup.js?v=1ed9a3b","/garage-na-rayone/car-neon.js":"/garage-na-rayone/car-neon.js?v=1ed9a3b","/garage-na-rayone/car-reveal.js":"/garage-na-rayone/car-reveal.js?v=1ed9a3b","/garage-na-rayone/car-underbody.js":"/garage-na-rayone/car-underbody.js?v=1ed9a3b","/garage-na-rayone/career.js":"/garage-na-rayone/career.js?v=1ed9a3b","/garage-na-rayone/challenge-api.js":"/garage-na-rayone/challenge-api.js?v=1ed9a3b","/garage-na-rayone/challenge-intro.js":"/garage-na-rayone/challenge-intro.js?v=1ed9a3b","/garage-na-rayone/challenge-rules.js":"/garage-na-rayone/challenge-rules.js?v=1ed9a3b","/garage-na-rayone/challenge-ui.js":"/garage-na-rayone/challenge-ui.js?v=1ed9a3b","/garage-na-rayone/characters.js":"/garage-na-rayone/characters.js?v=1ed9a3b","/garage-na-rayone/cloud-save.js":"/garage-na-rayone/cloud-save.js?v=1ed9a3b","/garage-na-rayone/crates.js":"/garage-na-rayone/crates.js?v=1ed9a3b","/garage-na-rayone/currency-icons.js":"/garage-na-rayone/currency-icons.js?v=1ed9a3b","/garage-na-rayone/customizer-ui.js":"/garage-na-rayone/customizer-ui.js?v=1ed9a3b","/garage-na-rayone/decal-liveries.js":"/garage-na-rayone/decal-liveries.js?v=1ed9a3b","/garage-na-rayone/decal-projection.js":"/garage-na-rayone/decal-projection.js?v=1ed9a3b","/garage-na-rayone/decals.js":"/garage-na-rayone/decals.js?v=1ed9a3b","/garage-na-rayone/dev/studio-driver.js":"/garage-na-rayone/dev/studio-driver.js?v=1ed9a3b","/garage-na-rayone/dev-mode.js":"/garage-na-rayone/dev-mode.js?v=1ed9a3b","/garage-na-rayone/dialog-dismiss.js":"/garage-na-rayone/dialog-dismiss.js?v=1ed9a3b","/garage-na-rayone/drag-camera.js":"/garage-na-rayone/drag-camera.js?v=1ed9a3b","/garage-na-rayone/drift-bonuses.js":"/garage-na-rayone/drift-bonuses.js?v=1ed9a3b","/garage-na-rayone/drift-feedback.js":"/garage-na-rayone/drift-feedback.js?v=1ed9a3b","/garage-na-rayone/drift-hud.js":"/garage-na-rayone/drift-hud.js?v=1ed9a3b","/garage-na-rayone/drift-scenery.js":"/garage-na-rayone/drift-scenery.js?v=1ed9a3b","/garage-na-rayone/drivetrain.js":"/garage-na-rayone/drivetrain.js?v=1ed9a3b","/garage-na-rayone/duel-rules.js":"/garage-na-rayone/duel-rules.js?v=1ed9a3b","/garage-na-rayone/duel-ui.js":"/garage-na-rayone/duel-ui.js?v=1ed9a3b","/garage-na-rayone/earned-crates.js":"/garage-na-rayone/earned-crates.js?v=1ed9a3b","/garage-na-rayone/engine-audio-legacy.js":"/garage-na-rayone/engine-audio-legacy.js?v=1ed9a3b","/garage-na-rayone/engine-audio.js":"/garage-na-rayone/engine-audio.js?v=1ed9a3b","/garage-na-rayone/engine-model.js":"/garage-na-rayone/engine-model.js?v=1ed9a3b","/garage-na-rayone/engine-presets.js":"/garage-na-rayone/engine-presets.js?v=1ed9a3b","/garage-na-rayone/engine-voice.js":"/garage-na-rayone/engine-voice.js?v=1ed9a3b","/garage-na-rayone/engine-worklet.js":"/garage-na-rayone/engine-worklet.js?v=1ed9a3b","/garage-na-rayone/event-rules.js":"/garage-na-rayone/event-rules.js?v=1ed9a3b","/garage-na-rayone/event-ui.js":"/garage-na-rayone/event-ui.js?v=1ed9a3b","/garage-na-rayone/features.js":"/garage-na-rayone/features.js?v=1ed9a3b","/garage-na-rayone/finish-camera.js":"/garage-na-rayone/finish-camera.js?v=1ed9a3b","/garage-na-rayone/finish-presentation.js":"/garage-na-rayone/finish-presentation.js?v=1ed9a3b","/garage-na-rayone/fleet-migration.js":"/garage-na-rayone/fleet-migration.js?v=1ed9a3b","/garage-na-rayone/fleet-views.js":"/garage-na-rayone/fleet-views.js?v=1ed9a3b","/garage-na-rayone/fleet.js":"/garage-na-rayone/fleet.js?v=1ed9a3b","/garage-na-rayone/form.js":"/garage-na-rayone/form.js?v=1ed9a3b","/garage-na-rayone/game.js":"/garage-na-rayone/game.js?v=1ed9a3b","/garage-na-rayone/garage-blackout.js":"/garage-na-rayone/garage-blackout.js?v=1ed9a3b","/garage-na-rayone/garage-crew.js":"/garage-na-rayone/garage-crew.js?v=1ed9a3b","/garage-na-rayone/garage-evening.js":"/garage-na-rayone/garage-evening.js?v=1ed9a3b","/garage-na-rayone/garage-focus.js":"/garage-na-rayone/garage-focus.js?v=1ed9a3b","/garage-na-rayone/garage-idle.js":"/garage-na-rayone/garage-idle.js?v=1ed9a3b","/garage-na-rayone/garage-lamps.js":"/garage-na-rayone/garage-lamps.js?v=1ed9a3b","/garage-na-rayone/garage-layout.js":"/garage-na-rayone/garage-layout.js?v=1ed9a3b","/garage-na-rayone/garage-levels.js":"/garage-na-rayone/garage-levels.js?v=1ed9a3b","/garage-na-rayone/garage-radio.js":"/garage-na-rayone/garage-radio.js?v=1ed9a3b","/garage-na-rayone/garage-resident.js":"/garage-na-rayone/garage-resident.js?v=1ed9a3b","/garage-na-rayone/garage-selection.js":"/garage-na-rayone/garage-selection.js?v=1ed9a3b","/garage-na-rayone/garage-shot.js":"/garage-na-rayone/garage-shot.js?v=1ed9a3b","/garage-na-rayone/garage-surfaces.js":"/garage-na-rayone/garage-surfaces.js?v=1ed9a3b","/garage-na-rayone/garage-upgrade.js":"/garage-na-rayone/garage-upgrade.js?v=1ed9a3b","/garage-na-rayone/garage-workshop.js":"/garage-na-rayone/garage-workshop.js?v=1ed9a3b","/garage-na-rayone/gltf.js":"/garage-na-rayone/gltf.js?v=1ed9a3b","/garage-na-rayone/goals.js":"/garage-na-rayone/goals.js?v=1ed9a3b","/garage-na-rayone/ground-light.js":"/garage-na-rayone/ground-light.js?v=1ed9a3b","/garage-na-rayone/handicap.js":"/garage-na-rayone/handicap.js?v=1ed9a3b","/garage-na-rayone/haptics.js":"/garage-na-rayone/haptics.js?v=1ed9a3b","/garage-na-rayone/intro-atmosphere.js":"/garage-na-rayone/intro-atmosphere.js?v=1ed9a3b","/garage-na-rayone/intro-parallax.js":"/garage-na-rayone/intro-parallax.js?v=1ed9a3b","/garage-na-rayone/invite-card.js":"/garage-na-rayone/invite-card.js?v=1ed9a3b","/garage-na-rayone/kit-clearance.js":"/garage-na-rayone/kit-clearance.js?v=1ed9a3b","/garage-na-rayone/live-portrait.js":"/garage-na-rayone/live-portrait.js?v=1ed9a3b","/garage-na-rayone/liveries.js":"/garage-na-rayone/liveries.js?v=1ed9a3b","/garage-na-rayone/loading-bar.js":"/garage-na-rayone/loading-bar.js?v=1ed9a3b","/garage-na-rayone/loaner-rules.js":"/garage-na-rayone/loaner-rules.js?v=1ed9a3b","/garage-na-rayone/loaner-ui.js":"/garage-na-rayone/loaner-ui.js?v=1ed9a3b","/garage-na-rayone/loot-ui.js":"/garage-na-rayone/loot-ui.js?v=1ed9a3b","/garage-na-rayone/meta-ui.js":"/garage-na-rayone/meta-ui.js?v=1ed9a3b","/garage-na-rayone/motion.js":"/garage-na-rayone/motion.js?v=1ed9a3b","/garage-na-rayone/music-beats.js":"/garage-na-rayone/music-beats.js?v=1ed9a3b","/garage-na-rayone/neons.js":"/garage-na-rayone/neons.js?v=1ed9a3b","/garage-na-rayone/notifications.js":"/garage-na-rayone/notifications.js?v=1ed9a3b","/garage-na-rayone/onboarding-scene.js":"/garage-na-rayone/onboarding-scene.js?v=1ed9a3b","/garage-na-rayone/onboarding.js":"/garage-na-rayone/onboarding.js?v=1ed9a3b","/garage-na-rayone/overpass-districts.js":"/garage-na-rayone/overpass-districts.js?v=1ed9a3b","/garage-na-rayone/overpass-flow.js":"/garage-na-rayone/overpass-flow.js?v=1ed9a3b","/garage-na-rayone/overpass-route.js":"/garage-na-rayone/overpass-route.js?v=1ed9a3b","/garage-na-rayone/overpass-world.js":"/garage-na-rayone/overpass-world.js?v=1ed9a3b","/garage-na-rayone/overtake-route.js":"/garage-na-rayone/overtake-route.js?v=1ed9a3b","/garage-na-rayone/paints.js":"/garage-na-rayone/paints.js?v=1ed9a3b","/garage-na-rayone/parking-course.js":"/garage-na-rayone/parking-course.js?v=1ed9a3b","/garage-na-rayone/part-icons.js":"/garage-na-rayone/part-icons.js?v=1ed9a3b","/garage-na-rayone/particle-batch.js":"/garage-na-rayone/particle-batch.js?v=1ed9a3b","/garage-na-rayone/pbr-renderer.js":"/garage-na-rayone/pbr-renderer.js?v=1ed9a3b","/garage-na-rayone/physics.js":"/garage-na-rayone/physics.js?v=1ed9a3b","/garage-na-rayone/pitstop-ui.js":"/garage-na-rayone/pitstop-ui.js?v=1ed9a3b","/garage-na-rayone/played-stats.js":"/garage-na-rayone/played-stats.js?v=1ed9a3b","/garage-na-rayone/portrait-rigs.js":"/garage-na-rayone/portrait-rigs.js?v=1ed9a3b","/garage-na-rayone/power-hints.js":"/garage-na-rayone/power-hints.js?v=1ed9a3b","/garage-na-rayone/powertrain-layout.js":"/garage-na-rayone/powertrain-layout.js?v=1ed9a3b","/garage-na-rayone/powertrain-xray.js":"/garage-na-rayone/powertrain-xray.js?v=1ed9a3b","/garage-na-rayone/profiles.js":"/garage-na-rayone/profiles.js?v=1ed9a3b","/garage-na-rayone/progression.js":"/garage-na-rayone/progression.js?v=1ed9a3b","/garage-na-rayone/puddle-splashes.js":"/garage-na-rayone/puddle-splashes.js?v=1ed9a3b","/garage-na-rayone/race-audio.js":"/garage-na-rayone/race-audio.js?v=1ed9a3b","/garage-na-rayone/race-effects.js":"/garage-na-rayone/race-effects.js?v=1ed9a3b","/garage-na-rayone/race-shadows.js":"/garage-na-rayone/race-shadows.js?v=1ed9a3b","/garage-na-rayone/race-world.js":"/garage-na-rayone/race-world.js?v=1ed9a3b","/garage-na-rayone/receipts.js":"/garage-na-rayone/receipts.js?v=1ed9a3b","/garage-na-rayone/referral-road.js":"/garage-na-rayone/referral-road.js?v=1ed9a3b","/garage-na-rayone/referral-tiers.js":"/garage-na-rayone/referral-tiers.js?v=1ed9a3b","/garage-na-rayone/render-quality.js":"/garage-na-rayone/render-quality.js?v=1ed9a3b","/garage-na-rayone/result-tiers.js":"/garage-na-rayone/result-tiers.js?v=1ed9a3b","/garage-na-rayone/reward-tiles.js":"/garage-na-rayone/reward-tiles.js?v=1ed9a3b","/garage-na-rayone/ridge-battle.js":"/garage-na-rayone/ridge-battle.js?v=1ed9a3b","/garage-na-rayone/ridge-body.js":"/garage-na-rayone/ridge-body.js?v=1ed9a3b","/garage-na-rayone/ridge-camera.js":"/garage-na-rayone/ridge-camera.js?v=1ed9a3b","/garage-na-rayone/ridge-contact-effects.js":"/garage-na-rayone/ridge-contact-effects.js?v=1ed9a3b","/garage-na-rayone/ridge-contact.js":"/garage-na-rayone/ridge-contact.js?v=1ed9a3b","/garage-na-rayone/ridge-controls.js":"/garage-na-rayone/ridge-controls.js?v=1ed9a3b","/garage-na-rayone/ridge-drift.js":"/garage-na-rayone/ridge-drift.js?v=1ed9a3b","/garage-na-rayone/ridge-obstacles.js":"/garage-na-rayone/ridge-obstacles.js?v=1ed9a3b","/garage-na-rayone/ridge-records.js":"/garage-na-rayone/ridge-records.js?v=1ed9a3b","/garage-na-rayone/ridge-recovery.js":"/garage-na-rayone/ridge-recovery.js?v=1ed9a3b","/garage-na-rayone/ridge-route.js":"/garage-na-rayone/ridge-route.js?v=1ed9a3b","/garage-na-rayone/ridge-terrain.js":"/garage-na-rayone/ridge-terrain.js?v=1ed9a3b","/garage-na-rayone/ridge-tyre-table.js":"/garage-na-rayone/ridge-tyre-table.js?v=1ed9a3b","/garage-na-rayone/ridge-tyres.js":"/garage-na-rayone/ridge-tyres.js?v=1ed9a3b","/garage-na-rayone/ridge-world.js":"/garage-na-rayone/ridge-world.js?v=1ed9a3b","/garage-na-rayone/rival-line-view.js":"/garage-na-rayone/rival-line-view.js?v=1ed9a3b","/garage-na-rayone/rival-line.js":"/garage-na-rayone/rival-line.js?v=1ed9a3b","/garage-na-rayone/rivals.js":"/garage-na-rayone/rivals.js?v=1ed9a3b","/garage-na-rayone/road-repairs.js":"/garage-na-rayone/road-repairs.js?v=1ed9a3b","/garage-na-rayone/road-ride.js":"/garage-na-rayone/road-ride.js?v=1ed9a3b","/garage-na-rayone/sandbox-save.js":"/garage-na-rayone/sandbox-save.js?v=1ed9a3b","/garage-na-rayone/sculpted-body-kit.js":"/garage-na-rayone/sculpted-body-kit.js?v=1ed9a3b","/garage-na-rayone/shop.js":"/garage-na-rayone/shop.js?v=1ed9a3b","/garage-na-rayone/soft-economy.js":"/garage-na-rayone/soft-economy.js?v=1ed9a3b","/garage-na-rayone/soyuz-bumper-mesh.js":"/garage-na-rayone/soyuz-bumper-mesh.js?v=1ed9a3b","/garage-na-rayone/spoiler-kit.js":"/garage-na-rayone/spoiler-kit.js?v=1ed9a3b","/garage-na-rayone/start-tree.js":"/garage-na-rayone/start-tree.js?v=1ed9a3b","/garage-na-rayone/store-catalog.js":"/garage-na-rayone/store-catalog.js?v=1ed9a3b","/garage-na-rayone/store.js":"/garage-na-rayone/store.js?v=1ed9a3b","/garage-na-rayone/surface-detail.js":"/garage-na-rayone/surface-detail.js?v=1ed9a3b","/garage-na-rayone/telegram.js":"/garage-na-rayone/telegram.js?v=1ed9a3b","/garage-na-rayone/telemetry.js":"/garage-na-rayone/telemetry.js?v=1ed9a3b","/garage-na-rayone/tracks.js":"/garage-na-rayone/tracks.js?v=1ed9a3b","/garage-na-rayone/tune-preview.js":"/garage-na-rayone/tune-preview.js?v=1ed9a3b","/garage-na-rayone/unlocks.js":"/garage-na-rayone/unlocks.js?v=1ed9a3b","/garage-na-rayone/upgrade-art.js":"/garage-na-rayone/upgrade-art.js?v=1ed9a3b","/garage-na-rayone/upgrade-button.js":"/garage-na-rayone/upgrade-button.js?v=1ed9a3b","/garage-na-rayone/upgrades.js":"/garage-na-rayone/upgrades.js?v=1ed9a3b","/garage-na-rayone/vehicle-dynamics.js":"/garage-na-rayone/vehicle-dynamics.js?v=1ed9a3b","/garage-na-rayone/vehicle-effects.js":"/garage-na-rayone/vehicle-effects.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/controls/OrbitControls.js":"/garage-na-rayone/vendor/addons/controls/OrbitControls.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/environments/RoomEnvironment.js":"/garage-na-rayone/vendor/addons/environments/RoomEnvironment.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/geometries/RoundedBoxGeometry.js":"/garage-na-rayone/vendor/addons/geometries/RoundedBoxGeometry.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/libs/meshopt_decoder.module.js":"/garage-na-rayone/vendor/addons/libs/meshopt_decoder.module.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/loaders/GLTFLoader.js":"/garage-na-rayone/vendor/addons/loaders/GLTFLoader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/math/SimplexNoise.js":"/garage-na-rayone/vendor/addons/math/SimplexNoise.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/EffectComposer.js":"/garage-na-rayone/vendor/addons/postprocessing/EffectComposer.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/MaskPass.js":"/garage-na-rayone/vendor/addons/postprocessing/MaskPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/OutputPass.js":"/garage-na-rayone/vendor/addons/postprocessing/OutputPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/Pass.js":"/garage-na-rayone/vendor/addons/postprocessing/Pass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/RenderPass.js":"/garage-na-rayone/vendor/addons/postprocessing/RenderPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/SSAOPass.js":"/garage-na-rayone/vendor/addons/postprocessing/SSAOPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/ShaderPass.js":"/garage-na-rayone/vendor/addons/postprocessing/ShaderPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/shaders/CopyShader.js":"/garage-na-rayone/vendor/addons/shaders/CopyShader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/shaders/OutputShader.js":"/garage-na-rayone/vendor/addons/shaders/OutputShader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/shaders/SSAOShader.js":"/garage-na-rayone/vendor/addons/shaders/SSAOShader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/utils/BufferGeometryUtils.js":"/garage-na-rayone/vendor/addons/utils/BufferGeometryUtils.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/utils/SkeletonUtils.js":"/garage-na-rayone/vendor/addons/utils/SkeletonUtils.js?v=1ed9a3b","/garage-na-rayone/vendor/three.core.min.js":"/garage-na-rayone/vendor/three.core.min.js?v=1ed9a3b","/garage-na-rayone/vendor/three.module.js":"/garage-na-rayone/vendor/three.module.js?v=1ed9a3b","/garage-na-rayone/weather-effects.js":"/garage-na-rayone/weather-effects.js?v=1ed9a3b","/garage-na-rayone/wet-road.js":"/garage-na-rayone/wet-road.js?v=1ed9a3b","/garage-na-rayone/wheel-kit.js":"/garage-na-rayone/wheel-kit.js?v=1ed9a3b"}}</script><script type="module">
+ import {coinIcon} from '../currency-icons.js';
+ import {partIcon as gamePartIcon} from '../part-icons.js';
+ const oldIcon=k=>`<span style="display:block;width:24px;height:22px">${gamePartIcon(k)}</span>`;
+
+ // Уточнённые иконки: те же силуэты, что в игре, но толще штрих и без мелочи, которая на 24 px
+ // превращается в кашу (протектор шины, зубцы КПП, лишние патрубки мотора).
+ const NEXT={
+  engine:'<path d="M12 12h7V8h13v4h7v6h5v12h-7l-4 5H17l-5-5H7V18h5z"/><path d="M23 4h6M26 4v4"/><path d="m27 17-5 8h7l-4 6"/>',
+  tires:'<ellipse cx="24" cy="21" rx="12" ry="16"/><ellipse cx="24" cy="21" rx="5" ry="8"/><path d="M21 5h-5C4 5 4 37 16 37h5"/>',
+  gearbox:'<path d="M9 13h19l7 6v11l-7 6H9z"/><path d="M35 22h8v5h-8"/><path d="M22 13v23M25 13V5h8"/>',
+  upgrades:'<circle cx="22" cy="23" r="11"/><circle cx="22" cy="23" r="4"/><path d="M22 12v7M31 19l-6 3M29 31l-5-4M15 31l5-4M13 19l6 3"/><path d="M33 23h8"/>',
+  bumpers:'<path d="m6 11 5-5h26l5 5v9l-7 4H13l-7-4z"/><path d="M14 14h20"/><path d="M6 33l5-4h26l5 4v4H6z"/>',
+  spoiler:'<path d="m5 11 38-3 1 8-38 3z"/><path d="M14 19v11M34 17v11M9 33l26-3"/>',
+  skirts:'<path d="m4 13 35-6 4 7-35 7z"/><path d="M8 21v-4l30-5"/><path d="m8 32 30-5"/>',
+  fenders:'<path d="M5 34v-9C5 3 43 3 43 25v9h-8v-9c0-15-22-15-22 0v9z"/><circle cx="24" cy="30" r="5"/>',
+  rims:'<circle cx="24" cy="21" r="17"/><circle cx="24" cy="21" r="4"/><path d="M24 4v13M39 15l-11 4M35 35l-8-10M13 35l8-10M9 15l11 4"/>',
+ };
+ const nextIcon=(k,size=26)=>`<svg viewBox="0 0 48 44" width="${size}" height="${Math.round(size*44/48)}" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linejoin="round" stroke-linecap="round">${NEXT[k]}</svg>`;
+ const RAR={common:'#a9ab9a',rare:'#73b9ef',epic:'#c08aec',legend:'#eeb857',uniq:'#e4463a'};
+ const art=n=>`<span class="art"><img src="../assets/parts/${n}" alt=""></span>`;
+ const card=({name,img,lvl,cap,rar='common',on=false,sel=false,busy=false,away=false,empty=false,tone=true})=>empty
+  ?`<div class="card empty">${art('bumpers-0.webp')}<span class="nm">—</span></div>`
+  :`<div class="card${on?' on':''}${sel?' sel':''}${busy?' busy':''}${tone?' tone':''}" style="--rar:${RAR[rar]}">
+     ${lvl?`<b class="lvl">${lvl}/${cap}</b>`:''}
+     ${on?'<b class="chk">✓</b>':''}
+     ${away?'<span class="away"><svg viewBox="0 0 24 16"><path d="M2 12h20l-3-6H8L5 9H2z"/><circle cx="7" cy="13" r="2"/><circle cx="17" cy="13" r="2"/></svg></span>':''}
+     ${art(img)}<span class="nm">${name}</span><i class="rar" style="--rar:${RAR[rar]}"></i></div>`;
+ const head=`<div class="head">
+   <span class="chip">УР. 2 <span class="bar"><i></i></span><em>◆ 6 / 9</em></span>
+   <span class="pow">${coinIcon('power')}211</span><span class="done">ГОТОВО ✓</span></div>`;
+ const tabs=on=>`<div class="tabs">${['ТЕХНИКА','КУЗОВ','ЦВЕТ'].map(t=>`<span class="${t===on?'on':''}">${t}</span>`).join('')}</div>`;
+ const SLOTSET={body:['bumpers','spoiler','skirts','fenders','rims'],power:['engine','tires','gearbox','upgrades']};
+ const slots=(n,kind='body')=>`<div class="slots" style="grid-template-columns:repeat(${SLOTSET[kind].length},1fr)">${SLOTSET[kind].map((k,i)=>`<i class="${i===n?'on':''}">${nextIcon(k,34)}</i>`).join('')}</div>`;
+ const foot=({name,lvl,cap,gain,price,scrap,plus,removable=true})=>`<div class="foot">
+   <div class="fline"><b>${name}</b><span class="lv">УР. ${lvl}/${cap}</span>
+    <span class="gain">${gain.map(g=>`<span>${g}</span>`).join('')}</span></div>
+   <div class="acts">
+    <button class="btn">${removable?'Снять':'Установить'}</button>
+    <button class="btn go go2"><span class="up-badge"><svg viewBox="0 0 24 24"><path d="M12 3 4 13h5v8h6v-8h5z"/></svg></span>${coinIcon('soft')}${price} ${coinIcon('parts')}${scrap} ${coinIcon('power')}+${plus}</button>
+   </div></div>`;
+
+ const frames=[
+ {tag:'СЕТКА',rec:true,title:'Карточки: арт крупно, редкость полоской',
+  html:`<div class="panel">${head}${tabs('КУЗОВ')}${slots(0,'body')}
+   <div class="grid">
+    ${card({name:'Сток',img:'bumpers-0.webp'})}
+    ${card({name:'Морда с противотуманками',img:'bumpers-1.webp',lvl:1,cap:5})}
+    ${card({name:'Губа на заклёпках',img:'bumpers-1-ring.webp',lvl:1,cap:5})}
+    ${card({name:'Губа не дура для драга',img:'bumpers-2.webp',lvl:1,cap:7,rar:'rare'})}
+    ${card({name:'Обвес авторитета',img:'bumpers-2-rally.webp',lvl:3,cap:10,rar:'epic',on:true})}
+    ${card({name:'Морда паддока',img:'bumpers-3.webp',lvl:1,cap:10,rar:'epic'})}
+   </div>
+   ${foot({name:'ОБВЕС АВТОРИТЕТА',lvl:3,cap:10,gain:[coinIcon('power')+'+1','+1 км/ч'],price:'738',scrap:'57',plus:1})}</div>`,
+  note:`<p><b>Редкость — свечение снизу и полоска.</b> Сейчас она заливает всю карточку целиком, и синие с фиолетовыми плитки перекрикивают саму деталь. Тон у нижнего края и полоса в четыре пикселя видны так же ясно, но не спорят с рамкой: рамка занята состоянием — золотая значит «стоит на машине».</p>
+   <p><b>Имя — одна строка.</b> «Морда с противотуманками» сейчас ломается и обрезается на полуслове; теперь режется многоточием и не ломает высоту ряда.</p>
+   <p><b>Уровень — тёмная плашка</b>, тот же вид, что на значке призыва. Золото на карточке означает одно: деталь стоит на машине.</p>
+   <p><b>Строка-подпись под сеткой убрана.</b> «Бамперы «Обвес авторитета» · уровень 3 из 10» повторяла то, что уже написано на карточке и в нижней панели.</p>`},
+
+ {tag:'НИЗ',rec:true,title:'Одна панель вместо подсказки, подписи и двух кнопок',
+  html:`<div class="panel">${head}${tabs('ТЕХНИКА')}${slots(0,'power')}
+   <div class="grid">
+    ${card({name:'Сток',img:'engine.webp'})}
+    ${card({name:'Капиталочка',img:'engine.webp',lvl:5,cap:5,away:true,busy:true})}
+    ${card({name:'Злой карб',img:'engine.webp',lvl:4,cap:10,rar:'epic',on:true})}
+   </div>
+   ${foot({name:'ЗЛОЙ КАРБ',lvl:4,cap:10,gain:[coinIcon('power')+'+86','+14 км/ч'],price:'984',scrap:'76',plus:23})}</div>`,
+  note:`<p>Сейчас про выбранную деталь говорят три разных места: пузырь-подсказка над сеткой, строка под сеткой и кнопки. Стало одно: <b>имя, уровень и что деталь даёт</b> — в строке, под ней два действия.</p>
+   <p><b>Прирост от прокачки остался на кнопке</b> (${'⚡'}+23) — это разные числа: одно про деталь сейчас, другое про следующий уровень. Рядом их видно без объяснений.</p>
+   <p><b>«НА ДРУГОЙ» стало значком машины.</b> Слово налезало на уровень и требовало чтения; иконка в углу и приглушённая карточка говорят то же самое.</p>`},
+
+ {tag:'ПУСТО',rec:false,title:'Пустая категория без объяснений',
+  html:`<div class="panel">${head}${tabs('КУЗОВ')}${slots(2,'body')}
+   <div class="grid">
+    ${card({name:'Сток',img:'spoiler-0.webp',on:true})}
+    ${card({empty:true})}${card({empty:true})}
+   </div>
+   <div class="foot"><div class="fline"><b>СТОК</b><span class="lv">заводская</span></div>
+    <div class="acts"><button class="btn wide off">Установлено</button></div></div></div>`,
+  note:`<p>Фразу «Пока нет деталей. Выигрывай их в заездах и ящиках» заменяют <b>пустые ячейки пунктиром</b>: место под будущие детали видно, читать нечего.</p>
+   <p>Кнопка «Установлено» осталась во всю строку, но приглушена — она не действие, а состояние.</p>`},
+ {tag:'ДЕТАЛИ',rec:true,title:'Редкость, иконки, стрелка',
+  html:`<div class="panel" style="padding:12px">
+   <div class="rowcmp"><span class="cap">БЫЛО</span><span class="ico">
+    ${['engine','tires','gearbox','upgrades'].map(k=>`<i>${oldIcon(k)}</i>`).join('')}
+    ${['bumpers','spoiler','skirts','fenders','rims'].map(k=>`<i>${oldIcon(k)}</i>`).join('')}</span></div>
+   <div class="rowcmp"><span class="cap">СТАЛО</span><span class="ico">
+    ${['engine','tires','gearbox','upgrades'].map((k,n)=>`<i class="${n===0?'on':''}">${nextIcon(k,30)}</i>`).join('')}
+    ${['bumpers','spoiler','skirts','fenders','rims'].map(k=>`<i>${nextIcon(k,30)}</i>`).join('')}</span></div>
+   <div class="grid" style="padding:8px 0 10px;grid-template-columns:repeat(5,1fr)">
+    ${['common','rare','epic','legend','uniq'].map((r,i)=>card({name:['Обычная','Редкая','Эпическая','Легенда','Уникальная'][i],img:'bumpers-'+Math.min(i,3)+'.webp',lvl:i+1,cap:5+i*2,rar:r,tone:true,on:i===2})).join('')}
+   </div>
+   <div class="acts" style="padding:0 0 4px">
+    <button class="btn">Снять</button>
+    <button class="btn go go2"><span class="up-badge"><svg viewBox="0 0 24 24"><path d="M12 3 4 13h5v8h6v-8h5z"/></svg></span>${coinIcon('soft')}984 ${coinIcon('parts')}76 ${coinIcon('power')}+23</button>
+   </div></div>`,
+  note:`<p><b>Редкость — тоном снизу карточки</b> плюс полоска в четыре пикселя. Цвет видно сразу, но он не спорит с рамкой: рамка занята состоянием — золотая значит «стоит на машине», светлая — «выбрана».</p>
+   <p><b>Иконки — те же силуэты, но плотнее.</b> Рисовать новые пиктограммы я пробовал: шина превращается в мишень, КПП — в леденец. Узнаваемость даёт привычный силуэт, поэтому оставил его, а поправил читаемость: штрих 2 → 2.7, размер 24 → 28 px, убрана мелочь, которая мылится (протектор шины, зубцы КПП, лишние патрубки мотора).</p>
+   <p><b>Стрелка прокачки стала знаком:</b> золотой квадрат со стрелкой вверх вместо треугольничка сбоку. Теперь видно, что это кнопка «сделать сильнее», а не просто ценник.</p>`},
+
+ ];
+
+ const only=new URLSearchParams(location.search).get('only');
+ const shown=only?[frames[Number(only)]].filter(Boolean):frames;
+ if(only){document.querySelector('h1').remove();document.querySelector('.sub').remove();
+  document.body.style.cssText+=';padding:18px 22px;min-height:100vh;display:grid;align-content:center';}
+ else document.querySelector('#frames').classList.add('multi');
+ document.querySelector('#frames').innerHTML=shown.map(f=>`<section><div>${f.html}</div>
+  <div class="note"><span class="tag${f.rec?' rec':''}">${f.tag}</span><h2>${f.title}</h2>${f.note}</div></section>`).join('');
+</script>

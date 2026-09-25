@@ -1,0 +1,348 @@
+<!doctype html><meta charset="utf-8"><title>Призыв корешей — макеты</title>
+<!-- Макеты на согласование: как переделать призыв новых игроков. В игру не подключено. -->
+<style>
+ @font-face{font-family:Oswald;src:url('../assets/oswald.woff2') format('woff2');font-weight:200 700;font-display:swap}
+ .coin{display:inline-flex;flex:0 0 auto;width:1.15em;height:1.15em}
+ .coin-svg{width:100%;height:100%;fill:currentColor;stroke:none}
+ .ic-art>.coin{width:100%;height:100%}
+ .ic-art--pair{display:flex;gap:3px;align-items:center;justify-content:center}
+ .ic-art--pair>.coin{width:47%;height:auto;aspect-ratio:1}
+ .ic-price>.coin,.ic-strip u>.coin{width:1em;height:1em}
+ .coin-soft{color:#ffbe1a}.coin-hard{color:#00e6c4}.coin-parts{color:#e6eefb}.coin-power{color:#ffd15c}
+ :root{--bg:#12140f;--panel:#1b1f1b;--line:#ffffff14;--gold:#eab45b;--gold-soft:#ffd68a;--ink:#e9dfc8;--mute:#9aa38c}
+ *{box-sizing:border-box}
+ body{margin:0;padding:28px;background:var(--bg);color:var(--ink);font:14px/1.45 Oswald,Arial,sans-serif}
+ h1{font:600 26px/1.1 Oswald;letter-spacing:.02em;margin:0 0 6px}
+ .ic-sub{color:var(--mute);margin:0 0 26px;max-width:780px;font:400 14px/1.5 Arial}
+ section{display:grid;grid-template-columns:375px 1fr;gap:26px;align-items:start;padding:22px 0}
+ #frames.multi section+section{border-top:1px solid var(--line)}
+ .ic-note h2{font:600 17px/1.2 Oswald;margin:0 0 8px;color:var(--gold-soft);letter-spacing:.02em}
+ .ic-note p{margin:0 0 9px;font:400 13.5px/1.5 Arial;color:#cfc8b6;max-width:420px}
+ .ic-note b{color:var(--ink)}
+ .ic-tag{display:inline-block;margin-bottom:9px;padding:2px 8px;border:1px solid var(--line);border-radius:99px;font:600 11px/1.6 Oswald;letter-spacing:.08em;color:var(--mute)}
+ .ic-tag.rec{border-color:#d9b56a99;color:var(--gold-soft)}
+ /* Телефон */
+ .ic-phone{width:375px;border:1px solid #2a2f26;border-radius:18px;overflow:hidden;background:#0f120d;box-shadow:0 18px 40px #0008}
+ .ic-scene{height:196px;background:linear-gradient(#20241c,#141812);position:relative;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+ .ic-scene:after{content:'кадр гаража';position:absolute;top:10px;left:12px;font:600 10px Oswald;letter-spacing:.12em;color:#4d5446}
+ .ic-scene .ic-car{width:250px;height:92px;margin-bottom:24px;border-radius:8px;background:linear-gradient(160deg,#6b2f2f,#3a1f1f);box-shadow:0 12px 24px #0009;position:relative}
+ .ic-scene .ic-car:before{content:'';position:absolute;inset:12px 26px auto 26px;height:26px;border-radius:6px;background:#0f120d55}
+ .ic-bar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0e110c;border-bottom:1px solid var(--line)}
+ .ic-chip{display:flex;align-items:center;gap:5px;font:500 14px Oswald;color:var(--ink)}
+ .ic-chip i{width:16px;height:16px;display:inline-flex}
+ .ic-plate{padding:5px 9px;border:1px solid #d9b56a99;border-radius:6px;background:#0d100dcc;color:var(--gold-soft);font:700 14px Oswald;display:flex;align-items:center;gap:5px}
+ /* Баннер призыва */
+ .ic-call{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;margin:8px;padding:8px 10px;border-radius:9px;
+  border:1px solid #d9b56a66;background:linear-gradient(100deg,#2a2116,#1a1d16 62%);position:relative;overflow:hidden}
+ .ic-call:before{content:'';position:absolute;inset:0;background:radial-gradient(120px 60px at 14% 50%,#eab45b26,transparent 70%)}
+ .ic-call .ic-art{position:relative;width:52px;height:52px}
+ .ic-call b{display:block;font:700 15px/1.1 Oswald;letter-spacing:.02em;color:#fff2d4;position:relative}
+ .ic-call span{display:block;font:400 11.5px/1.35 Arial;color:#c3b895;position:relative}
+ .ic-call .ic-go{position:relative;padding:9px 12px;border-radius:7px;border:0;background:var(--gold);color:#241e15;font:700 13px Oswald;letter-spacing:.03em;box-shadow:0 2px #876231}
+ .ic-track{position:relative;height:5px;margin-top:5px;border-radius:99px;background:#ffffff1a;overflow:hidden}
+ .ic-track i{display:block;height:100%;background:linear-gradient(90deg,#f0c579,#eab45b)}
+ /* Крейт из атласа игры */
+ .ic-crate{width:100%;height:100%;display:block;background-image:url('../assets/loot/soviet-crates.webp');background-size:500% 200%;background-repeat:no-repeat;background-position:var(--cx) 0}
+ .ic-swatch{display:block;width:100%;height:100%;border-radius:10px;box-shadow:inset 0 2px 10px #0006}
+ /* Окно */
+ .ic-win{background:#171a14;min-height:560px;display:flex;flex-direction:column}
+ .ic-win-head{display:flex;align-items:baseline;justify-content:space-between;padding:14px 14px 10px}
+ .ic-win-head h3{margin:0;font:600 21px/1 Oswald;letter-spacing:.04em}
+ .ic-win-head em{font-style:normal;color:var(--mute);font:400 12px Arial}
+ .ic-tabs{display:flex;gap:18px;padding:0 14px;border-bottom:1px solid var(--line)}
+ .ic-tabs span{padding:8px 0;font:600 13px Oswald;letter-spacing:.06em;color:#8d9482}
+ .ic-tabs span.on{color:var(--gold-soft);box-shadow:inset 0 -2px var(--gold)}
+ .ic-body{padding:12px 14px 16px;display:flex;flex-direction:column;gap:12px}
+ /* Герой-награда */
+ .ic-hero{position:relative;border-radius:12px;border:1px solid #d9b56a55;background:linear-gradient(170deg,#2b2417,#171a14 70%);padding:12px;display:grid;grid-template-columns:104px 1fr;gap:12px;align-items:center;overflow:hidden}
+ .ic-hero:before{content:'';position:absolute;inset:-40% 40% -40% -20%;background:radial-gradient(closest-side,#eab45b2e,transparent);pointer-events:none}
+ .ic-hero .ic-art{position:relative;width:104px;height:104px;filter:drop-shadow(0 8px 14px #0008)}
+ .ic-hero .ic-kicker{font:600 10.5px Oswald;letter-spacing:.14em;color:#b99b62}
+ .ic-hero h4{margin:2px 0 4px;font:700 20px/1.05 Oswald;letter-spacing:.02em;color:#fff1d2}
+ .ic-hero .ic-price{display:inline-flex;align-items:center;gap:5px;font:600 12.5px Oswald;color:#cbbf9d}
+ .ic-hero .ic-price i{width:14px;height:14px}
+ .ic-steps{display:flex;align-items:center;gap:4px;margin-top:9px}
+ .ic-steps b{font:700 13px Oswald;color:#fff1d2}
+ .ic-steps .ic-track{flex:1;margin:0}
+ /* Сделка */
+ .ic-deal{display:grid;grid-template-columns:1fr 26px 1fr;align-items:stretch;gap:0}
+ .ic-deal .ic-side{border:1px solid var(--line);border-radius:10px;background:#12150f;padding:10px;text-align:center}
+ .ic-deal .ic-side .ic-kicker{font:600 10px Oswald;letter-spacing:.14em;color:#8d9482}
+ .ic-deal .ic-side .ic-art{width:54px;height:54px;margin:6px auto 4px}
+ .ic-deal .ic-side strong{display:block;font:600 12.5px/1.25 Oswald;color:var(--ink)}
+ .ic-deal .ic-side small{display:block;margin-top:2px;font:400 10.5px Arial;color:#8d9482}
+ .ic-deal .ic-plus{display:flex;align-items:center;justify-content:center;color:#6f7763;font:700 18px Oswald}
+ .ic-cta{width:100%;padding:13px;border:0;border-radius:9px;background:var(--gold);color:#241e15;font:700 16px Oswald;letter-spacing:.04em;box-shadow:0 3px #876231}
+ .ic-fine{margin:0;text-align:center;font:400 11px Arial;color:#8d9482}
+ /* Лента ступеней */
+ .ic-ladder{display:flex;gap:6px;overflow:hidden}
+ .ic-rung{flex:0 0 78px;border:1px solid var(--line);border-radius:9px;background:#12150f;padding:8px 6px;text-align:center}
+ .ic-rung.done{border-color:#65d6c066;background:#12180f}
+ .ic-rung .ic-art{width:44px;height:44px;margin:0 auto 5px}
+ .ic-rung b{display:block;font:700 13px Oswald;color:#fff1d2}
+ .ic-rung small{display:block;font:400 9.5px/1.2 Arial;color:#8d9482;margin-top:2px}
+ /* Список корешей */
+ .ic-mates{display:flex;flex-direction:column;gap:6px}
+ .ic-mate{display:grid;grid-template-columns:28px 1fr auto;gap:9px;align-items:center;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:#12150f}
+ .ic-mate .ic-ava{width:28px;height:28px;border-radius:50%;background:#2c3128;display:grid;place-items:center;font:600 12px Oswald;color:#b9c0aa}
+ .ic-mate span{font:500 13px Oswald}
+ .ic-mate em{font-style:normal;font:400 11px Arial;color:#8d9482}
+ .ic-mate .ic-pill{padding:4px 8px;border-radius:6px;border:1px solid #65d6c066;color:#8fe2ce;font:600 11px Oswald}
+ .ic-mate .ic-pill.wait{border-color:var(--line);color:#8d9482}
+ /* Дорога (вариант 2) */
+ .ic-road{position:relative;padding-left:44px}
+ .ic-road:before{content:'';position:absolute;left:19px;top:6px;bottom:6px;width:4px;border-radius:2px;background:repeating-linear-gradient(#ffffff2a 0 10px,transparent 10px 20px)}
+ .ic-milestone{position:relative;display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;padding:8px 0}
+ .ic-milestone .ic-dot{position:absolute;left:-32px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;background:#20241c;border:2px solid #4a5142;display:grid;place-items:center;font:700 10px Oswald;color:#9aa38c}
+ .ic-milestone.done .ic-dot{border-color:#65d6c0;color:#8fe2ce}
+ .ic-milestone.now .ic-dot{border-color:var(--gold);background:#2a2116;color:var(--gold-soft);box-shadow:0 0 0 4px #eab45b22}
+ .ic-milestone .ic-art{width:52px;height:52px}
+ .ic-milestone strong{display:block;font:600 14px Oswald;color:var(--ink)}
+ .ic-milestone small{font:400 11px Arial;color:#8d9482}
+ .ic-milestone.now strong{color:#fff1d2}
+ /* Доработанная «Дорога района» */
+ .ic-road2{position:relative;padding-left:40px}
+ .ic-road2:before{content:'';position:absolute;left:15px;top:4px;bottom:4px;width:4px;border-radius:2px;
+  background:repeating-linear-gradient(#ffffff26 0 9px,transparent 9px 18px)}
+ .ic-ms{position:relative;display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;
+  padding:7px 9px;margin-bottom:7px;border:1px solid var(--line);border-radius:10px;background:#12150f}
+ .ic-ms .ic-num{position:absolute;left:-33px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;
+  background:#20241c;border:2px solid #4a5142;display:grid;place-items:center;font:700 10px Oswald;color:#9aa38c}
+ .ic-ms .ic-art{width:46px;height:46px}
+ .ic-ms strong{display:block;font:600 13.5px/1.15 Oswald;color:var(--ink)}
+ .ic-ms small{display:block;font:400 11px/1.3 Arial;color:#8d9482;margin-top:1px}
+ .ic-ms .ic-worth{display:inline-flex;align-items:center;gap:4px;font:600 11.5px Oswald;color:#b6ac8e}
+ .ic-ms .ic-worth .coin{width:12px;height:12px}
+ .ic-ms.ic-got{opacity:.62;padding:5px 9px}
+ .ic-ms.ic-got .ic-art{width:30px;height:30px}
+ .ic-ms.ic-got .ic-num{border-color:#65d6c0;color:#8fe2ce}
+ .ic-ms.ic-got strong{font-size:12px}
+ .ic-ms.ic-far{opacity:.82}
+ /* Текущая ступень — крупная карточка со сделкой внутри */
+ .ic-ms.ic-live{display:block;padding:0;border-color:#d9b56a88;background:linear-gradient(170deg,#2b2417,#15180f 72%);
+  box-shadow:0 10px 26px #0007}
+ .ic-ms.ic-live .ic-num{border-color:var(--gold);background:#2a2116;color:var(--gold-soft);box-shadow:0 0 0 4px #eab45b1f}
+ .ic-live .ic-liverow{display:grid;grid-template-columns:76px 1fr;gap:11px;align-items:center;padding:11px}
+ .ic-live .ic-art{width:76px;height:76px;filter:drop-shadow(0 7px 12px #0008)}
+ .ic-live .ic-kick{font:600 10px Oswald;letter-spacing:.14em;color:#b99b62}
+ .ic-live h4{margin:2px 0 3px;font:700 18px/1.05 Oswald;color:#fff1d2}
+ .ic-live .ic-steps{display:flex;align-items:center;gap:6px;margin-top:7px}
+ .ic-live .ic-steps b{font:700 12px Oswald;color:#fff1d2}
+ .ic-live .ic-left{font:400 11px Arial;color:#c3b895;margin-top:3px}
+ .ic-give{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#ffffff12;border-top:1px solid #ffffff12;
+  border-radius:0 0 9px 9px;overflow:hidden}
+ .ic-give div{background:#14170f;padding:7px 10px;display:flex;align-items:center;gap:7px}
+ .ic-give .coin,.ic-give .ic-crate{width:22px;height:22px;flex:0 0 auto}
+ .ic-give em{font-style:normal;display:block;font:600 9.5px Oswald;letter-spacing:.12em;color:#8d9482}
+ .ic-give span{display:block;font:500 11.5px/1.2 Oswald;color:var(--ink)}
+ .ic-sticky{position:sticky;bottom:0;padding:10px 0 2px;background:linear-gradient(#171a1400,#171a14 28%)}
+ .ic-tail{display:flex;align-items:center;gap:9px;padding:8px 10px;border:1px dashed #ffffff1f;border-radius:10px;
+  color:#8d9482;font:400 11.5px Arial;margin-bottom:7px}
+ .ic-tail b{color:#b6ac8e;font:600 12px Oswald}
+
+ /* Карточка в чат */
+ .ic-poster{width:340px;height:340px;border-radius:12px;overflow:hidden;position:relative;background:linear-gradient(160deg,#241d14,#12140f);border:1px solid #2a2f26}
+ .ic-poster .ic-ph{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 30%,#3a2a1c,#14170f 72%)}
+ .ic-poster .ic-car2{position:absolute;left:0;right:0;top:96px;height:150px;background:url('../assets/share/samara.jpg') center/cover no-repeat;-webkit-mask:linear-gradient(#0000,#000 18%,#000 82%,#0000);mask:linear-gradient(#0000,#000 18%,#000 82%,#0000)}
+ .ic-poster .ic-top{position:absolute;left:22px;right:22px;top:20px}
+ .ic-poster .ic-top .ic-k{font:600 11px Oswald;letter-spacing:.18em;color:#d8b46a}
+ .ic-poster .ic-top h5{margin:4px 0 0;font:700 30px/.95 Oswald;color:#fff3dd;letter-spacing:.01em}
+ .ic-poster .ic-gift{position:absolute;left:22px;right:22px;bottom:20px;display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;
+  padding:10px;border-radius:10px;background:#0c0e0bcc;border:1px solid #d9b56a66;backdrop-filter:blur(2px)}
+ .ic-poster .ic-gift .ic-art{width:64px;height:64px}
+ .ic-poster .ic-gift b{display:block;font:700 15px Oswald;color:#ffe9bd}
+ .ic-poster .ic-gift span{display:block;font:400 11.5px Arial;color:#c9bfa4}
+ .ic-strip{display:flex;gap:6px;margin-top:6px}
+ .ic-strip u{text-decoration:none;display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border-radius:5px;background:#ffffff10;font:600 11px Oswald;color:#e9dfc8}
+ .ic-strip u i{width:13px;height:13px}
+ /* Плашка момента */
+ .ic-moment{margin:8px;padding:10px 12px;border-radius:10px;border:1px solid #d9b56a55;background:linear-gradient(100deg,#2a2116,#171a14);display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center}
+ .ic-moment .ic-art{width:44px;height:44px}
+ .ic-moment b{display:block;font:600 14px Oswald;color:#fff1d2}
+ .ic-moment span{display:block;font:400 11px Arial;color:#b8ad8d}
+ .ic-moment .ic-go{padding:8px 11px;border:0;border-radius:7px;background:var(--gold);color:#241e15;font:700 12.5px Oswald;box-shadow:0 2px #876231}
+ .ic-hint{margin:10px 0 0;padding:9px 11px;border-left:2px solid #d9b56a66;background:#ffffff06;font:400 12.5px/1.5 Arial;color:#c3b895}
+ ul.why{margin:0;padding-left:18px;font:400 13.5px/1.6 Arial;color:#cfc8b6}
+ ul.why li{margin-bottom:4px}
+</style>
+<h1>Призыв корешей — макеты на согласование</h1>
+<p class="ic-sub">Арт наград, цвета красок и неона, иконки валют — настоящие, из игры. Экраны не подключены к игре: это только картинка для решения.</p>
+<div id="frames"></div>
+<script type="importmap">{"imports":{"/garage-na-rayone/analytics.js":"/garage-na-rayone/analytics.js?v=1ed9a3b","/garage-na-rayone/app-shell.js":"/garage-na-rayone/app-shell.js?v=1ed9a3b","/garage-na-rayone/avatar.js":"/garage-na-rayone/avatar.js?v=1ed9a3b","/garage-na-rayone/beat-clock.js":"/garage-na-rayone/beat-clock.js?v=1ed9a3b","/garage-na-rayone/body-profiles.js":"/garage-na-rayone/body-profiles.js?v=1ed9a3b","/garage-na-rayone/bumper-kit.js":"/garage-na-rayone/bumper-kit.js?v=1ed9a3b","/garage-na-rayone/callsign.js":"/garage-na-rayone/callsign.js?v=1ed9a3b","/garage-na-rayone/campaign-config.js":"/garage-na-rayone/campaign-config.js?v=1ed9a3b","/garage-na-rayone/campaign-texts.js":"/garage-na-rayone/campaign-texts.js?v=1ed9a3b","/garage-na-rayone/campaign-tuning.js":"/garage-na-rayone/campaign-tuning.js?v=1ed9a3b","/garage-na-rayone/car-classes.js":"/garage-na-rayone/car-classes.js?v=1ed9a3b","/garage-na-rayone/car-customization.js":"/garage-na-rayone/car-customization.js?v=1ed9a3b","/garage-na-rayone/car-driver.js":"/garage-na-rayone/car-driver.js?v=1ed9a3b","/garage-na-rayone/car-lamps.js":"/garage-na-rayone/car-lamps.js?v=1ed9a3b","/garage-na-rayone/car-levels.js":"/garage-na-rayone/car-levels.js?v=1ed9a3b","/garage-na-rayone/car-levelup.js":"/garage-na-rayone/car-levelup.js?v=1ed9a3b","/garage-na-rayone/car-neon.js":"/garage-na-rayone/car-neon.js?v=1ed9a3b","/garage-na-rayone/car-reveal.js":"/garage-na-rayone/car-reveal.js?v=1ed9a3b","/garage-na-rayone/car-underbody.js":"/garage-na-rayone/car-underbody.js?v=1ed9a3b","/garage-na-rayone/career.js":"/garage-na-rayone/career.js?v=1ed9a3b","/garage-na-rayone/challenge-api.js":"/garage-na-rayone/challenge-api.js?v=1ed9a3b","/garage-na-rayone/challenge-intro.js":"/garage-na-rayone/challenge-intro.js?v=1ed9a3b","/garage-na-rayone/challenge-rules.js":"/garage-na-rayone/challenge-rules.js?v=1ed9a3b","/garage-na-rayone/challenge-ui.js":"/garage-na-rayone/challenge-ui.js?v=1ed9a3b","/garage-na-rayone/characters.js":"/garage-na-rayone/characters.js?v=1ed9a3b","/garage-na-rayone/cloud-save.js":"/garage-na-rayone/cloud-save.js?v=1ed9a3b","/garage-na-rayone/crates.js":"/garage-na-rayone/crates.js?v=1ed9a3b","/garage-na-rayone/currency-icons.js":"/garage-na-rayone/currency-icons.js?v=1ed9a3b","/garage-na-rayone/customizer-ui.js":"/garage-na-rayone/customizer-ui.js?v=1ed9a3b","/garage-na-rayone/decal-liveries.js":"/garage-na-rayone/decal-liveries.js?v=1ed9a3b","/garage-na-rayone/decal-projection.js":"/garage-na-rayone/decal-projection.js?v=1ed9a3b","/garage-na-rayone/decals.js":"/garage-na-rayone/decals.js?v=1ed9a3b","/garage-na-rayone/dev/studio-driver.js":"/garage-na-rayone/dev/studio-driver.js?v=1ed9a3b","/garage-na-rayone/dev-mode.js":"/garage-na-rayone/dev-mode.js?v=1ed9a3b","/garage-na-rayone/dialog-dismiss.js":"/garage-na-rayone/dialog-dismiss.js?v=1ed9a3b","/garage-na-rayone/drag-camera.js":"/garage-na-rayone/drag-camera.js?v=1ed9a3b","/garage-na-rayone/drift-bonuses.js":"/garage-na-rayone/drift-bonuses.js?v=1ed9a3b","/garage-na-rayone/drift-feedback.js":"/garage-na-rayone/drift-feedback.js?v=1ed9a3b","/garage-na-rayone/drift-hud.js":"/garage-na-rayone/drift-hud.js?v=1ed9a3b","/garage-na-rayone/drift-scenery.js":"/garage-na-rayone/drift-scenery.js?v=1ed9a3b","/garage-na-rayone/drivetrain.js":"/garage-na-rayone/drivetrain.js?v=1ed9a3b","/garage-na-rayone/duel-rules.js":"/garage-na-rayone/duel-rules.js?v=1ed9a3b","/garage-na-rayone/duel-ui.js":"/garage-na-rayone/duel-ui.js?v=1ed9a3b","/garage-na-rayone/earned-crates.js":"/garage-na-rayone/earned-crates.js?v=1ed9a3b","/garage-na-rayone/engine-audio-legacy.js":"/garage-na-rayone/engine-audio-legacy.js?v=1ed9a3b","/garage-na-rayone/engine-audio.js":"/garage-na-rayone/engine-audio.js?v=1ed9a3b","/garage-na-rayone/engine-model.js":"/garage-na-rayone/engine-model.js?v=1ed9a3b","/garage-na-rayone/engine-presets.js":"/garage-na-rayone/engine-presets.js?v=1ed9a3b","/garage-na-rayone/engine-voice.js":"/garage-na-rayone/engine-voice.js?v=1ed9a3b","/garage-na-rayone/engine-worklet.js":"/garage-na-rayone/engine-worklet.js?v=1ed9a3b","/garage-na-rayone/event-rules.js":"/garage-na-rayone/event-rules.js?v=1ed9a3b","/garage-na-rayone/event-ui.js":"/garage-na-rayone/event-ui.js?v=1ed9a3b","/garage-na-rayone/features.js":"/garage-na-rayone/features.js?v=1ed9a3b","/garage-na-rayone/finish-camera.js":"/garage-na-rayone/finish-camera.js?v=1ed9a3b","/garage-na-rayone/finish-presentation.js":"/garage-na-rayone/finish-presentation.js?v=1ed9a3b","/garage-na-rayone/fleet-migration.js":"/garage-na-rayone/fleet-migration.js?v=1ed9a3b","/garage-na-rayone/fleet-views.js":"/garage-na-rayone/fleet-views.js?v=1ed9a3b","/garage-na-rayone/fleet.js":"/garage-na-rayone/fleet.js?v=1ed9a3b","/garage-na-rayone/form.js":"/garage-na-rayone/form.js?v=1ed9a3b","/garage-na-rayone/game.js":"/garage-na-rayone/game.js?v=1ed9a3b","/garage-na-rayone/garage-blackout.js":"/garage-na-rayone/garage-blackout.js?v=1ed9a3b","/garage-na-rayone/garage-crew.js":"/garage-na-rayone/garage-crew.js?v=1ed9a3b","/garage-na-rayone/garage-evening.js":"/garage-na-rayone/garage-evening.js?v=1ed9a3b","/garage-na-rayone/garage-focus.js":"/garage-na-rayone/garage-focus.js?v=1ed9a3b","/garage-na-rayone/garage-idle.js":"/garage-na-rayone/garage-idle.js?v=1ed9a3b","/garage-na-rayone/garage-lamps.js":"/garage-na-rayone/garage-lamps.js?v=1ed9a3b","/garage-na-rayone/garage-layout.js":"/garage-na-rayone/garage-layout.js?v=1ed9a3b","/garage-na-rayone/garage-levels.js":"/garage-na-rayone/garage-levels.js?v=1ed9a3b","/garage-na-rayone/garage-radio.js":"/garage-na-rayone/garage-radio.js?v=1ed9a3b","/garage-na-rayone/garage-resident.js":"/garage-na-rayone/garage-resident.js?v=1ed9a3b","/garage-na-rayone/garage-selection.js":"/garage-na-rayone/garage-selection.js?v=1ed9a3b","/garage-na-rayone/garage-shot.js":"/garage-na-rayone/garage-shot.js?v=1ed9a3b","/garage-na-rayone/garage-surfaces.js":"/garage-na-rayone/garage-surfaces.js?v=1ed9a3b","/garage-na-rayone/garage-upgrade.js":"/garage-na-rayone/garage-upgrade.js?v=1ed9a3b","/garage-na-rayone/garage-workshop.js":"/garage-na-rayone/garage-workshop.js?v=1ed9a3b","/garage-na-rayone/gltf.js":"/garage-na-rayone/gltf.js?v=1ed9a3b","/garage-na-rayone/goals.js":"/garage-na-rayone/goals.js?v=1ed9a3b","/garage-na-rayone/ground-light.js":"/garage-na-rayone/ground-light.js?v=1ed9a3b","/garage-na-rayone/handicap.js":"/garage-na-rayone/handicap.js?v=1ed9a3b","/garage-na-rayone/haptics.js":"/garage-na-rayone/haptics.js?v=1ed9a3b","/garage-na-rayone/intro-atmosphere.js":"/garage-na-rayone/intro-atmosphere.js?v=1ed9a3b","/garage-na-rayone/intro-parallax.js":"/garage-na-rayone/intro-parallax.js?v=1ed9a3b","/garage-na-rayone/invite-card.js":"/garage-na-rayone/invite-card.js?v=1ed9a3b","/garage-na-rayone/kit-clearance.js":"/garage-na-rayone/kit-clearance.js?v=1ed9a3b","/garage-na-rayone/live-portrait.js":"/garage-na-rayone/live-portrait.js?v=1ed9a3b","/garage-na-rayone/liveries.js":"/garage-na-rayone/liveries.js?v=1ed9a3b","/garage-na-rayone/loading-bar.js":"/garage-na-rayone/loading-bar.js?v=1ed9a3b","/garage-na-rayone/loaner-rules.js":"/garage-na-rayone/loaner-rules.js?v=1ed9a3b","/garage-na-rayone/loaner-ui.js":"/garage-na-rayone/loaner-ui.js?v=1ed9a3b","/garage-na-rayone/loot-ui.js":"/garage-na-rayone/loot-ui.js?v=1ed9a3b","/garage-na-rayone/meta-ui.js":"/garage-na-rayone/meta-ui.js?v=1ed9a3b","/garage-na-rayone/motion.js":"/garage-na-rayone/motion.js?v=1ed9a3b","/garage-na-rayone/music-beats.js":"/garage-na-rayone/music-beats.js?v=1ed9a3b","/garage-na-rayone/neons.js":"/garage-na-rayone/neons.js?v=1ed9a3b","/garage-na-rayone/notifications.js":"/garage-na-rayone/notifications.js?v=1ed9a3b","/garage-na-rayone/onboarding-scene.js":"/garage-na-rayone/onboarding-scene.js?v=1ed9a3b","/garage-na-rayone/onboarding.js":"/garage-na-rayone/onboarding.js?v=1ed9a3b","/garage-na-rayone/overpass-districts.js":"/garage-na-rayone/overpass-districts.js?v=1ed9a3b","/garage-na-rayone/overpass-flow.js":"/garage-na-rayone/overpass-flow.js?v=1ed9a3b","/garage-na-rayone/overpass-route.js":"/garage-na-rayone/overpass-route.js?v=1ed9a3b","/garage-na-rayone/overpass-world.js":"/garage-na-rayone/overpass-world.js?v=1ed9a3b","/garage-na-rayone/overtake-route.js":"/garage-na-rayone/overtake-route.js?v=1ed9a3b","/garage-na-rayone/paints.js":"/garage-na-rayone/paints.js?v=1ed9a3b","/garage-na-rayone/parking-course.js":"/garage-na-rayone/parking-course.js?v=1ed9a3b","/garage-na-rayone/part-icons.js":"/garage-na-rayone/part-icons.js?v=1ed9a3b","/garage-na-rayone/particle-batch.js":"/garage-na-rayone/particle-batch.js?v=1ed9a3b","/garage-na-rayone/pbr-renderer.js":"/garage-na-rayone/pbr-renderer.js?v=1ed9a3b","/garage-na-rayone/physics.js":"/garage-na-rayone/physics.js?v=1ed9a3b","/garage-na-rayone/pitstop-ui.js":"/garage-na-rayone/pitstop-ui.js?v=1ed9a3b","/garage-na-rayone/played-stats.js":"/garage-na-rayone/played-stats.js?v=1ed9a3b","/garage-na-rayone/portrait-rigs.js":"/garage-na-rayone/portrait-rigs.js?v=1ed9a3b","/garage-na-rayone/power-hints.js":"/garage-na-rayone/power-hints.js?v=1ed9a3b","/garage-na-rayone/powertrain-layout.js":"/garage-na-rayone/powertrain-layout.js?v=1ed9a3b","/garage-na-rayone/powertrain-xray.js":"/garage-na-rayone/powertrain-xray.js?v=1ed9a3b","/garage-na-rayone/profiles.js":"/garage-na-rayone/profiles.js?v=1ed9a3b","/garage-na-rayone/progression.js":"/garage-na-rayone/progression.js?v=1ed9a3b","/garage-na-rayone/puddle-splashes.js":"/garage-na-rayone/puddle-splashes.js?v=1ed9a3b","/garage-na-rayone/race-audio.js":"/garage-na-rayone/race-audio.js?v=1ed9a3b","/garage-na-rayone/race-effects.js":"/garage-na-rayone/race-effects.js?v=1ed9a3b","/garage-na-rayone/race-shadows.js":"/garage-na-rayone/race-shadows.js?v=1ed9a3b","/garage-na-rayone/race-world.js":"/garage-na-rayone/race-world.js?v=1ed9a3b","/garage-na-rayone/receipts.js":"/garage-na-rayone/receipts.js?v=1ed9a3b","/garage-na-rayone/referral-road.js":"/garage-na-rayone/referral-road.js?v=1ed9a3b","/garage-na-rayone/referral-tiers.js":"/garage-na-rayone/referral-tiers.js?v=1ed9a3b","/garage-na-rayone/render-quality.js":"/garage-na-rayone/render-quality.js?v=1ed9a3b","/garage-na-rayone/result-tiers.js":"/garage-na-rayone/result-tiers.js?v=1ed9a3b","/garage-na-rayone/reward-tiles.js":"/garage-na-rayone/reward-tiles.js?v=1ed9a3b","/garage-na-rayone/ridge-battle.js":"/garage-na-rayone/ridge-battle.js?v=1ed9a3b","/garage-na-rayone/ridge-body.js":"/garage-na-rayone/ridge-body.js?v=1ed9a3b","/garage-na-rayone/ridge-camera.js":"/garage-na-rayone/ridge-camera.js?v=1ed9a3b","/garage-na-rayone/ridge-contact-effects.js":"/garage-na-rayone/ridge-contact-effects.js?v=1ed9a3b","/garage-na-rayone/ridge-contact.js":"/garage-na-rayone/ridge-contact.js?v=1ed9a3b","/garage-na-rayone/ridge-controls.js":"/garage-na-rayone/ridge-controls.js?v=1ed9a3b","/garage-na-rayone/ridge-drift.js":"/garage-na-rayone/ridge-drift.js?v=1ed9a3b","/garage-na-rayone/ridge-obstacles.js":"/garage-na-rayone/ridge-obstacles.js?v=1ed9a3b","/garage-na-rayone/ridge-records.js":"/garage-na-rayone/ridge-records.js?v=1ed9a3b","/garage-na-rayone/ridge-recovery.js":"/garage-na-rayone/ridge-recovery.js?v=1ed9a3b","/garage-na-rayone/ridge-route.js":"/garage-na-rayone/ridge-route.js?v=1ed9a3b","/garage-na-rayone/ridge-terrain.js":"/garage-na-rayone/ridge-terrain.js?v=1ed9a3b","/garage-na-rayone/ridge-tyre-table.js":"/garage-na-rayone/ridge-tyre-table.js?v=1ed9a3b","/garage-na-rayone/ridge-tyres.js":"/garage-na-rayone/ridge-tyres.js?v=1ed9a3b","/garage-na-rayone/ridge-world.js":"/garage-na-rayone/ridge-world.js?v=1ed9a3b","/garage-na-rayone/rival-line-view.js":"/garage-na-rayone/rival-line-view.js?v=1ed9a3b","/garage-na-rayone/rival-line.js":"/garage-na-rayone/rival-line.js?v=1ed9a3b","/garage-na-rayone/rivals.js":"/garage-na-rayone/rivals.js?v=1ed9a3b","/garage-na-rayone/road-repairs.js":"/garage-na-rayone/road-repairs.js?v=1ed9a3b","/garage-na-rayone/road-ride.js":"/garage-na-rayone/road-ride.js?v=1ed9a3b","/garage-na-rayone/sandbox-save.js":"/garage-na-rayone/sandbox-save.js?v=1ed9a3b","/garage-na-rayone/sculpted-body-kit.js":"/garage-na-rayone/sculpted-body-kit.js?v=1ed9a3b","/garage-na-rayone/shop.js":"/garage-na-rayone/shop.js?v=1ed9a3b","/garage-na-rayone/soft-economy.js":"/garage-na-rayone/soft-economy.js?v=1ed9a3b","/garage-na-rayone/soyuz-bumper-mesh.js":"/garage-na-rayone/soyuz-bumper-mesh.js?v=1ed9a3b","/garage-na-rayone/spoiler-kit.js":"/garage-na-rayone/spoiler-kit.js?v=1ed9a3b","/garage-na-rayone/start-tree.js":"/garage-na-rayone/start-tree.js?v=1ed9a3b","/garage-na-rayone/store-catalog.js":"/garage-na-rayone/store-catalog.js?v=1ed9a3b","/garage-na-rayone/store.js":"/garage-na-rayone/store.js?v=1ed9a3b","/garage-na-rayone/surface-detail.js":"/garage-na-rayone/surface-detail.js?v=1ed9a3b","/garage-na-rayone/telegram.js":"/garage-na-rayone/telegram.js?v=1ed9a3b","/garage-na-rayone/telemetry.js":"/garage-na-rayone/telemetry.js?v=1ed9a3b","/garage-na-rayone/tracks.js":"/garage-na-rayone/tracks.js?v=1ed9a3b","/garage-na-rayone/tune-preview.js":"/garage-na-rayone/tune-preview.js?v=1ed9a3b","/garage-na-rayone/unlocks.js":"/garage-na-rayone/unlocks.js?v=1ed9a3b","/garage-na-rayone/upgrade-art.js":"/garage-na-rayone/upgrade-art.js?v=1ed9a3b","/garage-na-rayone/upgrade-button.js":"/garage-na-rayone/upgrade-button.js?v=1ed9a3b","/garage-na-rayone/upgrades.js":"/garage-na-rayone/upgrades.js?v=1ed9a3b","/garage-na-rayone/vehicle-dynamics.js":"/garage-na-rayone/vehicle-dynamics.js?v=1ed9a3b","/garage-na-rayone/vehicle-effects.js":"/garage-na-rayone/vehicle-effects.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/controls/OrbitControls.js":"/garage-na-rayone/vendor/addons/controls/OrbitControls.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/environments/RoomEnvironment.js":"/garage-na-rayone/vendor/addons/environments/RoomEnvironment.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/geometries/RoundedBoxGeometry.js":"/garage-na-rayone/vendor/addons/geometries/RoundedBoxGeometry.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/libs/meshopt_decoder.module.js":"/garage-na-rayone/vendor/addons/libs/meshopt_decoder.module.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/loaders/GLTFLoader.js":"/garage-na-rayone/vendor/addons/loaders/GLTFLoader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/math/SimplexNoise.js":"/garage-na-rayone/vendor/addons/math/SimplexNoise.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/EffectComposer.js":"/garage-na-rayone/vendor/addons/postprocessing/EffectComposer.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/MaskPass.js":"/garage-na-rayone/vendor/addons/postprocessing/MaskPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/OutputPass.js":"/garage-na-rayone/vendor/addons/postprocessing/OutputPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/Pass.js":"/garage-na-rayone/vendor/addons/postprocessing/Pass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/RenderPass.js":"/garage-na-rayone/vendor/addons/postprocessing/RenderPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/SSAOPass.js":"/garage-na-rayone/vendor/addons/postprocessing/SSAOPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/ShaderPass.js":"/garage-na-rayone/vendor/addons/postprocessing/ShaderPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/shaders/CopyShader.js":"/garage-na-rayone/vendor/addons/shaders/CopyShader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/shaders/OutputShader.js":"/garage-na-rayone/vendor/addons/shaders/OutputShader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/shaders/SSAOShader.js":"/garage-na-rayone/vendor/addons/shaders/SSAOShader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/utils/BufferGeometryUtils.js":"/garage-na-rayone/vendor/addons/utils/BufferGeometryUtils.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/utils/SkeletonUtils.js":"/garage-na-rayone/vendor/addons/utils/SkeletonUtils.js?v=1ed9a3b","/garage-na-rayone/vendor/three.core.min.js":"/garage-na-rayone/vendor/three.core.min.js?v=1ed9a3b","/garage-na-rayone/vendor/three.module.js":"/garage-na-rayone/vendor/three.module.js?v=1ed9a3b","/garage-na-rayone/weather-effects.js":"/garage-na-rayone/weather-effects.js?v=1ed9a3b","/garage-na-rayone/wet-road.js":"/garage-na-rayone/wet-road.js?v=1ed9a3b","/garage-na-rayone/wheel-kit.js":"/garage-na-rayone/wheel-kit.js?v=1ed9a3b"}}</script><script type="module">
+ import {coinIcon} from '../currency-icons.js';
+ const crate=(n,cls='')=>`<span class="ic-crate ${cls}" style="--cx:${n*25}%" aria-hidden="true"></span>`;
+ const swatch=c=>`<span class="ic-swatch" style="background:radial-gradient(120% 90% at 32% 22%,#ffffff40,transparent 42%),${c}"></span>`;
+ const neon=c=>`<span class="ic-swatch" style="background:#12150f;box-shadow:inset 0 0 22px ${c}aa, 0 0 16px ${c}66;border:1px solid ${c}88"></span>`;
+ const topbar=`<div class="ic-bar">
+   <span class="ic-plate">⌂ ГАРАЖ IV</span>
+   <span class="ic-chip">${coinIcon('soft')}30 413</span>
+   <span class="ic-chip">${coinIcon('hard')}240</span>
+   <span class="ic-chip">${coinIcon('parts')}424</span></div>`;
+ const scene=`<div class="ic-scene"><div class="ic-car"></div></div>`;
+
+ const frames=[
+ {tag:'ВХОД',rec:false,title:'Гараж: баннер призыва',
+  html:`<div class="ic-phone">${topbar}${scene}
+   <div class="ic-call"><span class="ic-art">${crate(3)}</span>
+    <div><b>ПОЗОВИ КОРЕША</b><span>ещё <b style="display:inline;color:#ffd68a">1</b> — и ящик со склада, 32 000 ₽ в магазине</span>
+     <span class="ic-track"><i style="width:66%"></i></span></div>
+    <button class="ic-go">ПОЗВАТЬ</button></div>
+   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 8px 8px">
+    <div class="ic-rung"><b>ТЮНИНГ</b></div><div class="ic-rung"><b>ЯЩИКИ</b></div><div class="ic-rung"><b>МАГАЗИН</b></div></div>
+   </div>`,
+  note:`<p>Сейчас призыв спрятан во вкладке 2 из 3 внутри окна «Стрелка». В гараже — главном экране — про корешей нет ни слова.</p>
+   <p><b>Полоса над нижним рядом:</b> арт ближайшей награды, одна строка выгоды с ценой в рублях, полоса прогресса и золотая кнопка. Полоса живёт, пока есть незакрытая ступень, и прячется на время заезда.</p>
+   <p>Цена в рублях — главный приём: «ящик со склада» ничего не говорит, <b>32 000 ₽</b> говорит всё.</p>`},
+
+ {tag:'ВАРИАНТ 1 · РЕКОМЕНДУЮ',rec:true,title:'Окно «Кореша»: витрина',
+  html:`<div class="ic-phone">${topbar}<div class="ic-win">
+   <div class="ic-win-head"><h3>КОРЕША</h3><em>привёл: 2</em></div>
+   <div class="ic-tabs"><span>СТРЕЛКИ</span><span class="ic-on">КОРЕША</span><span>ТАБЛИЦА</span></div>
+   <div class="ic-body">
+    <div class="ic-hero"><span class="ic-art">${crate(3)}</span>
+     <div><div class="ic-kicker">СЛЕДУЮЩАЯ НАГРАДА</div><h4>ЯЩИК СО СКЛАДА</h4>
+      <span class="ic-price">${coinIcon('soft')}32 000 в магазине</span>
+      <div class="ic-steps"><b>2</b><span class="ic-track"><i style="width:66%"></i></span><b>3</b></div>
+      <div style="font:400 11.5px Arial;color:#b8ad8d;margin-top:4px">остался один кореш</div></div></div>
+    <div class="ic-deal">
+     <div class="ic-side"><div class="ic-kicker">ТЕБЕ</div><div class="ic-art">${crate(3)}</div><strong>Ящик со склада</strong><small>эпическая деталь+</small></div>
+     <div class="ic-plus">+</div>
+     <div class="ic-side"><div class="ic-kicker">КОРЕШУ</div><div class="ic-art">${crate(0)}</div><strong>3 000 ₽ на старт</strong><small>падают за первый заезд</small></div></div>
+    <button class="ic-cta">ПОЗВАТЬ В TELEGRAM</button>
+    <p class="ic-fine">Засчитывается, когда кореш доедет первый заезд</p>
+    <div class="ic-ladder">
+     <div class="ic-rung ic-done"><div class="ic-art">${crate(3)}</div><b>3</b><small>ящик со склада</small></div>
+     <div class="ic-rung"><div class="ic-art ic-art--pair">${coinIcon('parts')}${coinIcon('soft')}</div><b>5</b><small>400 деталей и 25 000 ₽</small></div>
+     <div class="ic-rung"><div class="ic-art">${swatch('#6fb7a0')}</div><b>8</b><small>краска «Мятный»</small></div>
+     <div class="ic-rung"><div class="ic-art">${neon('#e8f4ff')}</div><b>12</b><small>неон «Ксенон»</small></div></div>
+    <div class="ic-mates">
+     <div class="ic-mate"><span class="ic-ava">С</span><span>Саня<em> · доехал</em></span><span class="ic-pill">+1</span></div>
+     <div class="ic-mate"><span class="ic-ava">К</span><span>Костян<em> · ещё не ехал</em></span><span class="ic-pill ic-wait">НАПОМНИТЬ</span></div></div>
+   </div></div></div>`,
+  note:`<p><b>Одна большая награда вместо шести строк.</b> Крупный арт ближайшей ступени, её цена в рублях, прогресс «2 из 3» и человеческая подпись «остался один кореш».</p>
+   <p><b>Сделка в две колонки.</b> Слева — что получишь ты, справа — что получит кореш. Это то, чего сейчас нет вообще: приглашённому не обещано ничего, и кинуть ссылку в чат нечем.</p>
+   <p><b>Лестница уехала вниз и стала лентой с картинками.</b> Она нужна как перспектива, а не как первое, что видишь. Краска и неон показаны своим цветом — их ценность видно.</p>
+   <p><b>Приглашённые — со статусом и кнопкой «напомнить».</b> Половина приведённых не доезжает первый заезд, и сейчас про это нельзя ничего сделать.</p>`},
+
+ {tag:'ВАРИАНТ 2',rec:false,title:'Дорога района',
+  html:`<div class="ic-phone">${topbar}<div class="ic-win">
+   <div class="ic-win-head"><h3>КОРЕША</h3><em>привёл: 2</em></div>
+   <div class="ic-tabs"><span>СТРЕЛКИ</span><span class="ic-on">КОРЕША</span><span>ТАБЛИЦА</span></div>
+   <div class="ic-body"><div class="ic-road">
+        <div class="ic-milestone ic-now"><span class="ic-dot">3</span><span class="ic-art">${crate(3)}</span><div><strong>Ящик со склада</strong><small>32 000 ₽ · остался один</small></div></div>
+    <div class="ic-milestone"><span class="ic-dot">5</span><span class="ic-art ic-art--pair">${coinIcon('parts')}${coinIcon('soft')}</span><div><strong>400 ⚒ и 25 000 ₽</strong><small>материалы на прокачку</small></div></div>
+    <div class="ic-milestone"><span class="ic-dot">8</span><span class="ic-art">${swatch('#6fb7a0')}</span><div><strong>Краска «Мятный»</strong><small>22 000 ₽ в магазине</small></div></div>
+    <div class="ic-milestone"><span class="ic-dot">12</span><span class="ic-art">${neon('#e8f4ff')}</span><div><strong>Неон «Ксенон»</strong><small>24 000 ₽ в магазине</small></div></div>
+    <div class="ic-milestone"><span class="ic-dot">20</span><span class="ic-art">${swatch('#c9a227')}</span><div><strong>Золото и красный ящик</strong><small>смотрите, сколько я привёл</small></div></div>
+   </div><button class="ic-cta">ПОЗВАТЬ В TELEGRAM</button></div></div></div>`,
+  note:`<p>Лестница как боевой пропуск: путь сверху вниз, пройденные вехи с галочкой, текущая подсвечена.</p>
+   <p><b>Плюс:</b> видно всю перспективу до золота — «ещё чуть-чуть» работает на тех, кто уже привёл двоих-троих.</p>
+   <p><b>Минус:</b> ближайшая награда теряется среди шести равных строк, а сделка «тебе / корешу» уезжает под сгиб. Для человека, который зовёт первый раз, это слабее.</p>
+   <p>Хороший компромисс: взять эту дорогу <b>второй вкладкой</b> внутри «Корешей», а на первом экране оставить витрину.</p>`},
+
+ {tag:'ВАРИАНТ 3',rec:false,title:'Сделка на весь экран',
+  html:`<div class="ic-phone">${topbar}<div class="ic-win">
+   <div class="ic-win-head"><h3>ПОЗОВИ КОРЕША</h3><em>привёл: 0</em></div>
+   <div class="ic-body">
+    <div class="ic-deal" style="grid-template-columns:1fr 30px 1fr">
+     <div class="ic-side" style="padding:16px 10px"><div class="ic-kicker">ТЕБЕ</div><div class="ic-art" style="width:78px;height:78px">${crate(3)}</div><strong>Ящик со склада</strong><small>за третьего кореша</small></div>
+     <div class="ic-plus">+</div>
+     <div class="ic-side" style="padding:16px 10px"><div class="ic-kicker">КОРЕШУ</div><div class="ic-art" style="width:78px;height:78px">${crate(0)}</div><strong>3 000 ₽ на старт</strong><small>за первый заезд</small></div></div>
+    <div class="ic-hero" style="grid-template-columns:1fr"><div><div class="ic-kicker">КАК ЭТО РАБОТАЕТ</div>
+     <p style="margin:6px 0 0;font:400 12.5px/1.5 Arial;color:#c3b895">Кидаешь ссылку в чат. Кореш ставит игру и проезжает первый заезд — ему падают 3 000 ₽, тебе плюс один к лестнице.</p></div></div>
+    <button class="ic-cta">ПОЗВАТЬ В TELEGRAM</button>
+    <p class="ic-fine">Дальше: 5 корешей — материалы · 8 — краска · 12 — неон · 20 — золото</p>
+   </div></div></div>`,
+  note:`<p>Весь экран — одна сделка. Лестница свёрнута в строку мелким шрифтом.</p>
+   <p><b>Плюс:</b> сильнее всего для первого приглашения — человек за секунду понимает обмен.</p>
+   <p><b>Минус:</b> тому, кто уже привёл пятерых, экран ничего не даёт: цели не видно, возвращаться незачем.</p>
+   <p>Поэтому предлагаю не выбирать: <b>этот экран показывать, пока корешей ноль</b>, а после первого — переключать на витрину (вариант 1).</p>`},
+
+ {tag:'ДОРОГА · ПЕРВЫЙ ЭКРАН',rec:true,title:'Что видно сразу',
+  html:`<div class="ic-phone">${topbar}<div class="ic-win">
+   <div class="ic-win-head"><h3>КОРЕША</h3><em>привёл: 2</em></div>
+   <div class="ic-tabs"><span>СТРЕЛКИ</span><span class="ic-on">КОРЕША</span><span>ТАБЛИЦА</span></div>
+   <div class="ic-body" style="gap:0">
+    <div class="ic-road2">
+     <div class="ic-ms ic-live"><span class="ic-num">3</span>
+      <div class="ic-liverow"><span class="ic-art">${crate(3)}</span>
+       <div><div class="ic-kick">СЛЕДУЮЩАЯ НАГРАДА</div><h4>ЯЩИК СО СКЛАДА</h4>
+        <span class="ic-worth">${coinIcon('soft')}32 000 в магазине</span>
+        <div class="ic-steps"><b>2</b><span class="ic-track"><i style="width:66%"></i></span><b>3</b></div>
+        <div class="ic-left">остался один кореш</div></div></div>
+      <div class="ic-give">
+       <div>${crate(3)}<span><em>ТЕБЕ</em>Ящик со склада</span></div>
+       <div>${coinIcon('soft')}<span><em>КОРЕШУ</em>3 000 ₽ на старт</span></div></div></div>
+     <div class="ic-ms"><span class="ic-num">5</span><span class="ic-art ic-art--pair">${coinIcon('parts')}${coinIcon('soft')}</span>
+      <div><strong>400 деталей и 25 000 ₽</strong><small>материалы на прокачку</small></div>
+      <span class="ic-worth">ещё 3</span></div>
+     <div class="ic-ms"><span class="ic-num">8</span><span class="ic-art">${swatch('#6fb7a0')}</span>
+      <div><strong>Краска «Мятный»</strong><small>22 000 ₽ в магазине, и 100 $</small></div><span class="ic-worth">ещё 6</span></div>
+    </div>
+    <div class="ic-sticky"><button class="ic-cta">ПОЗВАТЬ В TELEGRAM</button>
+     <p class="ic-fine" style="margin-top:6px">Засчитывается, когда кореш доедет первый заезд</p></div>
+   </div></div></div>`,
+  note:`<p><b>Слабое место «дороги» закрыто.</b> Текущая ступень — не строка в ряду, а крупная карточка: арт, цена в рублях, прогресс «2 из 3» и подпись «остался один кореш». Остальные вехи рядом с ней намеренно мельче.</p>
+   <p><b>Сделка внутри активной ступени.</b> Две колонки «ТЕБЕ / КОРЕШУ» прибиты к её низу — видно сразу, без прокрутки, и не нужен отдельный блок.</p>
+   <p><b>Пройденное сжимается.</b> Закрытая ступень остаётся строкой с галочкой: путь видно, место не занимает. Мгновенной награды за первого кореша нет — лестница начинается с трёх, как сейчас.</p>
+   <p><b>Кнопка прилипшая.</b> Сколько бы человек ни листал дорогу, «позвать» всегда под рукой.</p>`},
+
+ {tag:'ДОРОГА · ПРОКРУТКА',rec:false,title:'Что ниже',
+  html:`<div class="ic-phone"><div class="ic-win" style="min-height:520px">
+   <div class="ic-body" style="gap:0;padding-top:16px">
+    <div class="ic-road2">
+     <div class="ic-ms ic-far"><span class="ic-num">12</span><span class="ic-art">${neon('#e8f4ff')}</span>
+      <div><strong>Неон «Ксенон»</strong><small>24 000 ₽ в магазине, ящик и 50 $</small></div><span class="ic-worth">ещё 10</span></div>
+     <div class="ic-ms ic-far"><span class="ic-num">15</span><span class="ic-art">${crate(4)}</span>
+      <div><strong>Легендарный ящик</strong><small>90 000 ₽ в магазине</small></div><span class="ic-worth">ещё 13</span></div>
+     <div class="ic-ms ic-far"><span class="ic-num">20</span><span class="ic-art">${swatch('#c9a227')}</span>
+      <div><strong>Золото, неон и красный ящик</strong><small>уникальная деталь, 420 000 ₽</small></div><span class="ic-worth">ещё 18</span></div>
+     <div class="ic-tail"><b>∞</b> дальше — легендарный ящик за каждые десять корешей</div>
+    </div>
+    <div style="font:600 10px Oswald;letter-spacing:.14em;color:#8d9482;margin:6px 0 7px">КОГО ПОЗВАЛ</div>
+    <div class="ic-mates">
+     <div class="ic-mate"><span class="ic-ava">С</span><span>Саня<em> · доехал</em></span><span class="ic-pill">+1</span></div>
+     <div class="ic-mate"><span class="ic-ava">К</span><span>Костян<em> · открыл, не ехал</em></span><span class="ic-pill ic-wait">НАПОМНИТЬ</span></div>
+     <div class="ic-mate"><span class="ic-ava">Д</span><span>Димон<em> · доехал</em></span><span class="ic-pill">+1</span></div></div>
+    <div class="ic-sticky"><button class="ic-cta">ПОЗВАТЬ В TELEGRAM</button></div>
+   </div></div></div>`,
+  note:`<p>Дальние ступени — тем же строем, но тише: арт, название, цена в рублях. Разрыв между 12 и 20 держит цель на виду, а не обрывает лестницу.</p>
+   <p><b>Хвост показан честно:</b> «дальше — легендарный ящик за каждые десять корешей». В коде он уже есть (<b>REFERRAL_TAIL</b>), в интерфейсе его не видно.</p>
+   <p><b>Список позванных — под дорогой.</b> Главное в нём — «открыл, не ехал» с кнопкой «напомнить»: это те, кто уже почти пришёл, и сейчас с ними нельзя сделать ничего.</p>`},
+
+ {tag:'ЧАТ',rec:false,title:'Что видит кореш в Telegram',
+  html:`<div class="ic-poster"><div class="ic-ph"></div><div class="ic-car2"></div>
+   <div class="ic-top"><div class="ic-k">АНДРЕЙ ЗОВЁТ НА РАЙОН</div><h5>ЗАБЕРИ<br>СТАРТОВЫЙ НАБОР</h5></div>
+   <div class="ic-gift"><span class="ic-art">${crate(0)}</span>
+    <div><b>3 000 ₽ на старт</b><span>падают, как доедешь первый заезд</span>
+     <span class="ic-strip"><u>${coinIcon('soft')}3 000</u><u>ПЕРВЫЙ ЗАЕЗД</u></span></div></div></div>`,
+  note:`<p>Сейчас в чат уходит плакат «побей моё время 16.26». Он работает на тех, кто уже играет, но новичку предлагает соревнование с незнакомцем и ничего не даёт.</p>
+   <p><b>Вторая карточка — подарочная.</b> Тот же плакат на снимке своего гаража, но крючок другой: что человек получит, если поставит игру. Время и вызов уходят второй строкой.</p>
+   <p>Какую карточку слать, решает адресат: кореш из игры получает вызов, новый человек — подарок. Рисуется тем же <b>invite-card.js</b>, меняются заголовок и нижний блок.</p>`},
+
+ {tag:'МОМЕНТ',rec:false,title:'Когда просить',
+  html:`<div class="ic-phone">${topbar}
+   <div class="ic-scene" style="height:150px"><div class="ic-car" style="margin-bottom:14px"></div></div>
+   <div style="padding:10px 12px 0"><div style="font:700 19px Oswald;color:#8fe2ce">ВЫВЕЗ · 11.73 с</div>
+    <div style="font:400 12px Arial;color:#9aa38c;margin-bottom:8px">личный рекорд на 402 м</div></div>
+   <div class="ic-moment"><span class="ic-art">${crate(3)}</span>
+    <div><b>Позови кореша на реванш</b><span>ещё 1 — и ящик со склада</span></div>
+    <button class="ic-go">ПОЗВАТЬ</button></div>
+   <div style="padding:8px 12px 14px;display:flex;gap:8px">
+    <div class="ic-rung" style="flex:1"><b>В ГАРАЖ</b></div><div class="ic-rung" style="flex:1"><b>ЕЩЁ РАЗ</b></div></div></div>`,
+  note:`<p>Просить надо на пике: сразу после победы или рекорда, а не тогда, когда человек сам вспомнит про вкладку.</p>
+   <p><b>Узкая плашка на экране результата</b>, не модалка: она не перекрывает кнопки «в гараж» и «ещё раз» и не бесит. Появляется после победы, рекорда и открытия ящика — не чаще раза в сессию.</p>
+   <p>Второй момент — <b>после проигрыша боссу</b>: «позови кореша, погоняйте вдвоём». Но это проверять отдельно: там человек раздражён.</p>`},
+ ];
+
+ // ?only=N — один макет на страницу: так их удобно снимать в отдельные картинки.
+ const only=new URLSearchParams(location.search).get('only');
+ const shown=only?[frames[Number(only)]].filter(Boolean):frames;
+ if(only){document.querySelector('h1').remove();document.querySelector('.ic-sub').remove();
+  document.body.style.cssText+=';padding:18px 22px;min-height:100vh;display:grid;align-content:center';
+  document.querySelector('#frames').style.cssText='';}
+ if(!only)document.querySelector('#frames').classList.add('multi');
+ document.querySelector('#frames').innerHTML=shown.map(f=>`<section>
+   <div>${f.html}</div>
+   <div class="ic-note"><span class="ic-tag${f.rec?' ic-rec':''}">${f.tag}</span><h2>${f.title}</h2>${f.note}</div></section>`).join('');
+</script>

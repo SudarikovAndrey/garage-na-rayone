@@ -1,0 +1,131 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Боссы и главари — обзор тачек</title>
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js","three/addons/":"../vendor/addons/","/garage-na-rayone/analytics.js":"/garage-na-rayone/analytics.js?v=1ed9a3b","/garage-na-rayone/app-shell.js":"/garage-na-rayone/app-shell.js?v=1ed9a3b","/garage-na-rayone/avatar.js":"/garage-na-rayone/avatar.js?v=1ed9a3b","/garage-na-rayone/beat-clock.js":"/garage-na-rayone/beat-clock.js?v=1ed9a3b","/garage-na-rayone/body-profiles.js":"/garage-na-rayone/body-profiles.js?v=1ed9a3b","/garage-na-rayone/bumper-kit.js":"/garage-na-rayone/bumper-kit.js?v=1ed9a3b","/garage-na-rayone/callsign.js":"/garage-na-rayone/callsign.js?v=1ed9a3b","/garage-na-rayone/campaign-config.js":"/garage-na-rayone/campaign-config.js?v=1ed9a3b","/garage-na-rayone/campaign-texts.js":"/garage-na-rayone/campaign-texts.js?v=1ed9a3b","/garage-na-rayone/campaign-tuning.js":"/garage-na-rayone/campaign-tuning.js?v=1ed9a3b","/garage-na-rayone/car-classes.js":"/garage-na-rayone/car-classes.js?v=1ed9a3b","/garage-na-rayone/car-customization.js":"/garage-na-rayone/car-customization.js?v=1ed9a3b","/garage-na-rayone/car-driver.js":"/garage-na-rayone/car-driver.js?v=1ed9a3b","/garage-na-rayone/car-lamps.js":"/garage-na-rayone/car-lamps.js?v=1ed9a3b","/garage-na-rayone/car-levels.js":"/garage-na-rayone/car-levels.js?v=1ed9a3b","/garage-na-rayone/car-levelup.js":"/garage-na-rayone/car-levelup.js?v=1ed9a3b","/garage-na-rayone/car-neon.js":"/garage-na-rayone/car-neon.js?v=1ed9a3b","/garage-na-rayone/car-reveal.js":"/garage-na-rayone/car-reveal.js?v=1ed9a3b","/garage-na-rayone/car-underbody.js":"/garage-na-rayone/car-underbody.js?v=1ed9a3b","/garage-na-rayone/career.js":"/garage-na-rayone/career.js?v=1ed9a3b","/garage-na-rayone/challenge-api.js":"/garage-na-rayone/challenge-api.js?v=1ed9a3b","/garage-na-rayone/challenge-intro.js":"/garage-na-rayone/challenge-intro.js?v=1ed9a3b","/garage-na-rayone/challenge-rules.js":"/garage-na-rayone/challenge-rules.js?v=1ed9a3b","/garage-na-rayone/challenge-ui.js":"/garage-na-rayone/challenge-ui.js?v=1ed9a3b","/garage-na-rayone/characters.js":"/garage-na-rayone/characters.js?v=1ed9a3b","/garage-na-rayone/cloud-save.js":"/garage-na-rayone/cloud-save.js?v=1ed9a3b","/garage-na-rayone/crates.js":"/garage-na-rayone/crates.js?v=1ed9a3b","/garage-na-rayone/currency-icons.js":"/garage-na-rayone/currency-icons.js?v=1ed9a3b","/garage-na-rayone/customizer-ui.js":"/garage-na-rayone/customizer-ui.js?v=1ed9a3b","/garage-na-rayone/decal-liveries.js":"/garage-na-rayone/decal-liveries.js?v=1ed9a3b","/garage-na-rayone/decal-projection.js":"/garage-na-rayone/decal-projection.js?v=1ed9a3b","/garage-na-rayone/decals.js":"/garage-na-rayone/decals.js?v=1ed9a3b","/garage-na-rayone/dev/studio-driver.js":"/garage-na-rayone/dev/studio-driver.js?v=1ed9a3b","/garage-na-rayone/dev-mode.js":"/garage-na-rayone/dev-mode.js?v=1ed9a3b","/garage-na-rayone/dialog-dismiss.js":"/garage-na-rayone/dialog-dismiss.js?v=1ed9a3b","/garage-na-rayone/drag-camera.js":"/garage-na-rayone/drag-camera.js?v=1ed9a3b","/garage-na-rayone/drift-bonuses.js":"/garage-na-rayone/drift-bonuses.js?v=1ed9a3b","/garage-na-rayone/drift-feedback.js":"/garage-na-rayone/drift-feedback.js?v=1ed9a3b","/garage-na-rayone/drift-hud.js":"/garage-na-rayone/drift-hud.js?v=1ed9a3b","/garage-na-rayone/drift-scenery.js":"/garage-na-rayone/drift-scenery.js?v=1ed9a3b","/garage-na-rayone/drivetrain.js":"/garage-na-rayone/drivetrain.js?v=1ed9a3b","/garage-na-rayone/duel-rules.js":"/garage-na-rayone/duel-rules.js?v=1ed9a3b","/garage-na-rayone/duel-ui.js":"/garage-na-rayone/duel-ui.js?v=1ed9a3b","/garage-na-rayone/earned-crates.js":"/garage-na-rayone/earned-crates.js?v=1ed9a3b","/garage-na-rayone/engine-audio-legacy.js":"/garage-na-rayone/engine-audio-legacy.js?v=1ed9a3b","/garage-na-rayone/engine-audio.js":"/garage-na-rayone/engine-audio.js?v=1ed9a3b","/garage-na-rayone/engine-model.js":"/garage-na-rayone/engine-model.js?v=1ed9a3b","/garage-na-rayone/engine-presets.js":"/garage-na-rayone/engine-presets.js?v=1ed9a3b","/garage-na-rayone/engine-voice.js":"/garage-na-rayone/engine-voice.js?v=1ed9a3b","/garage-na-rayone/engine-worklet.js":"/garage-na-rayone/engine-worklet.js?v=1ed9a3b","/garage-na-rayone/event-rules.js":"/garage-na-rayone/event-rules.js?v=1ed9a3b","/garage-na-rayone/event-ui.js":"/garage-na-rayone/event-ui.js?v=1ed9a3b","/garage-na-rayone/features.js":"/garage-na-rayone/features.js?v=1ed9a3b","/garage-na-rayone/finish-camera.js":"/garage-na-rayone/finish-camera.js?v=1ed9a3b","/garage-na-rayone/finish-presentation.js":"/garage-na-rayone/finish-presentation.js?v=1ed9a3b","/garage-na-rayone/fleet-migration.js":"/garage-na-rayone/fleet-migration.js?v=1ed9a3b","/garage-na-rayone/fleet-views.js":"/garage-na-rayone/fleet-views.js?v=1ed9a3b","/garage-na-rayone/fleet.js":"/garage-na-rayone/fleet.js?v=1ed9a3b","/garage-na-rayone/form.js":"/garage-na-rayone/form.js?v=1ed9a3b","/garage-na-rayone/game.js":"/garage-na-rayone/game.js?v=1ed9a3b","/garage-na-rayone/garage-blackout.js":"/garage-na-rayone/garage-blackout.js?v=1ed9a3b","/garage-na-rayone/garage-crew.js":"/garage-na-rayone/garage-crew.js?v=1ed9a3b","/garage-na-rayone/garage-evening.js":"/garage-na-rayone/garage-evening.js?v=1ed9a3b","/garage-na-rayone/garage-focus.js":"/garage-na-rayone/garage-focus.js?v=1ed9a3b","/garage-na-rayone/garage-idle.js":"/garage-na-rayone/garage-idle.js?v=1ed9a3b","/garage-na-rayone/garage-lamps.js":"/garage-na-rayone/garage-lamps.js?v=1ed9a3b","/garage-na-rayone/garage-layout.js":"/garage-na-rayone/garage-layout.js?v=1ed9a3b","/garage-na-rayone/garage-levels.js":"/garage-na-rayone/garage-levels.js?v=1ed9a3b","/garage-na-rayone/garage-radio.js":"/garage-na-rayone/garage-radio.js?v=1ed9a3b","/garage-na-rayone/garage-resident.js":"/garage-na-rayone/garage-resident.js?v=1ed9a3b","/garage-na-rayone/garage-selection.js":"/garage-na-rayone/garage-selection.js?v=1ed9a3b","/garage-na-rayone/garage-shot.js":"/garage-na-rayone/garage-shot.js?v=1ed9a3b","/garage-na-rayone/garage-surfaces.js":"/garage-na-rayone/garage-surfaces.js?v=1ed9a3b","/garage-na-rayone/garage-upgrade.js":"/garage-na-rayone/garage-upgrade.js?v=1ed9a3b","/garage-na-rayone/garage-workshop.js":"/garage-na-rayone/garage-workshop.js?v=1ed9a3b","/garage-na-rayone/gltf.js":"/garage-na-rayone/gltf.js?v=1ed9a3b","/garage-na-rayone/goals.js":"/garage-na-rayone/goals.js?v=1ed9a3b","/garage-na-rayone/ground-light.js":"/garage-na-rayone/ground-light.js?v=1ed9a3b","/garage-na-rayone/handicap.js":"/garage-na-rayone/handicap.js?v=1ed9a3b","/garage-na-rayone/haptics.js":"/garage-na-rayone/haptics.js?v=1ed9a3b","/garage-na-rayone/intro-atmosphere.js":"/garage-na-rayone/intro-atmosphere.js?v=1ed9a3b","/garage-na-rayone/intro-parallax.js":"/garage-na-rayone/intro-parallax.js?v=1ed9a3b","/garage-na-rayone/invite-card.js":"/garage-na-rayone/invite-card.js?v=1ed9a3b","/garage-na-rayone/kit-clearance.js":"/garage-na-rayone/kit-clearance.js?v=1ed9a3b","/garage-na-rayone/live-portrait.js":"/garage-na-rayone/live-portrait.js?v=1ed9a3b","/garage-na-rayone/liveries.js":"/garage-na-rayone/liveries.js?v=1ed9a3b","/garage-na-rayone/loading-bar.js":"/garage-na-rayone/loading-bar.js?v=1ed9a3b","/garage-na-rayone/loaner-rules.js":"/garage-na-rayone/loaner-rules.js?v=1ed9a3b","/garage-na-rayone/loaner-ui.js":"/garage-na-rayone/loaner-ui.js?v=1ed9a3b","/garage-na-rayone/loot-ui.js":"/garage-na-rayone/loot-ui.js?v=1ed9a3b","/garage-na-rayone/meta-ui.js":"/garage-na-rayone/meta-ui.js?v=1ed9a3b","/garage-na-rayone/motion.js":"/garage-na-rayone/motion.js?v=1ed9a3b","/garage-na-rayone/music-beats.js":"/garage-na-rayone/music-beats.js?v=1ed9a3b","/garage-na-rayone/neons.js":"/garage-na-rayone/neons.js?v=1ed9a3b","/garage-na-rayone/notifications.js":"/garage-na-rayone/notifications.js?v=1ed9a3b","/garage-na-rayone/onboarding-scene.js":"/garage-na-rayone/onboarding-scene.js?v=1ed9a3b","/garage-na-rayone/onboarding.js":"/garage-na-rayone/onboarding.js?v=1ed9a3b","/garage-na-rayone/overpass-districts.js":"/garage-na-rayone/overpass-districts.js?v=1ed9a3b","/garage-na-rayone/overpass-flow.js":"/garage-na-rayone/overpass-flow.js?v=1ed9a3b","/garage-na-rayone/overpass-route.js":"/garage-na-rayone/overpass-route.js?v=1ed9a3b","/garage-na-rayone/overpass-world.js":"/garage-na-rayone/overpass-world.js?v=1ed9a3b","/garage-na-rayone/overtake-route.js":"/garage-na-rayone/overtake-route.js?v=1ed9a3b","/garage-na-rayone/paints.js":"/garage-na-rayone/paints.js?v=1ed9a3b","/garage-na-rayone/parking-course.js":"/garage-na-rayone/parking-course.js?v=1ed9a3b","/garage-na-rayone/part-icons.js":"/garage-na-rayone/part-icons.js?v=1ed9a3b","/garage-na-rayone/particle-batch.js":"/garage-na-rayone/particle-batch.js?v=1ed9a3b","/garage-na-rayone/pbr-renderer.js":"/garage-na-rayone/pbr-renderer.js?v=1ed9a3b","/garage-na-rayone/physics.js":"/garage-na-rayone/physics.js?v=1ed9a3b","/garage-na-rayone/pitstop-ui.js":"/garage-na-rayone/pitstop-ui.js?v=1ed9a3b","/garage-na-rayone/played-stats.js":"/garage-na-rayone/played-stats.js?v=1ed9a3b","/garage-na-rayone/portrait-rigs.js":"/garage-na-rayone/portrait-rigs.js?v=1ed9a3b","/garage-na-rayone/power-hints.js":"/garage-na-rayone/power-hints.js?v=1ed9a3b","/garage-na-rayone/powertrain-layout.js":"/garage-na-rayone/powertrain-layout.js?v=1ed9a3b","/garage-na-rayone/powertrain-xray.js":"/garage-na-rayone/powertrain-xray.js?v=1ed9a3b","/garage-na-rayone/profiles.js":"/garage-na-rayone/profiles.js?v=1ed9a3b","/garage-na-rayone/progression.js":"/garage-na-rayone/progression.js?v=1ed9a3b","/garage-na-rayone/puddle-splashes.js":"/garage-na-rayone/puddle-splashes.js?v=1ed9a3b","/garage-na-rayone/race-audio.js":"/garage-na-rayone/race-audio.js?v=1ed9a3b","/garage-na-rayone/race-effects.js":"/garage-na-rayone/race-effects.js?v=1ed9a3b","/garage-na-rayone/race-shadows.js":"/garage-na-rayone/race-shadows.js?v=1ed9a3b","/garage-na-rayone/race-world.js":"/garage-na-rayone/race-world.js?v=1ed9a3b","/garage-na-rayone/receipts.js":"/garage-na-rayone/receipts.js?v=1ed9a3b","/garage-na-rayone/referral-road.js":"/garage-na-rayone/referral-road.js?v=1ed9a3b","/garage-na-rayone/referral-tiers.js":"/garage-na-rayone/referral-tiers.js?v=1ed9a3b","/garage-na-rayone/render-quality.js":"/garage-na-rayone/render-quality.js?v=1ed9a3b","/garage-na-rayone/result-tiers.js":"/garage-na-rayone/result-tiers.js?v=1ed9a3b","/garage-na-rayone/reward-tiles.js":"/garage-na-rayone/reward-tiles.js?v=1ed9a3b","/garage-na-rayone/ridge-battle.js":"/garage-na-rayone/ridge-battle.js?v=1ed9a3b","/garage-na-rayone/ridge-body.js":"/garage-na-rayone/ridge-body.js?v=1ed9a3b","/garage-na-rayone/ridge-camera.js":"/garage-na-rayone/ridge-camera.js?v=1ed9a3b","/garage-na-rayone/ridge-contact-effects.js":"/garage-na-rayone/ridge-contact-effects.js?v=1ed9a3b","/garage-na-rayone/ridge-contact.js":"/garage-na-rayone/ridge-contact.js?v=1ed9a3b","/garage-na-rayone/ridge-controls.js":"/garage-na-rayone/ridge-controls.js?v=1ed9a3b","/garage-na-rayone/ridge-drift.js":"/garage-na-rayone/ridge-drift.js?v=1ed9a3b","/garage-na-rayone/ridge-obstacles.js":"/garage-na-rayone/ridge-obstacles.js?v=1ed9a3b","/garage-na-rayone/ridge-records.js":"/garage-na-rayone/ridge-records.js?v=1ed9a3b","/garage-na-rayone/ridge-recovery.js":"/garage-na-rayone/ridge-recovery.js?v=1ed9a3b","/garage-na-rayone/ridge-route.js":"/garage-na-rayone/ridge-route.js?v=1ed9a3b","/garage-na-rayone/ridge-terrain.js":"/garage-na-rayone/ridge-terrain.js?v=1ed9a3b","/garage-na-rayone/ridge-tyre-table.js":"/garage-na-rayone/ridge-tyre-table.js?v=1ed9a3b","/garage-na-rayone/ridge-tyres.js":"/garage-na-rayone/ridge-tyres.js?v=1ed9a3b","/garage-na-rayone/ridge-world.js":"/garage-na-rayone/ridge-world.js?v=1ed9a3b","/garage-na-rayone/rival-line-view.js":"/garage-na-rayone/rival-line-view.js?v=1ed9a3b","/garage-na-rayone/rival-line.js":"/garage-na-rayone/rival-line.js?v=1ed9a3b","/garage-na-rayone/rivals.js":"/garage-na-rayone/rivals.js?v=1ed9a3b","/garage-na-rayone/road-repairs.js":"/garage-na-rayone/road-repairs.js?v=1ed9a3b","/garage-na-rayone/road-ride.js":"/garage-na-rayone/road-ride.js?v=1ed9a3b","/garage-na-rayone/sandbox-save.js":"/garage-na-rayone/sandbox-save.js?v=1ed9a3b","/garage-na-rayone/sculpted-body-kit.js":"/garage-na-rayone/sculpted-body-kit.js?v=1ed9a3b","/garage-na-rayone/shop.js":"/garage-na-rayone/shop.js?v=1ed9a3b","/garage-na-rayone/soft-economy.js":"/garage-na-rayone/soft-economy.js?v=1ed9a3b","/garage-na-rayone/soyuz-bumper-mesh.js":"/garage-na-rayone/soyuz-bumper-mesh.js?v=1ed9a3b","/garage-na-rayone/spoiler-kit.js":"/garage-na-rayone/spoiler-kit.js?v=1ed9a3b","/garage-na-rayone/start-tree.js":"/garage-na-rayone/start-tree.js?v=1ed9a3b","/garage-na-rayone/store-catalog.js":"/garage-na-rayone/store-catalog.js?v=1ed9a3b","/garage-na-rayone/store.js":"/garage-na-rayone/store.js?v=1ed9a3b","/garage-na-rayone/surface-detail.js":"/garage-na-rayone/surface-detail.js?v=1ed9a3b","/garage-na-rayone/telegram.js":"/garage-na-rayone/telegram.js?v=1ed9a3b","/garage-na-rayone/telemetry.js":"/garage-na-rayone/telemetry.js?v=1ed9a3b","/garage-na-rayone/tracks.js":"/garage-na-rayone/tracks.js?v=1ed9a3b","/garage-na-rayone/tune-preview.js":"/garage-na-rayone/tune-preview.js?v=1ed9a3b","/garage-na-rayone/unlocks.js":"/garage-na-rayone/unlocks.js?v=1ed9a3b","/garage-na-rayone/upgrade-art.js":"/garage-na-rayone/upgrade-art.js?v=1ed9a3b","/garage-na-rayone/upgrade-button.js":"/garage-na-rayone/upgrade-button.js?v=1ed9a3b","/garage-na-rayone/upgrades.js":"/garage-na-rayone/upgrades.js?v=1ed9a3b","/garage-na-rayone/vehicle-dynamics.js":"/garage-na-rayone/vehicle-dynamics.js?v=1ed9a3b","/garage-na-rayone/vehicle-effects.js":"/garage-na-rayone/vehicle-effects.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/controls/OrbitControls.js":"/garage-na-rayone/vendor/addons/controls/OrbitControls.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/environments/RoomEnvironment.js":"/garage-na-rayone/vendor/addons/environments/RoomEnvironment.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/geometries/RoundedBoxGeometry.js":"/garage-na-rayone/vendor/addons/geometries/RoundedBoxGeometry.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/libs/meshopt_decoder.module.js":"/garage-na-rayone/vendor/addons/libs/meshopt_decoder.module.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/loaders/GLTFLoader.js":"/garage-na-rayone/vendor/addons/loaders/GLTFLoader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/math/SimplexNoise.js":"/garage-na-rayone/vendor/addons/math/SimplexNoise.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/EffectComposer.js":"/garage-na-rayone/vendor/addons/postprocessing/EffectComposer.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/MaskPass.js":"/garage-na-rayone/vendor/addons/postprocessing/MaskPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/OutputPass.js":"/garage-na-rayone/vendor/addons/postprocessing/OutputPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/Pass.js":"/garage-na-rayone/vendor/addons/postprocessing/Pass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/RenderPass.js":"/garage-na-rayone/vendor/addons/postprocessing/RenderPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/SSAOPass.js":"/garage-na-rayone/vendor/addons/postprocessing/SSAOPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/ShaderPass.js":"/garage-na-rayone/vendor/addons/postprocessing/ShaderPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/shaders/CopyShader.js":"/garage-na-rayone/vendor/addons/shaders/CopyShader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/shaders/OutputShader.js":"/garage-na-rayone/vendor/addons/shaders/OutputShader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/shaders/SSAOShader.js":"/garage-na-rayone/vendor/addons/shaders/SSAOShader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/utils/BufferGeometryUtils.js":"/garage-na-rayone/vendor/addons/utils/BufferGeometryUtils.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/utils/SkeletonUtils.js":"/garage-na-rayone/vendor/addons/utils/SkeletonUtils.js?v=1ed9a3b","/garage-na-rayone/vendor/three.core.min.js":"/garage-na-rayone/vendor/three.core.min.js?v=1ed9a3b","/garage-na-rayone/vendor/three.module.js":"/garage-na-rayone/vendor/three.module.js?v=1ed9a3b","/garage-na-rayone/weather-effects.js":"/garage-na-rayone/weather-effects.js?v=1ed9a3b","/garage-na-rayone/wet-road.js":"/garage-na-rayone/wet-road.js?v=1ed9a3b","/garage-na-rayone/wheel-kit.js":"/garage-na-rayone/wheel-kit.js?v=1ed9a3b"}}</script>
+<style>
+@font-face{font-family:Oswald;src:url('../assets/oswald.woff2')}
+:root{color-scheme:dark}
+body{margin:0;background:#15171a;color:#e8e0c8;font:14px/1.45 Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:12px 18px;background:#1c1f23;border-bottom:1px solid #ffffff14}
+header h1{margin:0;font:600 20px Oswald,Arial,sans-serif;letter-spacing:.5px}
+header label{display:flex;align-items:center;gap:6px;color:#b8b39f}
+select,button{font:inherit;color:#e8e0c8;background:#262a2f;border:1px solid #ffffff22;border-radius:4px;padding:5px 8px}
+button{cursor:pointer}.status{color:#a9a48f;margin-left:auto}
+.rows{display:grid;gap:14px;padding:14px 18px}
+.row{background:#1d2024;border:1px solid #ffffff12;border-left:4px solid var(--tier,#666);border-radius:6px;overflow:hidden}
+.row.boss{border-left-width:10px;background:#212529}
+.head{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;padding:8px 12px}
+.head h3{margin:0;font:600 17px Oswald,Arial,sans-serif}
+.head .role{color:#a9a48f}.head .где{color:#7f8a93;margin-left:auto;font-size:12px}
+.views{display:grid;grid-template-columns:2fr 1fr;gap:2px;background:#000}
+.views canvas{display:block;width:100%;background:#2a2e33}
+.spec{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px}
+.spec b{font-weight:400;background:#2a2f35;border:1px solid #ffffff14;border-radius:3px;padding:2px 7px;color:#d9d2bb}
+.spec b.neon{border-color:var(--neon,#888);color:var(--neon,#ddd)}
+.spec b.tier{background:var(--tier,#555);color:#12151a;font-weight:700}
+</style></head><body>
+<header><h1>Боссы и главари · тачки</h1>
+<label>Показать <select id="who"><option value="bosses">только боссы районов</option><option value="named">именные</option><option value="all">все 45 главарей</option></select></label>
+<button id="redraw">Перерисовать</button><span class="status" id="status">…</span></header>
+<div class="rows" id="rows"></div>
+<script type="module">
+import * as T from 'three';
+import {createGLTFLoader} from '../gltf.js';
+import {CARS} from '../fleet.js';
+import {PAINTS} from '../paints.js';
+import {NEONS} from '../neons.js';
+import {hydrate,opponent,CHARACTER_LOOKS} from '../progression.js';
+import {campaignPosition,CAMPAIGN_LENGTH} from '../campaign-config.js';
+import {isOverpassStage} from '../overpass-flow.js';
+import {characterFor} from '../characters.js';
+import {applyCustomization} from '../car-customization.js';
+import {attachNeon} from '../car-neon.js';
+import {pbrMaterial,outdoorEnvironment} from '../pbr-renderer.js';
+
+const $=s=>document.querySelector(s),q=new URLSearchParams(location.search);
+const rows=$('#rows'),status=$('#status'),whoSel=$('#who');
+whoSel.value=q.get('who')||'bosses';
+const paintName=id=>PAINTS.find(p=>p.id===id)?.name||id;
+const neonOf=id=>NEONS.find(n=>n.id===id);
+const TIER_COLOR=['#666','#8a8f96','#4f9fd6','#a06ad6','#d68a3a','#d64f4f'];
+
+const W=760,SIDE_H=300,Q_W=380;
+const renderer=new T.WebGLRenderer({antialias:true,preserveDrawingBuffer:true,alpha:true});
+renderer.setPixelRatio(1);renderer.setSize(W,SIDE_H,false);renderer.outputColorSpace=T.SRGBColorSpace;
+renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1;
+const env=outdoorEnvironment(renderer,{sky:0x9fb4c8,fog:0xd8d3c4,sun:0xfff0d0,intensity:1,id:'bosses'});
+const scene=new T.Scene();scene.background=new T.Color(0x22262b);scene.environment=env.texture;scene.environmentIntensity=.9;
+scene.add(new T.HemisphereLight(0xe8eef6,0x4a453b,1.5));
+const key=new T.DirectionalLight(0xfff0d8,3.1);key.position.set(-4,7,6);scene.add(key);
+const rim=new T.DirectionalLight(0xb8d0ee,1.3);rim.position.set(5,3,-5);scene.add(rim);
+const ground=new T.Mesh(new T.CircleGeometry(6,48),new T.MeshStandardMaterial({color:0x33383e,roughness:.9}));
+ground.rotation.x=-Math.PI/2;scene.add(ground);
+
+const models=new Map();
+async function base(i){
+ if(models.has(i))return models.get(i);
+ const gltf=await createGLTFLoader().loadAsync(`../assets/cars/${CARS[i].id}.glb`);
+ const car=gltf.scene;car.userData.fit=CARS[i];
+ car.traverse(o=>{if(o.isMesh)o.material=pbrMaterial(o.material,CARS[i]);});
+ models.set(i,car);return car;
+}
+function instance(i,rival){
+ const root=new T.Group(),car=models.get(i).clone(true);root.add(car);
+ Object.assign(root.userData,{carLength:CARS[i].length,carWidth:CARS[i].width,wheelbase:CARS[i].wheelbase,axleOffset:CARS[i].axleOffset||0,wheelRadius:CARS[i].radius,wheels:[]});
+ applyCustomization(root,car,rival.equipment||{},rival.paint||CARS[i].color,rival.decal||null);
+ if(rival.neon)attachNeon(root,rival.neon,{reduced:true,racing:false});
+ return root;
+}
+const shoot=(cam,canvas)=>{renderer.setSize(canvas.width,canvas.height,false);renderer.render(scene,cam);canvas.getContext('2d').drawImage(renderer.domElement,0,0);};
+function side(root,canvas,car){
+ const L=root.userData.carLength,H=car.height||1.5,cw=canvas.width,ch=canvas.height;
+ const cam=new T.OrthographicCamera(-L*.58,L*.58,L*.58*ch/cw,-L*.58*ch/cw,.1,50);
+ cam.position.set(0,H*.5+.6,8);cam.lookAt(0,H*.5-.1,0);shoot(cam,canvas);
+}
+function quarter(root,canvas){
+ const L=root.userData.carLength;
+ const cam=new T.PerspectiveCamera(30,canvas.width/canvas.height,.1,60);
+ cam.position.set(-L*1.05,1.3,L*.95);cam.lookAt(0,.5,0);shoot(cam,canvas);
+}
+// Кого показываем: боссы районов, все именные (у них своя внешность) или вся лестница главарей.
+function list(){
+ const mode=whoSel.value,out=[];
+ for(let rank=0;rank<CAMPAIGN_LENGTH;rank++){
+  if(isOverpassStage(rank))continue;
+  const pos=campaignPosition(rank);if(!pos.boss&&!pos.captain)continue;
+  const rival=opponent({...hydrate({version:3,campaignRevision:2}),rank});
+  if(mode==='bosses'&&!pos.boss)continue;
+  if(mode==='named'&&!CHARACTER_LOOKS[rival.name])continue;
+  out.push({rank,pos,rival});
+ }
+ return out;
+}
+let busy=false;
+async function draw(){
+ if(busy)return;busy=true;rows.innerHTML='';
+ const items=list();
+ for(const [k,{rank,pos,rival}] of items.entries()){
+  status.textContent=`рисуем ${k+1}/${items.length} · ${rival.name}`;
+  await base(rival.car);
+  const el=document.createElement('article');
+  el.className='row'+(pos.boss?' boss':'');
+  el.style.setProperty('--tier',TIER_COLOR[rival.tier]||'#666');
+  const neon=neonOf(rival.neon),role=characterFor(rival.name)?.role||'';
+  el.innerHTML=`<div class="head"><h3>${rival.name}</h3><span class="role">${role}</span>
+   <span class="где">${pos.boss?'босс района':'главарь'} ${pos.map+1} · серия ${pos.series+1} · ранг ${rank}</span></div>
+   <div class="views"><canvas width="${W}" height="${SIDE_H}"></canvas><canvas width="${Q_W}" height="${SIDE_H}"></canvas></div>
+   <div class="spec"><b class="tier">ступень ${rival.tier}</b><b>${CARS[rival.car].name}</b><b>${paintName(rival.paint)}</b>
+   ${rival.decal?`<b>винил: ${rival.decal}</b>`:''}
+   ${neon?`<b class="neon" style="--neon:${neon.color}">неон: ${neon.name}</b>`:'<b>без неона</b>'}
+   ${Object.values(rival.equipment||{}).map(id=>`<b>${id}</b>`).join('')||'<b>сток</b>'}</div>`;
+  rows.append(el);
+  await new Promise(x=>setTimeout(x,0));/* не rAF: в скрытой панели кадры не приходят */
+  const root=instance(rival.car,rival);scene.add(root);
+  const [a,b]=el.querySelectorAll('canvas');
+  side(root,a,CARS[rival.car]);quarter(root,b);
+  scene.remove(root);
+ }
+ status.textContent=`готово · ${items.length} соперников`;busy=false;
+}
+whoSel.onchange=draw;$('#redraw').onclick=draw;
+draw();
+</script></body></html>

@@ -1,0 +1,283 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Студия машин</title>
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js","three/addons/":"../vendor/addons/","/garage-na-rayone/analytics.js":"/garage-na-rayone/analytics.js?v=1ed9a3b","/garage-na-rayone/app-shell.js":"/garage-na-rayone/app-shell.js?v=1ed9a3b","/garage-na-rayone/avatar.js":"/garage-na-rayone/avatar.js?v=1ed9a3b","/garage-na-rayone/beat-clock.js":"/garage-na-rayone/beat-clock.js?v=1ed9a3b","/garage-na-rayone/body-profiles.js":"/garage-na-rayone/body-profiles.js?v=1ed9a3b","/garage-na-rayone/bumper-kit.js":"/garage-na-rayone/bumper-kit.js?v=1ed9a3b","/garage-na-rayone/callsign.js":"/garage-na-rayone/callsign.js?v=1ed9a3b","/garage-na-rayone/campaign-config.js":"/garage-na-rayone/campaign-config.js?v=1ed9a3b","/garage-na-rayone/campaign-texts.js":"/garage-na-rayone/campaign-texts.js?v=1ed9a3b","/garage-na-rayone/campaign-tuning.js":"/garage-na-rayone/campaign-tuning.js?v=1ed9a3b","/garage-na-rayone/car-classes.js":"/garage-na-rayone/car-classes.js?v=1ed9a3b","/garage-na-rayone/car-customization.js":"/garage-na-rayone/car-customization.js?v=1ed9a3b","/garage-na-rayone/car-driver.js":"/garage-na-rayone/car-driver.js?v=1ed9a3b","/garage-na-rayone/car-lamps.js":"/garage-na-rayone/car-lamps.js?v=1ed9a3b","/garage-na-rayone/car-levels.js":"/garage-na-rayone/car-levels.js?v=1ed9a3b","/garage-na-rayone/car-levelup.js":"/garage-na-rayone/car-levelup.js?v=1ed9a3b","/garage-na-rayone/car-neon.js":"/garage-na-rayone/car-neon.js?v=1ed9a3b","/garage-na-rayone/car-reveal.js":"/garage-na-rayone/car-reveal.js?v=1ed9a3b","/garage-na-rayone/car-underbody.js":"/garage-na-rayone/car-underbody.js?v=1ed9a3b","/garage-na-rayone/career.js":"/garage-na-rayone/career.js?v=1ed9a3b","/garage-na-rayone/challenge-api.js":"/garage-na-rayone/challenge-api.js?v=1ed9a3b","/garage-na-rayone/challenge-intro.js":"/garage-na-rayone/challenge-intro.js?v=1ed9a3b","/garage-na-rayone/challenge-rules.js":"/garage-na-rayone/challenge-rules.js?v=1ed9a3b","/garage-na-rayone/challenge-ui.js":"/garage-na-rayone/challenge-ui.js?v=1ed9a3b","/garage-na-rayone/characters.js":"/garage-na-rayone/characters.js?v=1ed9a3b","/garage-na-rayone/cloud-save.js":"/garage-na-rayone/cloud-save.js?v=1ed9a3b","/garage-na-rayone/crates.js":"/garage-na-rayone/crates.js?v=1ed9a3b","/garage-na-rayone/currency-icons.js":"/garage-na-rayone/currency-icons.js?v=1ed9a3b","/garage-na-rayone/customizer-ui.js":"/garage-na-rayone/customizer-ui.js?v=1ed9a3b","/garage-na-rayone/decal-liveries.js":"/garage-na-rayone/decal-liveries.js?v=1ed9a3b","/garage-na-rayone/decal-projection.js":"/garage-na-rayone/decal-projection.js?v=1ed9a3b","/garage-na-rayone/decals.js":"/garage-na-rayone/decals.js?v=1ed9a3b","/garage-na-rayone/dev/studio-driver.js":"/garage-na-rayone/dev/studio-driver.js?v=1ed9a3b","/garage-na-rayone/dev-mode.js":"/garage-na-rayone/dev-mode.js?v=1ed9a3b","/garage-na-rayone/dialog-dismiss.js":"/garage-na-rayone/dialog-dismiss.js?v=1ed9a3b","/garage-na-rayone/drag-camera.js":"/garage-na-rayone/drag-camera.js?v=1ed9a3b","/garage-na-rayone/drift-bonuses.js":"/garage-na-rayone/drift-bonuses.js?v=1ed9a3b","/garage-na-rayone/drift-feedback.js":"/garage-na-rayone/drift-feedback.js?v=1ed9a3b","/garage-na-rayone/drift-hud.js":"/garage-na-rayone/drift-hud.js?v=1ed9a3b","/garage-na-rayone/drift-scenery.js":"/garage-na-rayone/drift-scenery.js?v=1ed9a3b","/garage-na-rayone/drivetrain.js":"/garage-na-rayone/drivetrain.js?v=1ed9a3b","/garage-na-rayone/duel-rules.js":"/garage-na-rayone/duel-rules.js?v=1ed9a3b","/garage-na-rayone/duel-ui.js":"/garage-na-rayone/duel-ui.js?v=1ed9a3b","/garage-na-rayone/earned-crates.js":"/garage-na-rayone/earned-crates.js?v=1ed9a3b","/garage-na-rayone/engine-audio-legacy.js":"/garage-na-rayone/engine-audio-legacy.js?v=1ed9a3b","/garage-na-rayone/engine-audio.js":"/garage-na-rayone/engine-audio.js?v=1ed9a3b","/garage-na-rayone/engine-model.js":"/garage-na-rayone/engine-model.js?v=1ed9a3b","/garage-na-rayone/engine-presets.js":"/garage-na-rayone/engine-presets.js?v=1ed9a3b","/garage-na-rayone/engine-voice.js":"/garage-na-rayone/engine-voice.js?v=1ed9a3b","/garage-na-rayone/engine-worklet.js":"/garage-na-rayone/engine-worklet.js?v=1ed9a3b","/garage-na-rayone/event-rules.js":"/garage-na-rayone/event-rules.js?v=1ed9a3b","/garage-na-rayone/event-ui.js":"/garage-na-rayone/event-ui.js?v=1ed9a3b","/garage-na-rayone/features.js":"/garage-na-rayone/features.js?v=1ed9a3b","/garage-na-rayone/finish-camera.js":"/garage-na-rayone/finish-camera.js?v=1ed9a3b","/garage-na-rayone/finish-presentation.js":"/garage-na-rayone/finish-presentation.js?v=1ed9a3b","/garage-na-rayone/fleet-migration.js":"/garage-na-rayone/fleet-migration.js?v=1ed9a3b","/garage-na-rayone/fleet-views.js":"/garage-na-rayone/fleet-views.js?v=1ed9a3b","/garage-na-rayone/fleet.js":"/garage-na-rayone/fleet.js?v=1ed9a3b","/garage-na-rayone/form.js":"/garage-na-rayone/form.js?v=1ed9a3b","/garage-na-rayone/game.js":"/garage-na-rayone/game.js?v=1ed9a3b","/garage-na-rayone/garage-blackout.js":"/garage-na-rayone/garage-blackout.js?v=1ed9a3b","/garage-na-rayone/garage-crew.js":"/garage-na-rayone/garage-crew.js?v=1ed9a3b","/garage-na-rayone/garage-evening.js":"/garage-na-rayone/garage-evening.js?v=1ed9a3b","/garage-na-rayone/garage-focus.js":"/garage-na-rayone/garage-focus.js?v=1ed9a3b","/garage-na-rayone/garage-idle.js":"/garage-na-rayone/garage-idle.js?v=1ed9a3b","/garage-na-rayone/garage-lamps.js":"/garage-na-rayone/garage-lamps.js?v=1ed9a3b","/garage-na-rayone/garage-layout.js":"/garage-na-rayone/garage-layout.js?v=1ed9a3b","/garage-na-rayone/garage-levels.js":"/garage-na-rayone/garage-levels.js?v=1ed9a3b","/garage-na-rayone/garage-radio.js":"/garage-na-rayone/garage-radio.js?v=1ed9a3b","/garage-na-rayone/garage-resident.js":"/garage-na-rayone/garage-resident.js?v=1ed9a3b","/garage-na-rayone/garage-selection.js":"/garage-na-rayone/garage-selection.js?v=1ed9a3b","/garage-na-rayone/garage-shot.js":"/garage-na-rayone/garage-shot.js?v=1ed9a3b","/garage-na-rayone/garage-surfaces.js":"/garage-na-rayone/garage-surfaces.js?v=1ed9a3b","/garage-na-rayone/garage-upgrade.js":"/garage-na-rayone/garage-upgrade.js?v=1ed9a3b","/garage-na-rayone/garage-workshop.js":"/garage-na-rayone/garage-workshop.js?v=1ed9a3b","/garage-na-rayone/gltf.js":"/garage-na-rayone/gltf.js?v=1ed9a3b","/garage-na-rayone/goals.js":"/garage-na-rayone/goals.js?v=1ed9a3b","/garage-na-rayone/ground-light.js":"/garage-na-rayone/ground-light.js?v=1ed9a3b","/garage-na-rayone/handicap.js":"/garage-na-rayone/handicap.js?v=1ed9a3b","/garage-na-rayone/haptics.js":"/garage-na-rayone/haptics.js?v=1ed9a3b","/garage-na-rayone/intro-atmosphere.js":"/garage-na-rayone/intro-atmosphere.js?v=1ed9a3b","/garage-na-rayone/intro-parallax.js":"/garage-na-rayone/intro-parallax.js?v=1ed9a3b","/garage-na-rayone/invite-card.js":"/garage-na-rayone/invite-card.js?v=1ed9a3b","/garage-na-rayone/kit-clearance.js":"/garage-na-rayone/kit-clearance.js?v=1ed9a3b","/garage-na-rayone/live-portrait.js":"/garage-na-rayone/live-portrait.js?v=1ed9a3b","/garage-na-rayone/liveries.js":"/garage-na-rayone/liveries.js?v=1ed9a3b","/garage-na-rayone/loading-bar.js":"/garage-na-rayone/loading-bar.js?v=1ed9a3b","/garage-na-rayone/loaner-rules.js":"/garage-na-rayone/loaner-rules.js?v=1ed9a3b","/garage-na-rayone/loaner-ui.js":"/garage-na-rayone/loaner-ui.js?v=1ed9a3b","/garage-na-rayone/loot-ui.js":"/garage-na-rayone/loot-ui.js?v=1ed9a3b","/garage-na-rayone/meta-ui.js":"/garage-na-rayone/meta-ui.js?v=1ed9a3b","/garage-na-rayone/motion.js":"/garage-na-rayone/motion.js?v=1ed9a3b","/garage-na-rayone/music-beats.js":"/garage-na-rayone/music-beats.js?v=1ed9a3b","/garage-na-rayone/neons.js":"/garage-na-rayone/neons.js?v=1ed9a3b","/garage-na-rayone/notifications.js":"/garage-na-rayone/notifications.js?v=1ed9a3b","/garage-na-rayone/onboarding-scene.js":"/garage-na-rayone/onboarding-scene.js?v=1ed9a3b","/garage-na-rayone/onboarding.js":"/garage-na-rayone/onboarding.js?v=1ed9a3b","/garage-na-rayone/overpass-districts.js":"/garage-na-rayone/overpass-districts.js?v=1ed9a3b","/garage-na-rayone/overpass-flow.js":"/garage-na-rayone/overpass-flow.js?v=1ed9a3b","/garage-na-rayone/overpass-route.js":"/garage-na-rayone/overpass-route.js?v=1ed9a3b","/garage-na-rayone/overpass-world.js":"/garage-na-rayone/overpass-world.js?v=1ed9a3b","/garage-na-rayone/overtake-route.js":"/garage-na-rayone/overtake-route.js?v=1ed9a3b","/garage-na-rayone/paints.js":"/garage-na-rayone/paints.js?v=1ed9a3b","/garage-na-rayone/parking-course.js":"/garage-na-rayone/parking-course.js?v=1ed9a3b","/garage-na-rayone/part-icons.js":"/garage-na-rayone/part-icons.js?v=1ed9a3b","/garage-na-rayone/particle-batch.js":"/garage-na-rayone/particle-batch.js?v=1ed9a3b","/garage-na-rayone/pbr-renderer.js":"/garage-na-rayone/pbr-renderer.js?v=1ed9a3b","/garage-na-rayone/physics.js":"/garage-na-rayone/physics.js?v=1ed9a3b","/garage-na-rayone/pitstop-ui.js":"/garage-na-rayone/pitstop-ui.js?v=1ed9a3b","/garage-na-rayone/played-stats.js":"/garage-na-rayone/played-stats.js?v=1ed9a3b","/garage-na-rayone/portrait-rigs.js":"/garage-na-rayone/portrait-rigs.js?v=1ed9a3b","/garage-na-rayone/power-hints.js":"/garage-na-rayone/power-hints.js?v=1ed9a3b","/garage-na-rayone/powertrain-layout.js":"/garage-na-rayone/powertrain-layout.js?v=1ed9a3b","/garage-na-rayone/powertrain-xray.js":"/garage-na-rayone/powertrain-xray.js?v=1ed9a3b","/garage-na-rayone/profiles.js":"/garage-na-rayone/profiles.js?v=1ed9a3b","/garage-na-rayone/progression.js":"/garage-na-rayone/progression.js?v=1ed9a3b","/garage-na-rayone/puddle-splashes.js":"/garage-na-rayone/puddle-splashes.js?v=1ed9a3b","/garage-na-rayone/race-audio.js":"/garage-na-rayone/race-audio.js?v=1ed9a3b","/garage-na-rayone/race-effects.js":"/garage-na-rayone/race-effects.js?v=1ed9a3b","/garage-na-rayone/race-shadows.js":"/garage-na-rayone/race-shadows.js?v=1ed9a3b","/garage-na-rayone/race-world.js":"/garage-na-rayone/race-world.js?v=1ed9a3b","/garage-na-rayone/receipts.js":"/garage-na-rayone/receipts.js?v=1ed9a3b","/garage-na-rayone/referral-road.js":"/garage-na-rayone/referral-road.js?v=1ed9a3b","/garage-na-rayone/referral-tiers.js":"/garage-na-rayone/referral-tiers.js?v=1ed9a3b","/garage-na-rayone/render-quality.js":"/garage-na-rayone/render-quality.js?v=1ed9a3b","/garage-na-rayone/result-tiers.js":"/garage-na-rayone/result-tiers.js?v=1ed9a3b","/garage-na-rayone/reward-tiles.js":"/garage-na-rayone/reward-tiles.js?v=1ed9a3b","/garage-na-rayone/ridge-battle.js":"/garage-na-rayone/ridge-battle.js?v=1ed9a3b","/garage-na-rayone/ridge-body.js":"/garage-na-rayone/ridge-body.js?v=1ed9a3b","/garage-na-rayone/ridge-camera.js":"/garage-na-rayone/ridge-camera.js?v=1ed9a3b","/garage-na-rayone/ridge-contact-effects.js":"/garage-na-rayone/ridge-contact-effects.js?v=1ed9a3b","/garage-na-rayone/ridge-contact.js":"/garage-na-rayone/ridge-contact.js?v=1ed9a3b","/garage-na-rayone/ridge-controls.js":"/garage-na-rayone/ridge-controls.js?v=1ed9a3b","/garage-na-rayone/ridge-drift.js":"/garage-na-rayone/ridge-drift.js?v=1ed9a3b","/garage-na-rayone/ridge-obstacles.js":"/garage-na-rayone/ridge-obstacles.js?v=1ed9a3b","/garage-na-rayone/ridge-records.js":"/garage-na-rayone/ridge-records.js?v=1ed9a3b","/garage-na-rayone/ridge-recovery.js":"/garage-na-rayone/ridge-recovery.js?v=1ed9a3b","/garage-na-rayone/ridge-route.js":"/garage-na-rayone/ridge-route.js?v=1ed9a3b","/garage-na-rayone/ridge-terrain.js":"/garage-na-rayone/ridge-terrain.js?v=1ed9a3b","/garage-na-rayone/ridge-tyre-table.js":"/garage-na-rayone/ridge-tyre-table.js?v=1ed9a3b","/garage-na-rayone/ridge-tyres.js":"/garage-na-rayone/ridge-tyres.js?v=1ed9a3b","/garage-na-rayone/ridge-world.js":"/garage-na-rayone/ridge-world.js?v=1ed9a3b","/garage-na-rayone/rival-line-view.js":"/garage-na-rayone/rival-line-view.js?v=1ed9a3b","/garage-na-rayone/rival-line.js":"/garage-na-rayone/rival-line.js?v=1ed9a3b","/garage-na-rayone/rivals.js":"/garage-na-rayone/rivals.js?v=1ed9a3b","/garage-na-rayone/road-repairs.js":"/garage-na-rayone/road-repairs.js?v=1ed9a3b","/garage-na-rayone/road-ride.js":"/garage-na-rayone/road-ride.js?v=1ed9a3b","/garage-na-rayone/sandbox-save.js":"/garage-na-rayone/sandbox-save.js?v=1ed9a3b","/garage-na-rayone/sculpted-body-kit.js":"/garage-na-rayone/sculpted-body-kit.js?v=1ed9a3b","/garage-na-rayone/shop.js":"/garage-na-rayone/shop.js?v=1ed9a3b","/garage-na-rayone/soft-economy.js":"/garage-na-rayone/soft-economy.js?v=1ed9a3b","/garage-na-rayone/soyuz-bumper-mesh.js":"/garage-na-rayone/soyuz-bumper-mesh.js?v=1ed9a3b","/garage-na-rayone/spoiler-kit.js":"/garage-na-rayone/spoiler-kit.js?v=1ed9a3b","/garage-na-rayone/start-tree.js":"/garage-na-rayone/start-tree.js?v=1ed9a3b","/garage-na-rayone/store-catalog.js":"/garage-na-rayone/store-catalog.js?v=1ed9a3b","/garage-na-rayone/store.js":"/garage-na-rayone/store.js?v=1ed9a3b","/garage-na-rayone/surface-detail.js":"/garage-na-rayone/surface-detail.js?v=1ed9a3b","/garage-na-rayone/telegram.js":"/garage-na-rayone/telegram.js?v=1ed9a3b","/garage-na-rayone/telemetry.js":"/garage-na-rayone/telemetry.js?v=1ed9a3b","/garage-na-rayone/tracks.js":"/garage-na-rayone/tracks.js?v=1ed9a3b","/garage-na-rayone/tune-preview.js":"/garage-na-rayone/tune-preview.js?v=1ed9a3b","/garage-na-rayone/unlocks.js":"/garage-na-rayone/unlocks.js?v=1ed9a3b","/garage-na-rayone/upgrade-art.js":"/garage-na-rayone/upgrade-art.js?v=1ed9a3b","/garage-na-rayone/upgrade-button.js":"/garage-na-rayone/upgrade-button.js?v=1ed9a3b","/garage-na-rayone/upgrades.js":"/garage-na-rayone/upgrades.js?v=1ed9a3b","/garage-na-rayone/vehicle-dynamics.js":"/garage-na-rayone/vehicle-dynamics.js?v=1ed9a3b","/garage-na-rayone/vehicle-effects.js":"/garage-na-rayone/vehicle-effects.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/controls/OrbitControls.js":"/garage-na-rayone/vendor/addons/controls/OrbitControls.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/environments/RoomEnvironment.js":"/garage-na-rayone/vendor/addons/environments/RoomEnvironment.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/geometries/RoundedBoxGeometry.js":"/garage-na-rayone/vendor/addons/geometries/RoundedBoxGeometry.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/libs/meshopt_decoder.module.js":"/garage-na-rayone/vendor/addons/libs/meshopt_decoder.module.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/loaders/GLTFLoader.js":"/garage-na-rayone/vendor/addons/loaders/GLTFLoader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/math/SimplexNoise.js":"/garage-na-rayone/vendor/addons/math/SimplexNoise.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/EffectComposer.js":"/garage-na-rayone/vendor/addons/postprocessing/EffectComposer.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/MaskPass.js":"/garage-na-rayone/vendor/addons/postprocessing/MaskPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/OutputPass.js":"/garage-na-rayone/vendor/addons/postprocessing/OutputPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/Pass.js":"/garage-na-rayone/vendor/addons/postprocessing/Pass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/RenderPass.js":"/garage-na-rayone/vendor/addons/postprocessing/RenderPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/SSAOPass.js":"/garage-na-rayone/vendor/addons/postprocessing/SSAOPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/postprocessing/ShaderPass.js":"/garage-na-rayone/vendor/addons/postprocessing/ShaderPass.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/shaders/CopyShader.js":"/garage-na-rayone/vendor/addons/shaders/CopyShader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/shaders/OutputShader.js":"/garage-na-rayone/vendor/addons/shaders/OutputShader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/shaders/SSAOShader.js":"/garage-na-rayone/vendor/addons/shaders/SSAOShader.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/utils/BufferGeometryUtils.js":"/garage-na-rayone/vendor/addons/utils/BufferGeometryUtils.js?v=1ed9a3b","/garage-na-rayone/vendor/addons/utils/SkeletonUtils.js":"/garage-na-rayone/vendor/addons/utils/SkeletonUtils.js?v=1ed9a3b","/garage-na-rayone/vendor/three.core.min.js":"/garage-na-rayone/vendor/three.core.min.js?v=1ed9a3b","/garage-na-rayone/vendor/three.module.js":"/garage-na-rayone/vendor/three.module.js?v=1ed9a3b","/garage-na-rayone/weather-effects.js":"/garage-na-rayone/weather-effects.js?v=1ed9a3b","/garage-na-rayone/wet-road.js":"/garage-na-rayone/wet-road.js?v=1ed9a3b","/garage-na-rayone/wheel-kit.js":"/garage-na-rayone/wheel-kit.js?v=1ed9a3b"}}</script>
+<style>
+@font-face{font-family:Oswald;src:url('../assets/oswald.woff2')}
+:root{color-scheme:dark;--bg:#111416;--panel:#1a1d20;--line:#ffffff14;--text:#e8e2cf;--dim:#9a9586;--accent:#e2b24a;--ok:#9fd08a;--bad:#ef8d6a}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:13px/1.4 -apple-system,"Segoe UI",Arial,sans-serif}
+.app{display:grid;grid-template-columns:312px 1fr;height:100%}
+aside{background:var(--panel);border-right:1px solid var(--line);overflow:auto;padding:14px 14px 28px}
+h1{margin:0;font:600 20px/1.1 Oswald,Arial Narrow,sans-serif;letter-spacing:.5px;text-transform:uppercase}
+.sub{color:var(--dim);margin:3px 0 12px}
+section{border-top:1px solid var(--line);padding:11px 0}
+h2{margin:0 0 8px;font:600 11px/1 -apple-system,Arial,sans-serif;letter-spacing:1.3px;text-transform:uppercase;color:var(--accent)}
+.row{display:flex;flex-wrap:wrap;gap:6px}
+button{font:inherit;color:var(--text);background:#25292d;border:1px solid #ffffff1f;border-radius:5px;padding:5px 9px;cursor:pointer}
+button:hover{border-color:#ffffff44}
+button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:#2c2a22}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cars button{flex:1 1 0;padding:8px 6px;font:600 14px/1.1 Oswald,Arial Narrow,sans-serif;letter-spacing:.4px;text-transform:uppercase}
+.cars button small{display:block;font:400 11px/1.3 -apple-system,Arial,sans-serif;color:var(--dim);text-transform:none;letter-spacing:0}
+select{width:100%;font:inherit;color:var(--text);background:#25292d;border:1px solid #ffffff1f;border-radius:5px;padding:5px 6px}
+label.check{display:flex;gap:8px;align-items:center;margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.swatches{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}
+.swatches button{height:24px;padding:0;border-radius:4px}
+.swatches button[aria-pressed="true"]{outline:2px solid var(--accent);outline-offset:1px}
+.note{color:var(--dim);margin-top:6px}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}td{padding:2px 0}td:last-child{text-align:right}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+main{position:relative;min-width:0}
+#host{position:absolute;inset:0}#host canvas{display:block;width:100%;height:100%}
+#hud{position:absolute;left:12px;top:10px;background:#000a;padding:6px 9px;border-radius:5px;font-variant-numeric:tabular-nums}
+#hint{position:absolute;left:12px;bottom:10px;color:var(--dim);background:#000a;padding:4px 8px;border-radius:4px}
+#loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--dim);background:#111416cc}
+@media (max-width:760px){.app{grid-template-columns:1fr;grid-template-rows:auto 62vh}aside{border-right:0;border-bottom:1px solid var(--line)}}
+ .parts{display:grid;gap:6px;margin-top:8px}
+ .part{display:grid;grid-template-columns:74px 1fr;align-items:center;gap:8px}
+ .part span{font-size:12px;color:var(--muted,#9aa3ad);letter-spacing:.02em}
+ .part select{border-left:4px solid var(--tier,#3a4048)}
+</style></head><body>
+<div class="app">
+<aside>
+ <h1>Студия машин</h1>
+ <div class="sub">Финальная проверка новых моделей: те же файлы, материалы, обвес и свет, что в игре</div>
+ <section><div class="row cars" id="cars"></div></section>
+ <section><h2>Краска</h2><div class="swatches" id="paints"></div><div class="note" id="paint-name"></div>
+  <label class="check"><input type="checkbox" id="all-paints"> Все краски игры, не только заводские</label></section>
+ <section><h2>Детали кузова — как в мастерской</h2>
+  <div class="grid2"><select id="rarity" aria-label="Весь обвес сразу"></select><select id="style" aria-label="Стиль для всего обвеса"></select></div>
+  <div class="parts" id="parts"></div>
+  <div class="note">Каждая деталь игры: слот, редкость и стиль. У кузовных деталей варианты внутри редкости («с рынка», «от бати») меняют только цифры; у дисков каждый вариант — свой диск, цвет, профиль резины и суппорт.</div></section>
+ <section><h2>Винил · неон</h2>
+  <div class="grid2"><select id="decal" aria-label="Винил"></select><select id="neon" aria-label="Неон"></select></div></section>
+ <section><h2>Свет</h2>
+  <div class="row" id="light-mode">
+   <button data-light="off">Гараж, свет горит</button><button data-light="garage">Гараж, свет выключен</button>
+   <button data-light="sun">Яркий день</button><button data-light="day">Заезд днём</button><button data-light="night">Заезд ночью</button><button data-light="brake">Финиш: стопы</button></div>
+  <label class="check"><input type="checkbox" id="hazard" checked> Аварийка</label>
+  <label class="check"><input type="checkbox" id="sections"> Раскрасить секции фонарей</label>
+  <div class="note" id="light-note"></div></section>
+ <section><h2>Вид</h2>
+  <div class="row" id="body-mode"><button data-body="full" aria-pressed="true">Кузов целиком</button><button data-body="cut">Разрез</button></div>
+  <label class="check"><input type="checkbox" id="glass" checked> Стёкла</label>
+  <label class="check"><input type="checkbox" id="wire"> Сетка поверх</label>
+  <label class="check"><input type="checkbox" id="spin"> Колёса крутятся</label>
+  <label class="check"><input type="checkbox" id="steer"> Руль вывернут (передние колёса)</label>
+  <label class="check" id="driver-row"><input type="checkbox" id="driver" checked> Водитель за рулём</label>
+  <label class="check"><input type="checkbox" id="stand"> Персонаж 178 см рядом — сравнить рост</label></section>
+ <section><h2>Камера</h2><div class="row" id="cams"></div></section>
+ <section><h2>Сводка</h2><table>
+  <tr><td>Треугольников модели</td><td id="s-tris">—</td></tr>
+  <tr><td>Отрисовок модели</td><td id="s-draws">—</td></tr>
+  <tr><td>Треугольников в кадре</td><td id="s-frame">—</td></tr>
+  <tr><td>Длина × ширина × высота</td><td id="s-size">—</td></tr>
+  <tr><td>База · смещение осей</td><td id="s-base">—</td></tr>
+  <tr><td>Радиус колеса</td><td id="s-radius">—</td></tr>
+  <tr><td>Днище</td><td id="s-under">—</td></tr>
+  <tr><td>Лампы аварийки у стёкол</td><td id="s-lamps">—</td></tr>
+  <tr><td>Промах кистей (лев/прав)</td><td id="s-miss">—</td></tr>
+  <tr><td>Зазор от макушки до крыши</td><td id="s-head">—</td></tr>
+ </table></section>
+</aside>
+<main><div id="host"></div><div id="hud"></div><div id="loading">грузим машину…</div><div id="hint">Тяни мышью — вращение · колесо — приближение · правая кнопка — сдвиг</div></main>
+</div>
+<script type="module">
+// Студия финальной проверки трёх новых машин (22 сентября): Восьмёрка, Копейка, Волга.
+// Всё берётся из игры как есть: модель из assets/cars, паспорт fleet.js, applyCustomization (краска, винил,
+// обвес), световой ковёр и неон, bindIndicators (аварийка), накалы фар и стопов из garage-blackout и заезда.
+// Сцена — фотостудия гаража (buildStage). Водитель — dev/studio-driver.js, только в Восьмёрке.
+import * as T from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {createGLTFLoader} from '../gltf.js';
+import {GameRenderer} from '../pbr-renderer.js';
+import {QUALITY} from '../render-quality.js';
+import {buildStage} from '../garage-shot.js';
+import {CARS} from '../fleet.js';
+import {PAINTS,stockPaintsFor} from '../paints.js';
+import {DECALS} from '../decals.js';
+import {NEONS} from '../neons.js';
+import {RARITIES,KIT_STYLES,BODY_SLOTS,PARTS,partId} from '../progression.js';
+import {applyCustomization,disposeCustomizedCar} from '../car-customization.js';
+import {attachGroundLight} from '../ground-light.js';
+import {attachNeon} from '../car-neon.js';
+import {bindIndicators,BLINK} from '../garage-lamps.js';
+import {BLACKOUT} from '../garage-blackout.js';
+import {headCentres,lensCorners} from '../car-lamps.js';
+import {attachDriver,standingFigure,seatFor} from './studio-driver.js';
+
+const $=id=>document.getElementById(id),q=new URLSearchParams(location.search);
+const STUDIO=[{id:'samara',label:'Восьмёрка',model:'ВАЗ-2108'},{id:'kopeyka',label:'Копейка',model:'ВАЗ-2101'},{id:'volga',label:'Волга',model:'ГАЗ-24'},{id:'twelve',label:'Двенашка',model:'ВАЗ-2112'},{id:'niva',label:'Нива',model:'ВАЗ-21214'}];
+// Слоты кузова в порядке мастерской игры (customizer-ui.js, группа «Кузов»).
+const KIT=['bumpers','spoiler','skirts','fenders','rims'];
+const SLOT_NAMES={bumpers:'Бамперы',spoiler:'Спойлер',skirts:'Пороги',fenders:'Арки',rims:'Диски'};
+const state={car:STUDIO.find(c=>c.id===q.get('car'))?.id||'samara',paint:null,rarity:q.get('rarity')??'',style:q.get('style')??'',equip:{},decal:'',neon:'',light:q.get('light')||'off',cam:q.get('cam')||'all'};
+
+// Рендер как в игре.
+const renderer=new T.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFShadowMap;renderer.outputColorSpace=T.SRGBColorSpace;
+renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=.94;renderer.info.autoReset=false;
+const graphics=new GameRenderer(renderer);$('host').append(renderer.domElement);
+const camera=new T.PerspectiveCamera(34,1,.02,200);
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.08;
+
+// Интерфейс.
+for(const c of STUDIO){const b=document.createElement('button');b.dataset.car=c.id;b.innerHTML=`${c.label}<small>${c.model}</small>`;b.onclick=()=>{state.car=c.id;state.paint=null;rebuild();};$('cars').append(b);}
+// Весь обвес сразу: редкость и стиль на все пять слотов. Дальше любой слот меняется отдельно — как в игре.
+$('rarity').innerHTML='<option value="">Весь обвес: сток</option>'+RARITIES.map((r,i)=>`<option value="${i}">Весь обвес: ${r.name}</option>`).join('')+'<option value="mix" hidden>Весь обвес: свой набор</option>';
+$('style').innerHTML=KIT_STYLES.map(s=>`<option value="${s.id||''}">Стиль: ${s.name}</option>`).join('');$('style').value=state.style;
+// Детали слота — все, что есть в игре (PARTS), базовый вариант каждой редкости и стиля, с игровыми названиями.
+for(const slot of KIT){const row=document.createElement('label');row.className='part';row.innerHTML=`<span>${SLOT_NAMES[slot]}</span><select id="part-${slot}" aria-label="${SLOT_NAMES[slot]}"></select>`;$('parts').append(row);
+ const sel=row.querySelector('select');sel.innerHTML='<option value="">Сток</option>'+RARITIES.map((r,i)=>`<optgroup label="${r.name}">`+PARTS.filter(p=>p.slot===slot&&p.rarity===i&&(slot==='rims'||!p.variant))/* диски: у каждого варианта свой облик — показываем все */.map(p=>`<option value="${p.id}">«${p.nickname}»${BODY_SLOTS.includes(slot)?' · '+p.styleName:''}</option>`).join('')+'</optgroup>').join('');
+ sel.onchange=()=>{state.equip[slot]=sel.value;syncParts('mix');rebuild();};}
+function setAll(r,style){for(const slot of KIT)state.equip[slot]=r===''?'':partId(slot,Number(r),BODY_SLOTS.includes(slot)?(style||null):null);}
+function syncParts(all){for(const slot of KIT){const sel=$('part-'+slot),p=PARTS.find(x=>x.id===state.equip[slot]);sel.value=state.equip[slot]||'';sel.style.setProperty('--tier',p?RARITIES[p.rarity].color:'#3a4048');}
+ const r=new Set(KIT.map(s=>PARTS.find(x=>x.id===state.equip[s])?.rarity??''));$('rarity').value=all==='mix'&&r.size>1?'mix':[...r][0]===undefined?'':String([...r][0]);}
+$('rarity').onchange=()=>{if($('rarity').value==='mix')return;setAll($('rarity').value,$('style').value);syncParts();rebuild();};
+$('style').onchange=()=>{for(const slot of BODY_SLOTS){const p=PARTS.find(x=>x.id===state.equip[slot]);if(p)state.equip[slot]=partId(slot,p.rarity,$('style').value||null);}syncParts('mix');rebuild();};
+setAll(state.rarity,state.style);syncParts();
+$('decal').innerHTML='<option value="">Без винила</option>'+DECALS.map(d=>`<option value="${d.id}">${d.name}</option>`).join('');
+$('neon').innerHTML='<option value="">Без неона</option>'+NEONS.map(n=>`<option value="${n.id}">Неон: ${n.name}</option>`).join('');
+for(const [id,key] of [['decal','decal'],['neon','neon']])$(id).onchange=()=>{state[key]=$(id).value;rebuild();};
+$('all-paints').onchange=renderPaints;
+
+function renderPaints(){
+ const stock=stockPaintsFor(state.car),ids=$('all-paints').checked?PAINTS.map(p=>p.id):stock;
+ $('paints').innerHTML='';
+ for(const id of ids){const p=PAINTS.find(x=>x.id===id);if(!p)continue;const b=document.createElement('button');b.style.background=p.color;b.title=p.name+(stock.includes(id)?' · заводская':'');b.setAttribute('aria-label',p.name);b.setAttribute('aria-pressed',String(id===state.paint));b.onclick=()=>{state.paint=id;rebuild();};$('paints').append(b);}
+ $('paint-name').textContent=(PAINTS.find(p=>p.id===state.paint)?.name||'')+(stock.includes(state.paint)?' · заводская гамма':'');
+}
+
+// Модели грузятся один раз.
+const loader=createGLTFLoader(),models=new Map();
+// Метка времени: студия — для финальной проверки, модели и набор колёс всегда свежие, а не из кэша вкладки.
+const FRESH=Date.now();
+const base=id=>models.get(id)??models.set(id,loader.loadAsync(`../assets/cars/${id}.glb?v=${FRESH}`)).get(id);
+
+let root=null,car=null,stage=null,scene=null,indicators=null,driver=null,standing=null,beams=[],lamps={head:[],tail:[]},roomLights=[],roomEnv=1,paintMeshes=[],glassMeshes=[],wires=[],sectionsSaved=new Map(),busy=false,again=false,ticket=0;
+const fitOf=()=>CARS.find(c=>c.id===state.car);
+
+let viewedCar=null;
+async function rebuild(){
+ if(busy){again=true;return;}busy=true;const t=++ticket;$('loading').hidden=false;
+ try{
+  const fit=fitOf(),gltf=await base(state.car);
+  // Уборка прежнего экземпляра.
+  for(const w of wires)w.removeFromParent();wires.length=0;sectionsSaved.clear();
+  indicators?.dispose?.();indicators=null;driver?.person.dispose();driver=null;standing?.person.dispose();standing=null;
+  for(const b of beams){b.removeFromParent();b.target.removeFromParent();}beams=[];
+  stage?.dispose();if(root){disposeCustomizedCar(root);}
+  // Экземпляр как modelInstance в игре.
+  if(!state.paint)state.paint=stockPaintsFor(state.car)[0]||fit.color;
+  root=new T.Group();car=gltf.scene.clone(true);car.userData.fit=fit;root.add(car);
+  Object.assign(root.userData,{carLength:fit.length,carWidth:fit.width,wheelbase:fit.wheelbase,axleOffset:fit.axleOffset||0,wheelRadius:fit.radius,wheels:[]});
+  // Как modelInstance: геометрия клона общая с загруженной моделью — при пересборке её не освобождаем.
+  root.userData.shared=true;car.traverse(o=>{o.userData.shared=true;o.userData.car=true;if(/^Wheel_[FR][LR]$/.test(o.name))root.userData.wheels.push(o);});
+  const equipment=Object.fromEntries(KIT.filter(s=>state.equip[s]).map(s=>[s,state.equip[s]]));
+  applyCustomization(root,car,equipment,state.paint,state.decal||null);
+  attachGroundLight(root,fit,{ambient:1.5});
+  if(state.neon)attachNeon(root,state.neon,{racing:false});
+  stage=buildStage(T,renderer,root);scene=stage.scene;
+  // Свет машины: те же материалы, что ищут игра и выключатель гаража.
+  lamps={head:[],tail:[]};paintMeshes=[];glassMeshes=[];
+  car.traverse(o=>{if(!o.isMesh)return;const n=o.material.name||'';if(/headlight/i.test(n))lamps.head.push(o);else if(/^Red lens(?:\.\d+)?$/.test(n))lamps.tail.push(o);if(/^Paint/.test(n))paintMeshes.push(o);if(/glass/i.test(n)&&!/headlight/i.test(n))glassMeshes.push(o);});
+  roomLights=[];scene.traverse(o=>{if(o.isLight&&o.intensity>0)roomLights.push({light:o,base:o.intensity});});roomEnv=scene.environmentIntensity??1;
+  const fwd=new T.Vector3(-1,0,0),sides=lamps.head.length?headCentres(T,car,lamps.head):null;
+  for(let i=0;i<2;i++){const b=new T.SpotLight(BLACKOUT.beam.color,0,BLACKOUT.beam.distance,BLACKOUT.beam.angle,BLACKOUT.beam.penumbra,BLACKOUT.beam.decay);const at=sides?.[i]||new T.Vector3(-fit.length/2,.65,(i?1:-1)*.5);b.position.copy(at).addScaledVector(fwd,.18);b.target.position.copy(at).addScaledVector(fwd,6).setY(.02);scene.add(b,b.target);beams.push(b);}
+  hazard();applyLight(state.light);
+  if($('glass').checked===false)for(const m of glassMeshes)m.visible=false;
+  applyBodyMode();if($('wire').checked)wire(true);if($('sections').checked)sections(true);
+  if($('driver').checked)await seatDriver();
+  if($('stand').checked)await showStanding();
+  if(t!==ticket)return;
+  summary();renderPaints();
+  document.querySelectorAll('[data-car]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.car===state.car)));
+  // Ракурс ставим только при первой сборке и при смене машины: смена детали, краски или света камеру не трогает.
+  if(viewedCar!==state.car){viewedCar=state.car;view(state.cam,true);}
+ }catch(e){console.error(e);$('loading').textContent='не собралась: '+e.message;return;}
+ finally{busy=false;if(again){again=false;rebuild();}}
+ $('loading').hidden=true;
+}
+
+// Свет: цвета и накалы — из игры (garage-blackout.js, заезд в game.js, vehicle-effects.js).
+const LIGHT={
+ off:{room:1,head:0,tail:0,beam:0,note:'Светлый бокс: своего света у машины почти не видно, мигает только аварийка.'},
+ garage:{room:BLACKOUT.room,head:BLACKOUT.head,tail:BLACKOUT.tail,beam:BLACKOUT.beam.intensity,note:`Кнопка-лампочка в гараже: фары ${BLACKOUT.head}, габариты ${BLACKOUT.tail}, два прожектора — по одному на фару.`},
+ // Яркий день (Андрей, 23 сентября): солнце с тенями, небо и окружение ярче — видно форму кузова, стыки и блики.
+ sun:{room:1.6,head:0,tail:0,beam:0,sun:3.2,env:2.2,sky:0xbfd6ea,note:'Яркий день: солнце 3.2 сверху-спереди с тенями, окружение ×2.2, светлое небо.'},
+ day:{room:1,head:.12,tail:.18,beam:0,note:'Заезд днём: фары .12, габариты .18.'},
+ night:{room:.06,head:2.2,tail:.85,beam:BLACKOUT.beam.intensity,note:'Заезд ночью: фары 2.2, габариты .85.'},
+ brake:{room:.06,head:2.2,tail:1.9,beam:BLACKOUT.beam.intensity,note:'После финиша машина катится и тормозит: стопы 1.9.'},
+};
+function applyLight(mode){
+ state.light=mode;const L=LIGHT[mode];
+ document.querySelectorAll('[data-light]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.light===mode)));
+ for(const {light,base} of roomLights)light.intensity=base*L.room;if(scene)scene.environmentIntensity=roomEnv*(L.env??Math.max(L.room,.1));
+ if(scene){if(!scene.userData.sun){const d=new T.DirectionalLight(0xfff4e2,0);d.name='Studio sun';d.position.set(-4,7,5);d.castShadow=true;d.shadow.mapSize.set(2048,2048);Object.assign(d.shadow.camera,{left:-4,right:4,top:4,bottom:-4,near:.5,far:20});d.shadow.bias=-.0004;d.shadow.normalBias=.02;scene.add(d,d.target);scene.userData.sun=d;scene.userData.background0=scene.background;}
+  scene.userData.sun.intensity=L.sun||0;scene.background=L.sky?new T.Color(L.sky):scene.userData.background0;}
+ for(const m of lamps.head){m.material.emissive?.set(L.head?0xffdfaa:0);m.material.emissiveIntensity=L.head;}
+ for(const m of lamps.tail){m.material.emissive?.set(L.tail?0xff2010:0);m.material.emissiveIntensity=L.tail;}
+ for(const b of beams)b.intensity=L.beam;root?.userData.groundLight?.setAmbient?.(L.room<1?1:1.5);$('light-note').textContent=L.note;
+}
+document.querySelectorAll('[data-light]').forEach(b=>b.onclick=()=>applyLight(b.dataset.light));
+function hazard(){indicators?.dispose?.();indicators=null;if($('hazard').checked)indicators=bindIndicators(root,{});else car?.traverse(o=>{if(o.isMesh&&/^Amber lens/.test(o.material.name))o.material.emissiveIntensity=0;});}
+$('hazard').onchange=hazard;
+
+// Раскраска секций фонарей: каждая своим цветом — видно, какой треугольник куда попал.
+const SECTION={'Prismatic headlight glass':0x4fa3ff,'Red lens':0xff2a2a,'Amber lens':0xffa000,'Clear lens':0xffffff};
+function sections(on){
+ if(on)car.traverse(o=>{if(!o.isMesh||sectionsSaved.has(o))return;const c=SECTION[o.material.name];if(c!=null){sectionsSaved.set(o,o.material);o.material=new T.MeshBasicMaterial({color:c});}});
+ else{for(const [o,m] of sectionsSaved){o.material.dispose();o.material=m;}sectionsSaved.clear();hazard();applyLight(state.light);}
+}
+$('sections').onchange=()=>sections($('sections').checked);
+
+// Вид.
+function applyBodyMode(){const cut=document.querySelector('[data-body="cut"]').getAttribute('aria-pressed')==='true';for(const m of paintMeshes){m.material.transparent=cut;m.material.opacity=cut?.16:1;m.material.depthWrite=!cut;m.material.needsUpdate=true;}}
+document.querySelectorAll('[data-body]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-body]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));applyBodyMode();});
+$('glass').onchange=()=>{for(const m of glassMeshes)m.visible=$('glass').checked;};
+function wire(on){for(const w of wires)w.removeFromParent();wires.length=0;if(!on)return;root.traverse(o=>{if(!o.isMesh||o.isSkinnedMesh||o.userData.wireOf)return;const l=new T.LineSegments(new T.WireframeGeometry(o.geometry),new T.LineBasicMaterial({color:0x7fd0ff,transparent:true,opacity:.32}));l.userData.wireOf=o;o.add(l);wires.push(l);});}
+$('wire').onchange=()=>wire($('wire').checked);
+$('steer').onchange=()=>{for(const w of root.userData.wheels)if(w.name.startsWith('Wheel_F'))w.rotation.y=$('steer').checked?.45:0;};
+
+// Водитель (Восьмёрка) и персонаж стоя.
+async function seatDriver(){driver?.person.dispose();driver=null;const fit=seatFor(state.car);if(!fit||!$('driver').checked){showDriver(null);return;}driver=await attachDriver(root,fit);showDriver(driver?.report);}
+function showDriver(r){const cm=v=>v==null?'—':(v*100).toFixed(1)+' см';$('s-miss').textContent=r?cm(r.missL)+' / '+cm(r.missR):'—';$('s-miss').className=r&&Math.max(r.missL,r.missR)<.03?'ok':r?'bad':'';$('s-head').textContent=r?cm(r.clearance):'—';$('s-head').className=r&&r.clearance>.02?'ok':r?'bad':'';}
+$('driver').onchange=()=>seatDriver();
+async function showStanding(){standing?.person.dispose();standing=null;if(!$('stand').checked)return;const fit=fitOf();standing=await standingFigure(car,{position:[-fit.length/2-.55,0,fit.width/2-.1],yaw:Math.PI/2});}
+$('stand').onchange=()=>showStanding();
+
+// Камеры — в системе машины: нос по −X, левый борт (место водителя) по +Z.
+const CAMS=[['all','Вся'],['nose','Перед'],['tail','Корма'],['side','Борт'],['top','Сверху'],['under','Снизу'],['wheel','Колесо'],['cabin','Салон'],['kit','Обвес'],['rearq','Корма низко'],['frontq','Нос низко']];
+for(const [id,label] of CAMS){const b=document.createElement('button');b.dataset.cam=id;b.textContent=label;b.onclick=()=>view(id);$('cams').append(b);}
+function view(kind,keep=false){
+ state.cam=kind;document.querySelectorAll('[data-cam]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.cam===kind)));
+ const f=fitOf(),L=f.length,H=f.height,ax=f.axleOffset||0,front=-f.wheelbase/2+ax;
+ const P={all:[[0,.62,0],[4.6,2.3,5.6]],nose:[[-L/2+.2,.62,0],[-2.6,.55,2.0]],tail:[[L/2-.2,.72,0],[2.6,.55,2.0]],side:[[0,.62,0],[0,.35,6.4]],top:[[0,.3,0],[.01,7.6,.01]],under:[[0,.3,0],[1.5,-3.2,2.4]],wheel:[[front,f.radius,-f.width/2],[-.6,.12,-1.6]],cabin:[[-.25,.85,.35],[1.2,.95,-.05]],kit:[[0,.45,0],[-3.4,1.1,4.6]],rearq:[[L/2-.55,.42,f.width/2],[1.9,.12,1.9]],frontq:[[-L/2+.55,.42,f.width/2],[-1.9,.12,1.9]]}[kind];
+ const t=new T.Vector3(...P[0]);controls.target.copy(t);camera.position.copy(t).add(new T.Vector3(...P[1]));if(kind==='cabin'){camera.position.set(.15,1.25,1.25);controls.target.set(-.35,.8,.3);}controls.update();
+}
+
+// Сводка.
+function summary(){
+ let tris=0,draws=0;car.traverse(o=>{if(o.isMesh&&!o.isSkinnedMesh&&!/Neon|ContactShadow|Ground/i.test(o.name)){draws++;const g=o.geometry;tris+=(g.index?g.index.count:g.attributes.position.count)/3;}});
+ const f=fitOf();$('s-tris').textContent=new Intl.NumberFormat('ru-RU').format(tris);$('s-draws').textContent=draws;
+ $('s-size').textContent=`${f.length.toFixed(3)} × ${f.width.toFixed(3)} × ${f.height.toFixed(3)}`;$('s-base').textContent=`${f.wheelbase.toFixed(3)} · ${(f.axleOffset||0).toFixed(3)}`;$('s-radius').textContent=f.radius.toFixed(3);
+ $('s-under').textContent=f.ownUnderbody?'своё, игровое не подкладывается':'игровое (car-underbody)';
+ const amber=[];car.traverse(o=>{if(o.isMesh&&/^Amber lens/.test(o.material.name))amber.push(o);});const corners=lensCorners(T,root,amber)||[];
+ $('s-lamps').textContent=corners.filter(Boolean).length+' из 4';$('s-lamps').className=corners.filter(Boolean).length===4?'ok':'bad';
+}
+
+function resize(){const w=$('host').clientWidth,h=$('host').clientHeight;if(!w||!h)return;graphics.resize(w,h,devicePixelRatio,2,QUALITY[2]);camera.aspect=w/h;camera.updateProjectionMatrix();}
+new ResizeObserver(resize).observe($('host'));resize();
+let prev=0,last=0;
+renderer.setAnimationLoop(now=>{
+ const dt=prev?Math.min(.1,(now-prev)/1000):0;prev=now;
+ indicators?.update(dt);root?.userData.neon?.update(dt);driver?.person?.update?.(dt);standing?.person?.update?.(dt);
+ if($('spin').checked&&root)for(const w of root.userData.wheels)w.rotation.z-=dt*6;
+ controls.update();if(!scene)return;renderer.info.reset();graphics.render(scene,camera);
+ if(now-last>300){last=now;$('hud').textContent=`${STUDIO.find(c=>c.id===state.car).label} · кадр ${new Intl.NumberFormat('ru-RU').format(renderer.info.render.triangles)} треуг. · ${renderer.info.render.calls} отрисовок`;$('s-frame').textContent=new Intl.NumberFormat('ru-RU').format(renderer.info.render.triangles);}
+});
+// Для снимков: window.__studio.hazardOn() держит фазу «горит».
+window.__studio={state,view,applyLight,look(pos,at){controls.target.set(...at);camera.position.set(...pos);controls.update();},get root(){return root;},hazardOn(){if(indicators){indicators.update=()=>false;for(const m of indicators.materials)m.emissiveIntensity=BLINK.lensOn;for(const l of indicators.lights)l.intensity=BLINK.light;}}};
+await rebuild();window.__ready=true;
+</script></body></html>
