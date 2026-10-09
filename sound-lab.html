@@ -1,0 +1,225 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>
+// Double-clicking the HTML gives it a null origin: module imports and sample
+// fetches are blocked. Open this development tool on its local server instead.
+if(location.protocol==='file:')location.replace('http://127.0.0.1:4173/sound-lab.html'+location.search+location.hash);
+</script>
+<title>Звук мотора — стенд</title>
+<link rel="stylesheet" href="style.css?v=3447683"><link rel="stylesheet" href="ui-surfaces.css?v=3447683">
+<style>
+ body{margin:0;background:#14161300;color:#e6e2d2;font:14px/1.4 Arial,sans-serif}
+ main{max-width:520px;margin:0 auto;padding:14px 14px 40px}
+ h1{font:600 22px/1.1 Oswald,sans-serif;letter-spacing:1px;margin:6px 0 2px}
+ .note{color:#9aa091;font-size:12px;margin:0 0 14px}
+ fieldset{border:1px solid #ffffff1a;border-radius:8px;margin:0 0 12px;padding:10px 12px 12px;min-width:0;max-width:100%}
+ main{min-width:0}
+ input[type=range]{min-width:0;width:100%}
+ legend{font:600 11px/1 Oswald,sans-serif;letter-spacing:2px;color:#c9a96b;padding:0 6px}
+ .rack{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+ .chip{display:flex;flex-direction:column;gap:2px;padding:9px 10px;border:1px solid #ffffff1f;border-radius:6px;
+  background:#20241f;color:#cdd3c2;text-align:left;cursor:pointer}
+ .chip.on{border-color:#e6bc6377;background:#2c2a1d;color:#f0dcab}
+ .chip b{font:600 14px/1.1 Oswald,sans-serif;letter-spacing:.4px}
+ .chip small{font-size:10px;color:#93998b}
+ .chip.on small{color:#bfae82}
+ label.row{display:flex;align-items:center;gap:10px;margin:8px 0}
+ label.row span{min-width:96px;font:600 11px/1 Oswald,sans-serif;letter-spacing:1.4px;color:#b6bcac}
+ input[type=range]{flex:1;accent-color:#e6bc63}
+ output{min-width:74px;text-align:right;font:600 13px/1 Oswald,sans-serif;color:#efd9a6}
+ .keys{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+ .keys button{min-height:40px;padding:0 14px;border-radius:6px;border:1px solid #ffffff22;background:#2b2e26;
+  color:#e8e2cc;font:600 12px/1 Oswald,sans-serif;letter-spacing:1.4px;cursor:pointer}
+ .keys button.primary{background:#e6bc63;color:#14170f;border-color:#e6bc63}
+ .mix{font:11px/1.5 Arial;color:#8f978a;margin:10px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all}
+</style></head><body><main>
+<h1>ЗВУК МОТОРА · СТЕНД</h1>
+<p class="note">Копейка — мягкий басовый выпуск, Двенашка — спортивный бас, Волга — тяжёлый рёв. Выбери сборку и нажми «Разгон». После пробы и при уходе из окна звук выключается.</p>
+<fieldset><legend>ОСНОВА ЗВУКА</legend>
+ <div class="keys" id="sources"><button data-source="recorded" class="primary">ЗАПИСЬ МОТОРА</button><button data-source="synthetic">ПРЕДЫДУЩИЙ СИНТЕЗ</button></div>
+</fieldset>
+<fieldset><legend>СРАВНИТЬ СБОРКИ</legend>
+ <div class="keys" id="builds"><button data-build="stock" class="primary">СТОК</button><button data-build="motor">МОТОР 15</button><button data-build="street">МОТОР + ПРЯМОТОК</button><button data-build="race">ТУРБО + СПОРТ КПП</button><button data-build="shots">СТРЕЛЯЮЩИЙ ВЫХЛОП</button></div>
+ <p id="build-note" class="note" aria-live="polite">Заводская сборка: мягкий выхлоп и тихая коробка.</p>
+ <div class="keys"><button id="compare">СРАВНИТЬ НА ТЕХ ЖЕ ОБОРОТАХ</button></div>
+ <label class="row"><span>ГРОМКОСТЬ</span><input id="volume" type="range" min="0" max="100" value="60"><output id="volume-out">60 %</output></label>
+</fieldset>
+<fieldset><legend>МАШИНА</legend>
+ <label class="row"><span>МАШИНА</span><select id="car"></select></label>
+ <p id="car-note" class="note"></p>
+ <div class="keys"><button id="compare-cars">КОПЕЙКА → ДВЕНАШКА → ВОЛГА</button></div>
+ <label class="row"><span>УРОВЕНЬ МОТОРА</span><input type="range" id="engine" min="0" max="20" step="1" value="0"><output id="engine-out"></output></label>
+ <label class="row"><span>УРОВЕНЬ КПП</span><input type="range" id="gearbox" min="0" max="20" step="1" value="0"><output id="gearbox-out"></output></label>
+ <p class="mix" id="tier"></p>
+</fieldset>
+<fieldset><legend>ЖЕЛЕЗО</legend><div class="rack" id="rack"></div>
+ <label class="row"><span>РАНГ АПГРЕЙДОВ</span><input type="range" id="rank" min="0" max="100" step="5" value="0"><output id="rank-out"></output></label>
+ <p class="mix" id="mix"></p>
+</fieldset>
+<fieldset><legend>МОТОР</legend>
+ <label class="row"><span>ОБОРОТЫ</span><input type="range" id="rpm" min="900" max="7400" step="20" value="1200"><output id="rpm-out"></output></label>
+ <label class="row"><span>ГАЗ</span><input type="range" id="load" min="0" max="100" step="1" value="0"><output id="load-out"></output></label>
+ <div class="keys">
+  <button id="run" class="primary">ЗАПУСТИТЬ</button>
+  <button id="pull">ГАЗ В ПОЛ ДО ОТСЕЧКИ</button>
+  <button id="blip">ПЕРЕГАЗОВКА</button>
+  <button id="shift">ПЕРЕКЛЮЧИТЬ</button>
+  <button id="nitro">НИТРО</button>
+  <button id="launch">СТАРТ · ДВА-СТЕП</button>
+  <button id="sweep">РАЗГОН</button>
+  <button id="exhaust-test">СТРЕЛЬБА НА СБРОСЕ</button>
+ </div>
+</fieldset>
+<fieldset id="synth-modes" hidden><legend>ЧТО СЛУШАЕМ</legend>
+ <p class="note">Дополнительные режимы для сравнения слоёв мотора.</p>
+ <div class="keys" id="modes">
+  <button data-mode="tone">А · ТОЛЬКО ТОН</button>
+  <button data-mode="live">Б · ТОН + ЖИВОСТЬ</button>
+  <button data-mode="all" class="primary">В · ВСЁ, КАК В ИГРЕ</button>
+ </div>
+ <p class="mix" id="mode-note"></p>
+</fieldset>
+<fieldset id="synth-character" hidden><legend>ХАРАКТЕР ЗВУКА</legend>
+ <p class="note">100 % — как в пресете машины. Ниже — чище и мягче, выше — грязнее и злее.</p>
+ <label class="row"><span>ГРЯЗЬ</span><input type="range" id="m-dirt" min="0" max="200" step="5" value="100"><output id="m-dirt-out"></output></label>
+ <label class="row"><span>ЗЛОСТЬ</span><input type="range" id="m-anger" min="0" max="200" step="5" value="100"><output id="m-anger-out"></output></label>
+ <label class="row"><span>ХЛОПКИ</span><input type="range" id="m-pops" min="0" max="200" step="5" value="100"><output id="m-pops-out"></output></label>
+ <label class="row"><span>БАС</span><input type="range" id="m-bass" min="0" max="200" step="5" value="100"><output id="m-bass-out"></output></label>
+ <div class="keys"><button id="copy" class="primary">СКОПИРОВАТЬ НАСТРОЙКИ</button><button id="reset">СБРОСИТЬ</button></div>
+ <p class="mix" id="json"></p>
+ <details><summary class="note" style="cursor:pointer">Тонкая настройка (много ручек)</summary><div id="knobs"></div></details>
+</fieldset>
+</main>
+<script type="importmap">{"imports":{"/garage-na-rayone/analytics.js":"/garage-na-rayone/analytics.js?v=3447683","/garage-na-rayone/app-shell.js":"/garage-na-rayone/app-shell.js?v=3447683","/garage-na-rayone/avatar.js":"/garage-na-rayone/avatar.js?v=3447683","/garage-na-rayone/beat-clock.js":"/garage-na-rayone/beat-clock.js?v=3447683","/garage-na-rayone/body-profiles.js":"/garage-na-rayone/body-profiles.js?v=3447683","/garage-na-rayone/bumper-kit.js":"/garage-na-rayone/bumper-kit.js?v=3447683","/garage-na-rayone/callsign.js":"/garage-na-rayone/callsign.js?v=3447683","/garage-na-rayone/campaign-config.js":"/garage-na-rayone/campaign-config.js?v=3447683","/garage-na-rayone/campaign-texts.js":"/garage-na-rayone/campaign-texts.js?v=3447683","/garage-na-rayone/campaign-tuning.js":"/garage-na-rayone/campaign-tuning.js?v=3447683","/garage-na-rayone/car-classes.js":"/garage-na-rayone/car-classes.js?v=3447683","/garage-na-rayone/car-customization.js":"/garage-na-rayone/car-customization.js?v=3447683","/garage-na-rayone/car-driver.js":"/garage-na-rayone/car-driver.js?v=3447683","/garage-na-rayone/car-hero.js":"/garage-na-rayone/car-hero.js?v=3447683","/garage-na-rayone/car-lamps.js":"/garage-na-rayone/car-lamps.js?v=3447683","/garage-na-rayone/car-levels.js":"/garage-na-rayone/car-levels.js?v=3447683","/garage-na-rayone/car-levelup.js":"/garage-na-rayone/car-levelup.js?v=3447683","/garage-na-rayone/car-neon.js":"/garage-na-rayone/car-neon.js?v=3447683","/garage-na-rayone/car-reveal.js":"/garage-na-rayone/car-reveal.js?v=3447683","/garage-na-rayone/car-shadow-batch.js":"/garage-na-rayone/car-shadow-batch.js?v=3447683","/garage-na-rayone/car-underbody.js":"/garage-na-rayone/car-underbody.js?v=3447683","/garage-na-rayone/career.js":"/garage-na-rayone/career.js?v=3447683","/garage-na-rayone/challenge-api.js":"/garage-na-rayone/challenge-api.js?v=3447683","/garage-na-rayone/challenge-intro.js":"/garage-na-rayone/challenge-intro.js?v=3447683","/garage-na-rayone/challenge-rules.js":"/garage-na-rayone/challenge-rules.js?v=3447683","/garage-na-rayone/challenge-ui.js":"/garage-na-rayone/challenge-ui.js?v=3447683","/garage-na-rayone/characters.js":"/garage-na-rayone/characters.js?v=3447683","/garage-na-rayone/cloud-save.js":"/garage-na-rayone/cloud-save.js?v=3447683","/garage-na-rayone/crates.js":"/garage-na-rayone/crates.js?v=3447683","/garage-na-rayone/currency-icons.js":"/garage-na-rayone/currency-icons.js?v=3447683","/garage-na-rayone/customizer-ui.js":"/garage-na-rayone/customizer-ui.js?v=3447683","/garage-na-rayone/decal-liveries.js":"/garage-na-rayone/decal-liveries.js?v=3447683","/garage-na-rayone/decal-projection.js":"/garage-na-rayone/decal-projection.js?v=3447683","/garage-na-rayone/decals.js":"/garage-na-rayone/decals.js?v=3447683","/garage-na-rayone/dev/frame-profiler.js":"/garage-na-rayone/dev/frame-profiler.js?v=3447683","/garage-na-rayone/dev/lighting-debug.js":"/garage-na-rayone/dev/lighting-debug.js?v=3447683","/garage-na-rayone/dev/performance.js":"/garage-na-rayone/dev/performance.js?v=3447683","/garage-na-rayone/dev/puddle-debug.js":"/garage-na-rayone/dev/puddle-debug.js?v=3447683","/garage-na-rayone/dev/race-peek.js":"/garage-na-rayone/dev/race-peek.js?v=3447683","/garage-na-rayone/dev/race-preview-options.js":"/garage-na-rayone/dev/race-preview-options.js?v=3447683","/garage-na-rayone/dev/studio-driver.js":"/garage-na-rayone/dev/studio-driver.js?v=3447683","/garage-na-rayone/dev-mode.js":"/garage-na-rayone/dev-mode.js?v=3447683","/garage-na-rayone/dialog-dismiss.js":"/garage-na-rayone/dialog-dismiss.js?v=3447683","/garage-na-rayone/drag-camera.js":"/garage-na-rayone/drag-camera.js?v=3447683","/garage-na-rayone/drift-bonuses.js":"/garage-na-rayone/drift-bonuses.js?v=3447683","/garage-na-rayone/drift-feedback.js":"/garage-na-rayone/drift-feedback.js?v=3447683","/garage-na-rayone/drift-hud.js":"/garage-na-rayone/drift-hud.js?v=3447683","/garage-na-rayone/drift-scenery.js":"/garage-na-rayone/drift-scenery.js?v=3447683","/garage-na-rayone/drivetrain.js":"/garage-na-rayone/drivetrain.js?v=3447683","/garage-na-rayone/duel-rules.js":"/garage-na-rayone/duel-rules.js?v=3447683","/garage-na-rayone/duel-ui.js":"/garage-na-rayone/duel-ui.js?v=3447683","/garage-na-rayone/earned-crates.js":"/garage-na-rayone/earned-crates.js?v=3447683","/garage-na-rayone/engine-audio-legacy.js":"/garage-na-rayone/engine-audio-legacy.js?v=3447683","/garage-na-rayone/engine-audio.js":"/garage-na-rayone/engine-audio.js?v=3447683","/garage-na-rayone/engine-model.js":"/garage-na-rayone/engine-model.js?v=3447683","/garage-na-rayone/engine-presets.js":"/garage-na-rayone/engine-presets.js?v=3447683","/garage-na-rayone/engine-profiles.js":"/garage-na-rayone/engine-profiles.js?v=3447683","/garage-na-rayone/engine-recording.js":"/garage-na-rayone/engine-recording.js?v=3447683","/garage-na-rayone/engine-sport.js":"/garage-na-rayone/engine-sport.js?v=3447683","/garage-na-rayone/engine-voice.js":"/garage-na-rayone/engine-voice.js?v=3447683","/garage-na-rayone/engine-worklet.js":"/garage-na-rayone/engine-worklet.js?v=3447683","/garage-na-rayone/event-rules.js":"/garage-na-rayone/event-rules.js?v=3447683","/garage-na-rayone/event-ui.js":"/garage-na-rayone/event-ui.js?v=3447683","/garage-na-rayone/features.js":"/garage-na-rayone/features.js?v=3447683","/garage-na-rayone/finish-camera.js":"/garage-na-rayone/finish-camera.js?v=3447683","/garage-na-rayone/finish-presentation.js":"/garage-na-rayone/finish-presentation.js?v=3447683","/garage-na-rayone/fleet-migration.js":"/garage-na-rayone/fleet-migration.js?v=3447683","/garage-na-rayone/fleet-views.js":"/garage-na-rayone/fleet-views.js?v=3447683","/garage-na-rayone/fleet.js":"/garage-na-rayone/fleet.js?v=3447683","/garage-na-rayone/form.js":"/garage-na-rayone/form.js?v=3447683","/garage-na-rayone/game.js":"/garage-na-rayone/game.js?v=3447683","/garage-na-rayone/garage-blackout.js":"/garage-na-rayone/garage-blackout.js?v=3447683","/garage-na-rayone/garage-crew.js":"/garage-na-rayone/garage-crew.js?v=3447683","/garage-na-rayone/garage-evening.js":"/garage-na-rayone/garage-evening.js?v=3447683","/garage-na-rayone/garage-focus.js":"/garage-na-rayone/garage-focus.js?v=3447683","/garage-na-rayone/garage-frame.js":"/garage-na-rayone/garage-frame.js?v=3447683","/garage-na-rayone/garage-idle.js":"/garage-na-rayone/garage-idle.js?v=3447683","/garage-na-rayone/garage-lamps.js":"/garage-na-rayone/garage-lamps.js?v=3447683","/garage-na-rayone/garage-layout.js":"/garage-na-rayone/garage-layout.js?v=3447683","/garage-na-rayone/garage-levels.js":"/garage-na-rayone/garage-levels.js?v=3447683","/garage-na-rayone/garage-radio.js":"/garage-na-rayone/garage-radio.js?v=3447683","/garage-na-rayone/garage-resident.js":"/garage-na-rayone/garage-resident.js?v=3447683","/garage-na-rayone/garage-selection.js":"/garage-na-rayone/garage-selection.js?v=3447683","/garage-na-rayone/garage-shot.js":"/garage-na-rayone/garage-shot.js?v=3447683","/garage-na-rayone/garage-surfaces.js":"/garage-na-rayone/garage-surfaces.js?v=3447683","/garage-na-rayone/garage-upgrade.js":"/garage-na-rayone/garage-upgrade.js?v=3447683","/garage-na-rayone/garage-workshop.js":"/garage-na-rayone/garage-workshop.js?v=3447683","/garage-na-rayone/gltf.js":"/garage-na-rayone/gltf.js?v=3447683","/garage-na-rayone/goals.js":"/garage-na-rayone/goals.js?v=3447683","/garage-na-rayone/ground-light.js":"/garage-na-rayone/ground-light.js?v=3447683","/garage-na-rayone/handicap.js":"/garage-na-rayone/handicap.js?v=3447683","/garage-na-rayone/haptics.js":"/garage-na-rayone/haptics.js?v=3447683","/garage-na-rayone/industrial-ground.js":"/garage-na-rayone/industrial-ground.js?v=3447683","/garage-na-rayone/industrial-kit.js":"/garage-na-rayone/industrial-kit.js?v=3447683","/garage-na-rayone/industrial-weathering.js":"/garage-na-rayone/industrial-weathering.js?v=3447683","/garage-na-rayone/intro-atmosphere.js":"/garage-na-rayone/intro-atmosphere.js?v=3447683","/garage-na-rayone/intro-parallax.js":"/garage-na-rayone/intro-parallax.js?v=3447683","/garage-na-rayone/invite-card.js":"/garage-na-rayone/invite-card.js?v=3447683","/garage-na-rayone/kit-clearance.js":"/garage-na-rayone/kit-clearance.js?v=3447683","/garage-na-rayone/lighting-state.js":"/garage-na-rayone/lighting-state.js?v=3447683","/garage-na-rayone/live-portrait.js":"/garage-na-rayone/live-portrait.js?v=3447683","/garage-na-rayone/liveries.js":"/garage-na-rayone/liveries.js?v=3447683","/garage-na-rayone/loading-bar.js":"/garage-na-rayone/loading-bar.js?v=3447683","/garage-na-rayone/loaner-rules.js":"/garage-na-rayone/loaner-rules.js?v=3447683","/garage-na-rayone/loaner-ui.js":"/garage-na-rayone/loaner-ui.js?v=3447683","/garage-na-rayone/location-weathering.js":"/garage-na-rayone/location-weathering.js?v=3447683","/garage-na-rayone/loot-ui.js":"/garage-na-rayone/loot-ui.js?v=3447683","/garage-na-rayone/meta-ui.js":"/garage-na-rayone/meta-ui.js?v=3447683","/garage-na-rayone/mobile-scenery.js":"/garage-na-rayone/mobile-scenery.js?v=3447683","/garage-na-rayone/motion.js":"/garage-na-rayone/motion.js?v=3447683","/garage-na-rayone/music-beats.js":"/garage-na-rayone/music-beats.js?v=3447683","/garage-na-rayone/neons.js":"/garage-na-rayone/neons.js?v=3447683","/garage-na-rayone/notifications.js":"/garage-na-rayone/notifications.js?v=3447683","/garage-na-rayone/onboarding-scene.js":"/garage-na-rayone/onboarding-scene.js?v=3447683","/garage-na-rayone/onboarding.js":"/garage-na-rayone/onboarding.js?v=3447683","/garage-na-rayone/overpass-districts.js":"/garage-na-rayone/overpass-districts.js?v=3447683","/garage-na-rayone/overpass-flow.js":"/garage-na-rayone/overpass-flow.js?v=3447683","/garage-na-rayone/overpass-route.js":"/garage-na-rayone/overpass-route.js?v=3447683","/garage-na-rayone/overpass-world.js":"/garage-na-rayone/overpass-world.js?v=3447683","/garage-na-rayone/overtake-route.js":"/garage-na-rayone/overtake-route.js?v=3447683","/garage-na-rayone/paint-surface.js":"/garage-na-rayone/paint-surface.js?v=3447683","/garage-na-rayone/paints.js":"/garage-na-rayone/paints.js?v=3447683","/garage-na-rayone/parking-course.js":"/garage-na-rayone/parking-course.js?v=3447683","/garage-na-rayone/part-icons.js":"/garage-na-rayone/part-icons.js?v=3447683","/garage-na-rayone/particle-batch.js":"/garage-na-rayone/particle-batch.js?v=3447683","/garage-na-rayone/pbr-renderer.js":"/garage-na-rayone/pbr-renderer.js?v=3447683","/garage-na-rayone/physics.js":"/garage-na-rayone/physics.js?v=3447683","/garage-na-rayone/pitstop-ui.js":"/garage-na-rayone/pitstop-ui.js?v=3447683","/garage-na-rayone/played-stats.js":"/garage-na-rayone/played-stats.js?v=3447683","/garage-na-rayone/portrait-rigs.js":"/garage-na-rayone/portrait-rigs.js?v=3447683","/garage-na-rayone/portrait.js":"/garage-na-rayone/portrait.js?v=3447683","/garage-na-rayone/post-process.js":"/garage-na-rayone/post-process.js?v=3447683","/garage-na-rayone/power-hints.js":"/garage-na-rayone/power-hints.js?v=3447683","/garage-na-rayone/powertrain-layout.js":"/garage-na-rayone/powertrain-layout.js?v=3447683","/garage-na-rayone/powertrain-xray.js":"/garage-na-rayone/powertrain-xray.js?v=3447683","/garage-na-rayone/profiles.js":"/garage-na-rayone/profiles.js?v=3447683","/garage-na-rayone/progression.js":"/garage-na-rayone/progression.js?v=3447683","/garage-na-rayone/puddle-atlas.js":"/garage-na-rayone/puddle-atlas.js?v=3447683","/garage-na-rayone/puddle-field.js":"/garage-na-rayone/puddle-field.js?v=3447683","/garage-na-rayone/puddle-layout.js":"/garage-na-rayone/puddle-layout.js?v=3447683","/garage-na-rayone/puddle-splashes.js":"/garage-na-rayone/puddle-splashes.js?v=3447683","/garage-na-rayone/race-audio.js":"/garage-na-rayone/race-audio.js?v=3447683","/garage-na-rayone/race-effects.js":"/garage-na-rayone/race-effects.js?v=3447683","/garage-na-rayone/race-lighting.js":"/garage-na-rayone/race-lighting.js?v=3447683","/garage-na-rayone/race-peek.js":"/garage-na-rayone/race-peek.js?v=3447683","/garage-na-rayone/race-resource-cache.js":"/garage-na-rayone/race-resource-cache.js?v=3447683","/garage-na-rayone/race-shadows.js":"/garage-na-rayone/race-shadows.js?v=3447683","/garage-na-rayone/race-world.js":"/garage-na-rayone/race-world.js?v=3447683","/garage-na-rayone/receipts.js":"/garage-na-rayone/receipts.js?v=3447683","/garage-na-rayone/referral-road.js":"/garage-na-rayone/referral-road.js?v=3447683","/garage-na-rayone/referral-tiers.js":"/garage-na-rayone/referral-tiers.js?v=3447683","/garage-na-rayone/render-quality.js":"/garage-na-rayone/render-quality.js?v=3447683","/garage-na-rayone/residential-kit.js":"/garage-na-rayone/residential-kit.js?v=3447683","/garage-na-rayone/result-tiers.js":"/garage-na-rayone/result-tiers.js?v=3447683","/garage-na-rayone/reward-tiles.js":"/garage-na-rayone/reward-tiles.js?v=3447683","/garage-na-rayone/ridge-battle.js":"/garage-na-rayone/ridge-battle.js?v=3447683","/garage-na-rayone/ridge-body.js":"/garage-na-rayone/ridge-body.js?v=3447683","/garage-na-rayone/ridge-camera.js":"/garage-na-rayone/ridge-camera.js?v=3447683","/garage-na-rayone/ridge-contact-effects.js":"/garage-na-rayone/ridge-contact-effects.js?v=3447683","/garage-na-rayone/ridge-contact.js":"/garage-na-rayone/ridge-contact.js?v=3447683","/garage-na-rayone/ridge-controls.js":"/garage-na-rayone/ridge-controls.js?v=3447683","/garage-na-rayone/ridge-drift.js":"/garage-na-rayone/ridge-drift.js?v=3447683","/garage-na-rayone/ridge-obstacles.js":"/garage-na-rayone/ridge-obstacles.js?v=3447683","/garage-na-rayone/ridge-records.js":"/garage-na-rayone/ridge-records.js?v=3447683","/garage-na-rayone/ridge-recovery.js":"/garage-na-rayone/ridge-recovery.js?v=3447683","/garage-na-rayone/ridge-route.js":"/garage-na-rayone/ridge-route.js?v=3447683","/garage-na-rayone/ridge-terrain.js":"/garage-na-rayone/ridge-terrain.js?v=3447683","/garage-na-rayone/ridge-tyre-table.js":"/garage-na-rayone/ridge-tyre-table.js?v=3447683","/garage-na-rayone/ridge-tyres.js":"/garage-na-rayone/ridge-tyres.js?v=3447683","/garage-na-rayone/ridge-world.js":"/garage-na-rayone/ridge-world.js?v=3447683","/garage-na-rayone/rival-line-view.js":"/garage-na-rayone/rival-line-view.js?v=3447683","/garage-na-rayone/rival-line.js":"/garage-na-rayone/rival-line.js?v=3447683","/garage-na-rayone/rivals.js":"/garage-na-rayone/rivals.js?v=3447683","/garage-na-rayone/road-repairs.js":"/garage-na-rayone/road-repairs.js?v=3447683","/garage-na-rayone/road-ride.js":"/garage-na-rayone/road-ride.js?v=3447683","/garage-na-rayone/sandbox-save.js":"/garage-na-rayone/sandbox-save.js?v=3447683","/garage-na-rayone/scenery-surface.js":"/garage-na-rayone/scenery-surface.js?v=3447683","/garage-na-rayone/sculpted-body-kit.js":"/garage-na-rayone/sculpted-body-kit.js?v=3447683","/garage-na-rayone/shader-material-pool.js":"/garage-na-rayone/shader-material-pool.js?v=3447683","/garage-na-rayone/shop.js":"/garage-na-rayone/shop.js?v=3447683","/garage-na-rayone/signature-models.js":"/garage-na-rayone/signature-models.js?v=3447683","/garage-na-rayone/signature-parts.js":"/garage-na-rayone/signature-parts.js?v=3447683","/garage-na-rayone/soft-economy.js":"/garage-na-rayone/soft-economy.js?v=3447683","/garage-na-rayone/soyuz-bumper-mesh.js":"/garage-na-rayone/soyuz-bumper-mesh.js?v=3447683","/garage-na-rayone/spoiler-kit.js":"/garage-na-rayone/spoiler-kit.js?v=3447683","/garage-na-rayone/start-tree.js":"/garage-na-rayone/start-tree.js?v=3447683","/garage-na-rayone/store-catalog.js":"/garage-na-rayone/store-catalog.js?v=3447683","/garage-na-rayone/store.js":"/garage-na-rayone/store.js?v=3447683","/garage-na-rayone/storefront.js":"/garage-na-rayone/storefront.js?v=3447683","/garage-na-rayone/street-surface-light.js":"/garage-na-rayone/street-surface-light.js?v=3447683","/garage-na-rayone/surface-detail.js":"/garage-na-rayone/surface-detail.js?v=3447683","/garage-na-rayone/telegram.js":"/garage-na-rayone/telegram.js?v=3447683","/garage-na-rayone/telemetry.js":"/garage-na-rayone/telemetry.js?v=3447683","/garage-na-rayone/tracks.js":"/garage-na-rayone/tracks.js?v=3447683","/garage-na-rayone/tune-preview.js":"/garage-na-rayone/tune-preview.js?v=3447683","/garage-na-rayone/unlocks.js":"/garage-na-rayone/unlocks.js?v=3447683","/garage-na-rayone/upgrade-art.js":"/garage-na-rayone/upgrade-art.js?v=3447683","/garage-na-rayone/upgrade-button.js":"/garage-na-rayone/upgrade-button.js?v=3447683","/garage-na-rayone/upgrades.js":"/garage-na-rayone/upgrades.js?v=3447683","/garage-na-rayone/vehicle-dynamics.js":"/garage-na-rayone/vehicle-dynamics.js?v=3447683","/garage-na-rayone/vehicle-effects.js":"/garage-na-rayone/vehicle-effects.js?v=3447683","/garage-na-rayone/vendor/addons/controls/OrbitControls.js":"/garage-na-rayone/vendor/addons/controls/OrbitControls.js?v=3447683","/garage-na-rayone/vendor/addons/environments/RoomEnvironment.js":"/garage-na-rayone/vendor/addons/environments/RoomEnvironment.js?v=3447683","/garage-na-rayone/vendor/addons/geometries/RoundedBoxGeometry.js":"/garage-na-rayone/vendor/addons/geometries/RoundedBoxGeometry.js?v=3447683","/garage-na-rayone/vendor/addons/libs/meshopt_decoder.module.js":"/garage-na-rayone/vendor/addons/libs/meshopt_decoder.module.js?v=3447683","/garage-na-rayone/vendor/addons/loaders/GLTFLoader.js":"/garage-na-rayone/vendor/addons/loaders/GLTFLoader.js?v=3447683","/garage-na-rayone/vendor/addons/math/SimplexNoise.js":"/garage-na-rayone/vendor/addons/math/SimplexNoise.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/EffectComposer.js":"/garage-na-rayone/vendor/addons/postprocessing/EffectComposer.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/MaskPass.js":"/garage-na-rayone/vendor/addons/postprocessing/MaskPass.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/OutputPass.js":"/garage-na-rayone/vendor/addons/postprocessing/OutputPass.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/Pass.js":"/garage-na-rayone/vendor/addons/postprocessing/Pass.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/RenderPass.js":"/garage-na-rayone/vendor/addons/postprocessing/RenderPass.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/SSAOPass.js":"/garage-na-rayone/vendor/addons/postprocessing/SSAOPass.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/ShaderPass.js":"/garage-na-rayone/vendor/addons/postprocessing/ShaderPass.js?v=3447683","/garage-na-rayone/vendor/addons/shaders/CopyShader.js":"/garage-na-rayone/vendor/addons/shaders/CopyShader.js?v=3447683","/garage-na-rayone/vendor/addons/shaders/OutputShader.js":"/garage-na-rayone/vendor/addons/shaders/OutputShader.js?v=3447683","/garage-na-rayone/vendor/addons/shaders/SSAOShader.js":"/garage-na-rayone/vendor/addons/shaders/SSAOShader.js?v=3447683","/garage-na-rayone/vendor/addons/utils/BufferGeometryUtils.js":"/garage-na-rayone/vendor/addons/utils/BufferGeometryUtils.js?v=3447683","/garage-na-rayone/vendor/addons/utils/SkeletonUtils.js":"/garage-na-rayone/vendor/addons/utils/SkeletonUtils.js?v=3447683","/garage-na-rayone/vendor/three.core.min.js":"/garage-na-rayone/vendor/three.core.min.js?v=3447683","/garage-na-rayone/vendor/three.module.js":"/garage-na-rayone/vendor/three.module.js?v=3447683","/garage-na-rayone/wall-recovery.js":"/garage-na-rayone/wall-recovery.js?v=3447683","/garage-na-rayone/weather-effects.js":"/garage-na-rayone/weather-effects.js?v=3447683","/garage-na-rayone/wet-road.js":"/garage-na-rayone/wet-road.js?v=3447683","/garage-na-rayone/wheel-kit.js":"/garage-na-rayone/wheel-kit.js?v=3447683"}}</script><script type="module">
+import {EngineAudio} from './engine-audio.js';
+import {mixFor,LAYERS} from './engine-voice.js';
+import {UPGRADES} from './upgrades.js';
+import {HANDLING} from './vehicle-dynamics.js';
+import {engineParams} from './engine-presets.js';
+import {engineProfile,exhaustMode} from './engine-profiles.js';
+const NAMES={twelve:'Двенашка',oka:'Ока',smz:'СМЗ',kopeyka:'Копейка',pyaterka:'Пятёрка',moskvich:'Москвич',samara:'Восьмёрка',nine:'Девятка','ninety-nine':'99-я',ten:'Десятка',volga:'Волга',niva:'Нива',uaz:'УАЗ',bukhanka:'Буханка'};
+const $=s=>document.querySelector(s);
+const on=new Set();
+// Ручки: [ключ, подпись, min, max, шаг, группа]. Пусто = значение пресета.
+const KNOBS=[['pulseGain','ИМПУЛЬС ВЫПУСКА',0,3,.05,'model'],['blowTime','ДЛИНА ИМПУЛЬСА',.01,.15,.005,'model'],['blowRise','МЯГКОСТЬ ФРОНТА',.001,.03,.001,'model'],['blowGain','ШУМ ПРОДУВКИ',0,3,.05,'model'],['ignitionGain','СИЛА ВСПЫШКИ',0,3,.05,'model'],['pistonGain','КАЧОК ПОРШНЯ',0,2,.05,'model'],['jitter','ДРОЖЬ ОБОРОТОВ',0,.1,.002,'model'],['cycleVar','РАЗБРОС ВСПЫШЕК',0,.6,.02,'model'],['intakeNoise','ШУМ ВПУСКА',0,1,.02,'model'],['exhaustClosedRefl','КЛАПАН ЗАКРЫТ (ОТРАЖ.)',0,.95,.01,'model'],['mufflerDamping','ГЛУШИТЕЛЬ (ЗАТУХ.)',0,.6,.01,'model'],['pipeRefl','ТРУБА (ОТРАЖ.)',0,.5,.01,'model'],['popGain','ХЛОПКИ',0,2,.05,'model'],['crackGain','ТРЕСК',0,1,.02,'model'],['boomGain','УДАР ХЛОПКА',0,2,.05,'model'],['boomHz','ХЛОПОК: ВЫСОТА ГЦ',60,300,5,'model'],['boomDrive','ХЛОПОК: ПЕРЕГРУЗ',1,10,.5,'model'],['clickGain','ХЛОПОК: ЩЕЛЧОК',0,1.5,.05,'model'],['exhaustGain','ГРОМКОСТЬ ВЫХЛОПА',0,1,.01,'model'],['intakeGain','ГРОМКОСТЬ ВПУСКА',0,.5,.005,'model'],['driveGain','ДРАЙВ МАСТЕРИНГА',.3,3,.05,'master'],['presenceDb','ПИК 600 ГЦ',-6,10,.5,'master'],['bassMix','БАС-ГАРМОНИКИ',0,2.5,.05,'master'],['bassDrive','БАС: ПЕРЕГРУЗ',1,20,.5,'master'],['highpassHz','ХАЙПАСС',60,400,5,'master'],['lowpassHz','ЛОУПАСС',1200,8000,100,'master'],['busGain','ГРОМКОСТЬ ШИНЫ',.5,4,.1,'master']];
+const tweaks={model:{},master:{}};let mode='all',sourceMode='recorded';const macro={dirt:1,anger:1,pops:1,bass:1};
+const MODE_NOTE={tone:'Ровные одинаковые вспышки, без шума впуска и продувки. Если «радио» есть и здесь — дело в трубе и мастеринге.',live:'Плавание оборотов и разные по силе вспышки, шума воздуха нет. Если «радио» появилось здесь — виновата живость.',all:'Полный пресет машины: живость плюс шум впуска и продувки по потоку.'};
+// Пресет без ручек — база для режимов и трёх макро-ручек.
+function basePreset(){const c=carState();return engineParams(c.carId,c.levels[0],voice(),{pitch:c.handling.pitch});}
+function applyMacros(){const b=basePreset(),m={};
+ if(mode==='tone'){m.jitter=0;m.cycleVar=0;m.intakeNoise=0;m.blowGain=0;}
+ else if(mode==='live'){m.intakeNoise=0;m.blowGain=0;}
+ if(macro.dirt!==1){for(const k of ['jitter','cycleVar','intakeNoise','blowGain'])if(m[k]==null)m[k]=+(b[k]*macro.dirt).toFixed(4);}
+ if(macro.anger!==1){m.pulseGain=+(b.pulseGain*macro.anger).toFixed(3);m.ignitionGain=+(b.ignitionGain*(.7+.3*macro.anger)).toFixed(3);m.blowTime=+(b.blowTime/(.6+.4*macro.anger)).toFixed(4);m.exhaustClosedRefl=+Math.min(.95,b.exhaustClosedRefl*(1.15-.15*macro.anger)).toFixed(3);}
+ if(macro.pops!==1){m.popGain=+(b.popGain*macro.pops).toFixed(3);m.crackGain=+(b.crackGain*macro.pops).toFixed(3);m.crackleBase=+(b.crackleBase*macro.pops).toFixed(3);m.boomGain=+(b.boomGain*macro.pops).toFixed(3);}
+ const master={...fine.master};if(macro.bass!==1&&master.bassMix==null)master.bassMix=+(b.bass*macro.bass).toFixed(3);
+ tweaks.model={...m,...fine.model};tweaks.master=master;engine?.setTweaks(tweaks);}
+const fine={model:{},master:{}};
+let ctx,engine,car={gear:2,maxGear:5,carId:'samara',redline:7200,boost:0},running=false,auto=null,hold=0,sweeping=false;
+$('#car').innerHTML=Object.keys(HANDLING).map(id=>`<option value="${id}"${id==='samara'?' selected':''}>${NAMES[id]||id}</option>`).join('');
+// Машина стенда собирается как в заезде: уровень мотора первым элементом levels, пресет звука по carId и pitch.
+function carState(){const h=HANDLING[$('#car').value];return {...car,maxGear:h.gears.length,carId:h.id,redline:h.rpm,levels:[Number($('#engine').value),0,Number($('#gearbox').value)],handling:h};}
+$('#rack').innerHTML=UPGRADES.map(u=>`<button class="chip" data-u="${u.id}"><b>${u.name}</b><small>${Object.keys(u.sound||{}).join(' · ')||'без звука'}</small></button>`).join('');
+function voice(){return mixFor(UPGRADES.filter(u=>on.has(u.id)),[Number($('#engine').value),0,0],Object.fromEntries([...on].map(id=>[id,Number($('#rank').value)/100])));}
+$('#knobs').innerHTML=KNOBS.map(([k,label,min,max,step])=>`<label class="row"><span>${label}</span><input type="range" data-knob="${k}" min="${min}" max="${max}" step="${step}" value="${min}"><output data-out="${k}">пресет</output></label>`).join('');
+$('#knobs').oninput=e=>{const k=e.target.dataset.knob;if(!k)return;const def=KNOBS.find(x=>x[0]===k);fine[def[5]][k]=Number(e.target.value);applyMacros();paint();};
+$('#modes').onclick=e=>{const b=e.target.closest('[data-mode]');if(!b)return;mode=b.dataset.mode;for(const x of document.querySelectorAll('[data-mode]'))x.classList.toggle('primary',x===b);applyMacros();paint();};
+for(const k of ['dirt','anger','pops','bass'])$('#m-'+k).oninput=e=>{macro[k]=Number(e.target.value)/100;applyMacros();paint();};
+$('#reset').onclick=()=>{fine.model={};fine.master={};macro.dirt=macro.anger=macro.pops=macro.bass=1;for(const k of ['dirt','anger','pops','bass'])$('#m-'+k).value=100;for(const r of document.querySelectorAll('[data-knob]'))r.value=r.min;if(engine){engine.tweaks={model:{},master:{}};engine.lastKey='';if(engine.hp){engine.hp.frequency.value=38;engine.peak.gain.value=2;engine.lp.frequency.value=4400;engine.lp2.frequency.value=5200;engine.bassDrive.gain.value=1.5;}}applyMacros();paint();};
+$('#copy').onclick=()=>{const text=JSON.stringify({car:$('#car').value,level:Number($('#engine').value),upgrades:[...on],rank:Number($('#rank').value),mode,macro,...tweaks});navigator.clipboard?.writeText(text);$('#json').textContent='скопировано: '+text;};
+function paint(){
+ for(const [k,,,,,group] of KNOBS){const o=document.querySelector(`[data-out="${k}"]`);const v=fine[group][k];o.textContent=v==null?(group==='model'&&engine?.params?.[k]!=null?'пресет '+(+engine.params[k].toFixed(3)):'пресет'):String(v);}
+ for(const k of ['dirt','anger','pops','bass'])$('#m-'+k+'-out').textContent=Math.round(macro[k]*100)+' %';
+ $('#mode-note').textContent=MODE_NOTE[mode];
+ $('#json').textContent=JSON.stringify({mode,macro,...tweaks});
+ for(const b of document.querySelectorAll('[data-u]'))b.classList.toggle('on',on.has(b.dataset.u));
+ $('#engine-out').textContent=$('#engine').value;$('#gearbox-out').textContent=$('#gearbox').value;
+ $('#rank-out').textContent=$('#rank').value+' %';
+ $('#rpm').max=HANDLING[$('#car').value].rpm;
+ $('#tier').textContent=!running?(engine?'Мотор заглушен':'Нажми «Запустить»'):sourceMode==='synthetic'?'Предыдущий синтез':engine.recordedActive?(Number($('#engine').value)>=10?(engine.recording?.sport.loaded?'Играет запись мотора · '+engineProfile($('#car').value).label:'Спортивная запись недоступна · играет прежний мотор'):'Играет запись мотора · '+(Number($('#engine').value)>0?'переход к спортивному выхлопу':'сток')):engine.recording?.status==='fallback'?'Запись не загрузилась. Временно играет синтез — перезагрузи стенд.':'Загружаю записи моторов…';
+ $('#rpm-out').textContent=$('#rpm').value+' об';
+ $('#load-out').textContent=$('#load').value+' %';
+ const mix=voice();
+ const identity=engineProfile($('#car').value),level=Number($('#engine').value);
+ const stockNotes={kopeyka:'Сухой звонкий характер классики.',samara:'Ровный, собранный четырёхцилиндровый мотор.',volga:'Низкий, неторопливый басовый мотор.',twelve:'Более звонкий оборотистый мотор.',niva:'Глухое низкое урчание.'};
+ if(running&&engine?.recordedActive&&level>=10&&engine.recording?.sport.loaded&&!engine.recording.sport.familySources[identity.bank])$('#tier').textContent='Голос этой машины не загрузился · играет резервный спортивный мотор';
+ const exhaustNotes={quiet:'Выхлоп без стрельбы.',street:'Прямоток: отдельные хлопки на сбросе.',crackle:'Прямоток + прошивка: серия хлопков.',antilag:'Турбина + прямоток + прошивка: стреляющая очередь.'};
+ $('#car-note').textContent=(level>=10?identity.name+' · '+identity.label+'. ':level>0?'Переход к спортивному голосу. ':'')+(level<10?stockNotes[$('#car').value]+' ':'')+exhaustNotes[exhaustMode(mix)];
+ $('#mix').textContent=LAYERS.map(k=>k+' '+mix[k].toFixed(2)).join('   ');
+ engine?.setVoice(mix);
+}
+function start(){
+ if(running||document.hidden)return;
+ ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();
+ ctx.resume?.();
+ if(!engine){const out=ctx.createDynamicsCompressor();out.threshold.value=-3;out.knee.value=0;out.ratio.value=20;out.attack.value=.002;out.release.value=.12;out.connect(ctx.destination);engine=new EngineAudio(ctx,out);engine.setSourceMode(sourceMode);engine.recordingReady.then(paint);engine.ready.then(paint);}
+ running=true;$('#run').textContent='ЗАГЛУШИТЬ';applyMacros();paint();tick();
+}
+function stop(){cancelSequence();running=false;$('#run').textContent='ЗАПУСТИТЬ';engine?.silence(car);cancelAnimationFrame(auto);ctx?.suspend?.().catch(()=>{});paint();}
+function tick(){
+ if(!running)return;
+ engine.update(carState(),Number($('#rpm').value),Number($('#load').value)/100,Number($('#volume').value)*.006,hold);
+ auto=requestAnimationFrame(tick);
+}
+$('#run').onclick=()=>running?stop():start();
+$('#sources').onclick=e=>{const b=e.target.closest('[data-source]');if(!b)return;sourceMode=b.dataset.source;engine?.setSourceMode(sourceMode);
+ for(const x of document.querySelectorAll('[data-source]'))x.classList.toggle('primary',x===b);
+ $('#synth-modes').hidden=$('#synth-character').hidden=sourceMode!=='synthetic';paint();};
+$('#rack').onclick=e=>{const b=e.target.closest('[data-u]');if(!b)return;on.has(b.dataset.u)?on.delete(b.dataset.u):on.add(b.dataset.u);applyMacros();paint();};
+for(const id of ['#rpm','#load'])$(id).oninput=paint;for(const id of ['#engine','#gearbox','#rank','#car'])$(id).oninput=()=>{applyMacros();paint();};
+// All scheduled gestures share a generation. Stop, backgrounding and changing a build cancel them.
+let sequence=0;
+function cancelSequence(){sequence++;hold=0;sweeping=false;car.boost=0;car.nitroActive=false;}
+function later(fn,ms,token=sequence){setTimeout(()=>{if(token===sequence&&running)fn();},ms);}
+function ramp(from,to,ms,load,after,token=sequence){
+ start();const t0=performance.now();
+ (function step(now=performance.now()){
+  if(token!==sequence||!running)return;
+  const k=Math.min(1,(now-t0)/ms);$('#rpm').value=Math.round(from+(to-from)*k);
+  if(load!==undefined)$('#load').value=load;paint();
+  if(k<1)requestAnimationFrame(step);else after?.();
+ })();
+}
+const BUILD_NOTE={stock:'Заводская сборка: приглушённый выхлоп и тихая коробка.',motor:'Мотор 15: отдельный спортивный голос выбранной машины. Заводская КПП, без турбины и стрельбы.',street:'Спортивный мотор, прямоток и распредвал: густой холостой и двойные хлопки на сбросе.',race:'Спортивный мотор и КПП, турбина и прошивка: свист под нагрузкой, сброс давления и очередь выхлопных хлопков.',shots:'Турбина + прямоток + прошивка: пять неровных выстрелов на сбросе после разгона. Нажми «Стрельба на сбросе».'};
+function build(name){cancelSequence();on.clear();const street=name==='street',race=name==='race'||name==='shots';
+ $('#engine').value=race||name==='motor'?15:street?10:0;$('#gearbox').value=race?15:0;$('#rank').value=race?100:street?50:0;
+ for(const id of (name==='shots'?['turbo','exhaust','ecu']:race?['turbo','exhaust','ecu','cams','nitro']:street?['exhaust','cams']:[]))on.add(id);
+ $('#rpm').value=1100;$('#load').value=0;car.gear=1;
+ for(const b of document.querySelectorAll('[data-build]'))b.classList.toggle('primary',b.dataset.build===name);
+ $('#build-note').textContent=BUILD_NOTE[name];applyMacros();paint();
+}
+$('#builds').onclick=e=>{const name=e.target.closest('[data-build]')?.dataset.build;if(name)build(name);};
+$('#volume').oninput=()=>{$('#volume-out').textContent=$('#volume').value+' %';};
+$('#pull').onclick=()=>{cancelSequence();car.gear=2;const top=carState().redline;ramp(1100,top,2600,100,()=>later(()=>ramp(top,1100,1300,0,stop),650));};
+$('#blip').onclick=()=>{cancelSequence();ramp(1000,4200,300,100,()=>ramp(4200,1100,850,0,stop));};
+$('#shift').onclick=()=>{const wasRunning=running;cancelSequence();start();car.gear=Math.min(carState().maxGear,car.gear+1);$('#rpm').value=Math.max(1100,Number($('#rpm').value)-1800);$('#load').value=20;paint();later(()=>{$('#load').value=100;paint();if(!wasRunning)later(stop,1100);},140);};
+$('#nitro').onclick=()=>{const wasRunning=running;cancelSequence();start();car.nitroActive=true;paint();later(()=>{car.nitroActive=false;paint();if(!wasRunning)later(stop,300);},900);};
+$('#launch').onclick=()=>{cancelSequence();start();const h=HANDLING[$('#car').value];hold=Math.round(h.rpm*.62);car.gear=1;$('#rpm').value=hold;$('#load').value=50;paint();
+ later(()=>{const rpm=hold;hold=0;ramp(rpm,h.rpm-150,1500,100,()=>ramp(h.rpm-150,1100,1200,0,stop));},1800);};
+function sweep(after=stop){cancelSequence();start();sweeping=true;const h=HANDLING[$('#car').value];car.gear=1;let gear=1;
+ const go=()=>ramp(gear===1?1800:Math.round(h.rpm*.58),h.rpm-250,1350,100,()=>{
+  if(gear>=h.gears.length){ramp(h.rpm-250,1100,1300,0,()=>{sweeping=false;after?.();});return;}
+  $('#load').value=20;paint();later(()=>{gear++;car.gear=gear;go();},180);});go();
+}
+$('#sweep').onclick=()=>sweep();
+$('#compare').onclick=()=>{
+ const rpm=Number($('#rpm').value),load=Number($('#load').value),names=['stock','motor','street','race'];
+ const audition=i=>{build(names[i]);$('#rpm').value=rpm;$('#load').value=load;paint();start();
+  later(()=>{if(i+1<names.length)audition(i+1);else stop();},3000);
+ };audition(0);
+};
+$('#compare-cars').onclick=()=>{
+ cancelSequence();const token=sequence,rpm=Number($('#rpm').value),load=Number($('#load').value),ids=['kopeyka','twelve','volga'];
+ const audition=i=>{$('#car').value=ids[i];$('#rpm').value=rpm;$('#load').value=load;applyMacros();paint();start();
+  later(()=>{if(i+1<ids.length)audition(i+1);else stop();},3000,token);
+ };audition(0);
+};
+$('#exhaust-test').onclick=()=>{
+ cancelSequence();car.gear=2;const top=Math.min(5900,carState().redline-200);
+ ramp(1600,top,1700,100,()=>later(()=>ramp(top,1800,1400,0,stop),850));
+};
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('pagehide',stop);
+// A visible Chrome window can keep playing while Codex is in front: that does
+// not fire visibilitychange. Never resume on focus; a new press is required.
+window.addEventListener('blur',stop);
+paint();
+</script></body></html>

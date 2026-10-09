@@ -1,0 +1,504 @@
+{
+  "version": 1,
+  "sampleRate": 24000,
+  "channels": 1,
+  "gameRpmIsArtistic": true,
+  "sources": {
+    "wrx": {
+      "title": "WRX - Exhaust sounds",
+      "author": "ulose2piranha",
+      "url": "https://freesound.org/people/ulose2piranha/sounds/273334/",
+      "preview": "https://cdn.freesound.org/previews/273/273334_4168822-hq.mp3",
+      "license": "CC0-1.0",
+      "source_sha256": "a710a18ecab0aa9460e6d3e9b5d3fd17892f84700cbe179ebcdf653a88686da3"
+    },
+    "mustang": {
+      "title": "Mustang Ehxaust.aif",
+      "author": "victormalloy",
+      "url": "https://freesound.org/people/victormalloy/sounds/113213/",
+      "preview": "https://cdn.freesound.org/previews/113/113213_137116-hq.mp3",
+      "license": "CC0-1.0",
+      "sha256": "11bbc47e6f736d7207f23588c0a994b81a40620f7e7cd164820ea324154385bc"
+    }
+  },
+  "voices": {
+    "street": {
+      "baseHz": 9.5,
+      "exponent": 0.81,
+      "wrx": 0.25,
+      "mustang": 0.75
+    },
+    "coupe": {
+      "baseHz": 10.5,
+      "exponent": 0.88,
+      "wrx": 0.8,
+      "mustang": 0.2
+    }
+  },
+  "files": [
+    {
+      "file": "street-idle.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "street",
+      "rpm": 800,
+      "targetCycleHz": 9.5,
+      "pitchExponent": 0.81,
+      "duration": 1.052625,
+      "rms": 0.2,
+      "peak": 0.6497586007154361,
+      "sha256": "ce74224a3c781631553304dd38e0bf2400231a276f6d286b5859dfb6b6e2ac8b",
+      "donors": [
+        {
+          "file": "engine-sport/idle.wav",
+          "sha256": "502e3191bf599a0fcc7addc19abadbd635863d4a439a259e2ad956eacb701b57",
+          "cycles": 12,
+          "weight": 0.25
+        },
+        {
+          "file": "engine-refined/mustang-idle.wav",
+          "sha256": "185423fa7e3c1be04cdd04d7514b0e7ce8ed456b3a446542b8eb9ccf7ea86d8a",
+          "cycles": 13,
+          "weight": 0.75
+        }
+      ]
+    },
+    {
+      "file": "street-low.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "street",
+      "rpm": 1400,
+      "targetCycleHz": 14.948045968323964,
+      "pitchExponent": 0.81,
+      "duration": 1.070375,
+      "rms": 0.2,
+      "peak": 0.5987462542870399,
+      "sha256": "22dfc19145c2ad2702707b1a5667d2e97a24068aa292fdd8ef8615efae71befa",
+      "donors": [
+        {
+          "file": "engine-sport/low.wav",
+          "sha256": "27accc6b85691eb04399aaa0516fae34df88c084ae423bc3314b2092a16ffb0c",
+          "cycles": 6,
+          "weight": 0.25
+        },
+        {
+          "file": "engine-refined/mustang-low.wav",
+          "sha256": "287874abb22e802c536e95562890752d56b29d5f9cee389dcdd7526c3dda2d03",
+          "cycles": 13,
+          "weight": 0.75
+        }
+      ]
+    },
+    {
+      "file": "street-mid-low.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "street",
+      "rpm": 2100,
+      "targetCycleHz": 20.759569568783654,
+      "pitchExponent": 0.81,
+      "duration": 1.1079166666666667,
+      "rms": 0.19999999999999998,
+      "peak": 0.5976409575642794,
+      "sha256": "342c6725fa90be6ac87959b56d09d1132a8db82529310a635b403e5822f13b77",
+      "donors": [
+        {
+          "file": "engine-sport/mid-low.wav",
+          "sha256": "065e8a94db8649a4bf5ccab1d88587492790073eed8a8214fd714ce0c61e395c",
+          "cycles": 9,
+          "weight": 0.25
+        },
+        {
+          "file": "engine-refined/mustang-mid-low.wav",
+          "sha256": "ad56e6c26ce86f0d5d5720672344bb77a3cd9bbff0854a75f8e861b51175514b",
+          "cycles": 14,
+          "weight": 0.75
+        }
+      ]
+    },
+    {
+      "file": "street-mid.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "street",
+      "rpm": 2900,
+      "targetCycleHz": 26.962682278429533,
+      "pitchExponent": 0.81,
+      "duration": 1.1126666666666667,
+      "rms": 0.2,
+      "peak": 0.5927123956795107,
+      "sha256": "f1fd592f82faeff9d25df1ffb6a4f0643b8a87c643975dde39a4f479a15a33ba",
+      "donors": [
+        {
+          "file": "engine-sport/mid.wav",
+          "sha256": "02369c1bca171a4d836b8963f349fc88e3bf8266a89f6a040fd3894443a9c4d7",
+          "cycles": 13,
+          "weight": 0.25
+        },
+        {
+          "file": "engine-refined/mustang-mid.wav",
+          "sha256": "1b314e2727123204d8756257c932e5c3114e025e639f5623e999eccb4c0046f7",
+          "cycles": 14,
+          "weight": 0.75
+        }
+      ]
+    },
+    {
+      "file": "street-cruise.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "street",
+      "rpm": 3500,
+      "targetCycleHz": 31.399001079464174,
+      "pitchExponent": 0.81,
+      "duration": 1.1146666666666667,
+      "rms": 0.2,
+      "peak": 0.6742081469273892,
+      "sha256": "e690f95ac1f0b0c24e7ac778760c8c56f534d2726ce716f4f8728804bd9b9314",
+      "donors": [
+        {
+          "file": "engine-sport/cruise.wav",
+          "sha256": "c8ab6ebde1c6b614afe1e834e5de94ee4e020792b65bfad43c43926188299b20",
+          "cycles": 13,
+          "weight": 0.25
+        },
+        {
+          "file": "engine-refined/mustang-cruise.wav",
+          "sha256": "1e48803b7cacbb6ddc2310d0e39db9fb6356a3a3f213f6f011227579afa00e10",
+          "cycles": 18,
+          "weight": 0.75
+        }
+      ]
+    },
+    {
+      "file": "street-pull.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "street",
+      "rpm": 4100,
+      "targetCycleHz": 35.69239082377234,
+      "pitchExponent": 0.81,
+      "duration": 1.0926666666666667,
+      "rms": 0.2,
+      "peak": 0.6154877463360041,
+      "sha256": "d41a2385f61f442502afb231d6a61922ae41a68177d53e3a063bd5aaeb47ab1a",
+      "donors": [
+        {
+          "file": "engine-sport/pull.wav",
+          "sha256": "0391adcbd936e33a15d6d64f7dcd812b949bd1b5d3929b68a02f71c1806d7dbc",
+          "cycles": 21,
+          "weight": 0.25
+        },
+        {
+          "file": "engine-refined/mustang-pull.wav",
+          "sha256": "62dc61e9e6b2ee1b2bbf9331d16e0f5dd197d89309e3932e1c958770c8e043dd",
+          "cycles": 18,
+          "weight": 0.75
+        }
+      ]
+    },
+    {
+      "file": "street-high.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "street",
+      "rpm": 4900,
+      "targetCycleHz": 41.23628576982259,
+      "pitchExponent": 0.81,
+      "duration": 1.0912916666666668,
+      "rms": 0.20000000000000004,
+      "peak": 0.7141972623193659,
+      "sha256": "55af1a8a21067b4d3dbdf5830887e88d00de6d50634e942d881b4c1e0edfb056",
+      "donors": [
+        {
+          "file": "engine-sport/high.wav",
+          "sha256": "a2f6e3bd65fb9f8abfaf0f4c210d51f2e9de4693c52619fd4101b1d55891cbeb",
+          "cycles": 26,
+          "weight": 0.25
+        },
+        {
+          "file": "engine-refined/mustang-high.wav",
+          "sha256": "ba2e1c38eb81c0caae02ea698f06ef333337ca45f11f5263dbf487a59be5bc42",
+          "cycles": 17,
+          "weight": 0.75
+        }
+      ]
+    },
+    {
+      "file": "street-top.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "street",
+      "rpm": 5800,
+      "targetCycleHz": 47.271283094595596,
+      "pitchExponent": 0.81,
+      "duration": 1.1000416666666666,
+      "rms": 0.20000000000000004,
+      "peak": 0.7269443993059511,
+      "sha256": "d1899c99c56665bb84b84c310a60235044051aab24bb7ef222cb96dfbb9ef68c",
+      "donors": [
+        {
+          "file": "engine-sport/top.wav",
+          "sha256": "800224bc47118a5410c463a8ee9a2a5cd99a9eaa18f9e9b4b20637dfeebdb790",
+          "cycles": 28,
+          "weight": 0.25
+        },
+        {
+          "file": "engine-refined/mustang-top.wav",
+          "sha256": "ce3960241f2397a53061e2523fde526d56f0e04d8f285ee3e8a4fd70e2a3a811",
+          "cycles": 17,
+          "weight": 0.75
+        }
+      ]
+    },
+    {
+      "file": "coupe-idle.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "coupe",
+      "rpm": 800,
+      "targetCycleHz": 10.5,
+      "pitchExponent": 0.88,
+      "duration": 1.142875,
+      "rms": 0.2,
+      "peak": 0.6313114595973467,
+      "sha256": "030f9d1ed5b733a443c384ce1104f69b99d5aba116542ba52556bd01f6c01a6e",
+      "donors": [
+        {
+          "file": "engine-sport/idle.wav",
+          "sha256": "502e3191bf599a0fcc7addc19abadbd635863d4a439a259e2ad956eacb701b57",
+          "cycles": 12,
+          "weight": 0.8
+        },
+        {
+          "file": "engine-refined/mustang-idle.wav",
+          "sha256": "185423fa7e3c1be04cdd04d7514b0e7ce8ed456b3a446542b8eb9ccf7ea86d8a",
+          "cycles": 13,
+          "weight": 0.2
+        }
+      ]
+    },
+    {
+      "file": "coupe-low.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "coupe",
+      "rpm": 1400,
+      "targetCycleHz": 17.181567471459733,
+      "pitchExponent": 0.88,
+      "duration": 1.1058333333333332,
+      "rms": 0.2,
+      "peak": 0.7456997291040809,
+      "sha256": "2290a2378b3ef1215ca3a2e1a284bafdbd7c9914e6de31ac2dc2bf5eefaae903",
+      "donors": [
+        {
+          "file": "engine-sport/low.wav",
+          "sha256": "27accc6b85691eb04399aaa0516fae34df88c084ae423bc3314b2092a16ffb0c",
+          "cycles": 6,
+          "weight": 0.8
+        },
+        {
+          "file": "engine-refined/mustang-low.wav",
+          "sha256": "287874abb22e802c536e95562890752d56b29d5f9cee389dcdd7526c3dda2d03",
+          "cycles": 13,
+          "weight": 0.2
+        }
+      ]
+    },
+    {
+      "file": "coupe-mid-low.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "coupe",
+      "rpm": 2100,
+      "targetCycleHz": 24.548394272398767,
+      "pitchExponent": 0.88,
+      "duration": 1.099875,
+      "rms": 0.19999999999999998,
+      "peak": 0.5305782650971702,
+      "sha256": "bb6ab6b3a790ba83caeb634f8fb6787410aca749062a6f3ad2178e209cbd4c9a",
+      "donors": [
+        {
+          "file": "engine-sport/mid-low.wav",
+          "sha256": "065e8a94db8649a4bf5ccab1d88587492790073eed8a8214fd714ce0c61e395c",
+          "cycles": 9,
+          "weight": 0.8
+        },
+        {
+          "file": "engine-refined/mustang-mid-low.wav",
+          "sha256": "ad56e6c26ce86f0d5d5720672344bb77a3cd9bbff0854a75f8e861b51175514b",
+          "cycles": 14,
+          "weight": 0.2
+        }
+      ]
+    },
+    {
+      "file": "coupe-mid.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "coupe",
+      "rpm": 2900,
+      "targetCycleHz": 32.61221889484804,
+      "pitchExponent": 0.88,
+      "duration": 1.103875,
+      "rms": 0.2,
+      "peak": 0.48758182535844535,
+      "sha256": "13872694a557e184f62cabdd30acfbf5a9088854d037a33fde673917127f40b9",
+      "donors": [
+        {
+          "file": "engine-sport/mid.wav",
+          "sha256": "02369c1bca171a4d836b8963f349fc88e3bf8266a89f6a040fd3894443a9c4d7",
+          "cycles": 13,
+          "weight": 0.8
+        },
+        {
+          "file": "engine-refined/mustang-mid.wav",
+          "sha256": "1b314e2727123204d8756257c932e5c3114e025e639f5623e999eccb4c0046f7",
+          "cycles": 14,
+          "weight": 0.2
+        }
+      ]
+    },
+    {
+      "file": "coupe-cruise.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "coupe",
+      "rpm": 3500,
+      "targetCycleHz": 38.481322534089266,
+      "pitchExponent": 0.88,
+      "duration": 1.0914583333333334,
+      "rms": 0.2,
+      "peak": 0.6441240384607184,
+      "sha256": "c2400bc1d4fe64a131ab4749292f1d9c7eeeb970f7b9a2b3179179b38c8c4092",
+      "donors": [
+        {
+          "file": "engine-sport/cruise.wav",
+          "sha256": "c8ab6ebde1c6b614afe1e834e5de94ee4e020792b65bfad43c43926188299b20",
+          "cycles": 13,
+          "weight": 0.8
+        },
+        {
+          "file": "engine-refined/mustang-cruise.wav",
+          "sha256": "1e48803b7cacbb6ddc2310d0e39db9fb6356a3a3f213f6f011227579afa00e10",
+          "cycles": 18,
+          "weight": 0.2
+        }
+      ]
+    },
+    {
+      "file": "coupe-pull.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "coupe",
+      "rpm": 4100,
+      "targetCycleHz": 44.230301972721136,
+      "pitchExponent": 0.88,
+      "duration": 1.1078333333333332,
+      "rms": 0.2,
+      "peak": 0.6389096112184804,
+      "sha256": "2450f85ee4f0373ded4d495e013847e08ebeaf3b13e18ffaab942a5847e185cf",
+      "donors": [
+        {
+          "file": "engine-sport/pull.wav",
+          "sha256": "0391adcbd936e33a15d6d64f7dcd812b949bd1b5d3929b68a02f71c1806d7dbc",
+          "cycles": 21,
+          "weight": 0.8
+        },
+        {
+          "file": "engine-refined/mustang-pull.wav",
+          "sha256": "62dc61e9e6b2ee1b2bbf9331d16e0f5dd197d89309e3932e1c958770c8e043dd",
+          "cycles": 18,
+          "weight": 0.2
+        }
+      ]
+    },
+    {
+      "file": "coupe-high.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "coupe",
+      "rpm": 4900,
+      "targetCycleHz": 51.74193439114649,
+      "pitchExponent": 0.88,
+      "duration": 1.101625,
+      "rms": 0.2,
+      "peak": 0.7201280514778884,
+      "sha256": "c414b86ddfeb29676a3322a2b82de3b37b6dfd37491a86acfc1368e4d6fa4e95",
+      "donors": [
+        {
+          "file": "engine-sport/high.wav",
+          "sha256": "a2f6e3bd65fb9f8abfaf0f4c210d51f2e9de4693c52619fd4101b1d55891cbeb",
+          "cycles": 26,
+          "weight": 0.8
+        },
+        {
+          "file": "engine-refined/mustang-high.wav",
+          "sha256": "ba2e1c38eb81c0caae02ea698f06ef333337ca45f11f5263dbf487a59be5bc42",
+          "cycles": 17,
+          "weight": 0.2
+        }
+      ]
+    },
+    {
+      "file": "coupe-top.wav",
+      "sources": [
+        "wrx",
+        "mustang"
+      ],
+      "voice": "coupe",
+      "rpm": 5800,
+      "targetCycleHz": 60.018722173028756,
+      "pitchExponent": 0.88,
+      "duration": 1.0996666666666666,
+      "rms": 0.2,
+      "peak": 0.7309278612736598,
+      "sha256": "9032ce8a3899dfcbaf9f83e8e6097795dfda072e9adcf57c2281a4f969ba305a",
+      "donors": [
+        {
+          "file": "engine-sport/top.wav",
+          "sha256": "800224bc47118a5410c463a8ee9a2a5cd99a9eaa18f9e9b4b20637dfeebdb790",
+          "cycles": 28,
+          "weight": 0.8
+        },
+        {
+          "file": "engine-refined/mustang-top.wav",
+          "sha256": "ce3960241f2397a53061e2523fde526d56f0e04d8f285ee3e8a4fd70e2a3a811",
+          "cycles": 17,
+          "weight": 0.2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>Макет: мои тачки</title>
+<style>
+@font-face{font-family:Oswald;src:url('assets/oswald.woff2') format('woff2');font-weight:400 700;font-display:swap}
+:root{--ink:#e9dfc8;--gold:#eab45b;--green:#7fc47a}
+*{box-sizing:border-box}
+body{margin:0;padding:26px;background:#0e100f;color:var(--ink);font:400 14px Oswald,system-ui;display:flex;gap:26px;align-items:flex-start}
+.phone{width:375px;height:812px;position:relative;overflow:hidden;border-radius:18px;background:#111413;
+ display:flex;flex-direction:column;box-shadow:0 20px 60px #000a}
+.phone>.cap{position:absolute;left:0;right:0;bottom:-26px;text-align:center;font:600 12px Oswald;letter-spacing:.1em;color:#8d8877}
+
+/* Верхняя панель — как в игре */
+.topbar{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#0d100f;border-bottom:1px solid #ffffff10;flex:0 0 auto}
+.topbar .chip{display:flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid #6b5a33;border-radius:5px;background:#1d1a12;font:600 14px Oswald;color:#f0dcae}
+.topbar .res{margin-left:auto;display:flex;gap:12px;align-items:center;font:600 14px Oswald}
+.topbar .res span{display:flex;align-items:center;gap:5px}
+.topbar .x{width:32px;height:32px;display:grid;place-items:center;border:0;background:none;color:#cdc3ab;font-size:20px}
+
+/* Заголовок экрана */
+.head{padding:14px 16px 10px;flex:0 0 auto}
+.head h1{margin:0;font:700 30px/1 Oswald;letter-spacing:.01em}
+.head p{margin:5px 0 0;font:400 13px Oswald;color:#9d9583}
+
+/* Витрина */
+.hero{position:relative;flex:0 0 auto;height:204px;overflow:hidden;background:#0a0c0b}
+.hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(2px) brightness(.55) saturate(.8);transform:scale(1.08)}
+.hero .fade{position:absolute;inset:0;background:linear-gradient(180deg,#0a0c0bd9,#0a0c0b26 30%,#0a0c0be6 76%,#0a0c0b 100%)}
+.hero .car{position:absolute;left:50%;top:36%;transform:translate(-50%,-50%);width:72%;
+ filter:drop-shadow(0 18px 26px #000c)}
+.hero .text{position:absolute;left:16px;right:16px;bottom:10px}
+.hero h2{margin:4px 0 0;font:700 32px/1 Oswald;letter-spacing:.01em;text-shadow:0 3px 14px #000}
+.hero .specs{margin:6px 0 0;font:500 13px Oswald;color:#c9bfa7;display:flex;gap:10px;align-items:center}
+.hero .specs b{color:var(--gold);font-weight:700}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 11px 4px;border-radius:4px;
+ background:linear-gradient(#f3cd85,#dda43c);color:#2a2008;font:700 12px Oswald;letter-spacing:.08em;text-transform:uppercase;
+ box-shadow:0 2px 0 #8a6529}
+.badge.dim{background:#2a2e2b;color:#a49b86;box-shadow:none;border:1px solid #ffffff16}
+
+/* Список */
+.list{flex:1;min-height:0;overflow:auto;padding:9px 12px 8px;display:flex;flex-direction:column;gap:7px;scrollbar-width:none}
+.row{display:grid;grid-template-columns:80px 1fr auto;align-items:center;gap:10px;padding:5px 11px 5px 6px;
+ border:1px solid #ffffff12;border-radius:8px;background:#181c1a;text-align:left}
+.row.on{border-color:var(--gold);background:#20201a;box-shadow:inset 0 0 0 1px #eab45b40}
+.row img{width:80px;height:46px;object-fit:contain;filter:drop-shadow(0 4px 6px #000a)}
+.row.locked img{filter:brightness(.35) saturate(.2)}
+.row b{display:block;font:700 17px/1.1 Oswald}
+.row small{display:block;margin-top:2px;font:400 12px Oswald;color:#9d9583}
+.state{display:flex;align-items:center;gap:6px;font:600 13px Oswald;white-space:nowrap}
+.state.own{color:var(--green)}
+.state.sel{color:var(--gold)}
+.state.lock{color:#8f8876}
+.state.shards{color:#c9bfa7}
+.dot{width:20px;height:20px;border-radius:50%;border:2px solid currentColor;display:grid;place-items:center;font-size:11px}
+.bar{grid-column:2/-1;height:4px;border-radius:2px;background:#ffffff14;overflow:hidden;margin-top:2px}
+.bar i{display:block;height:100%;background:var(--gold)}
+
+/* Нижняя панель */
+.bar-bottom{flex:0 0 auto;display:grid;grid-template-columns:auto 1fr;gap:10px;padding:10px 12px 14px;background:#0d100f;border-top:1px solid #ffffff12}
+.need{display:flex;align-items:center;gap:9px;padding:8px 12px;border:1px solid #ffffff14;border-radius:8px;background:#161a18;max-width:150px}
+.need small{display:block;font:400 11px Oswald;color:#8f8876}
+.need b{display:block;font:700 15px/1.1 Oswald;color:#d9cfb6}
+.cta{border:0;border-radius:8px;padding:11px 12px;white-space:nowrap;background:linear-gradient(#f2c87d,#e0a63f);color:#241e15;
+ font:700 18px Oswald;letter-spacing:.02em;box-shadow:0 4px 0 #8a6529;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.cta .line{display:flex;align-items:center;gap:8px}
+.cta .prog{width:100%;height:4px;border-radius:2px;background:#00000030;overflow:hidden}
+.cta .prog i{display:block;height:100%;background:#3f2f12}
+.cta.ghost{background:#1d211f;color:#cdc3ab;box-shadow:0 3px 0 #0f1211;border:1px solid #ffffff16}
+svg{display:block}
+</style></head><body>
+
+<div class="phone" id="a"></div>
+<div class="phone" id="b"></div>
+<div class="phone" id="c"></div>
+
+<script type="importmap">{"imports":{"/garage-na-rayone/analytics.js":"/garage-na-rayone/analytics.js?v=3447683","/garage-na-rayone/app-shell.js":"/garage-na-rayone/app-shell.js?v=3447683","/garage-na-rayone/avatar.js":"/garage-na-rayone/avatar.js?v=3447683","/garage-na-rayone/beat-clock.js":"/garage-na-rayone/beat-clock.js?v=3447683","/garage-na-rayone/body-profiles.js":"/garage-na-rayone/body-profiles.js?v=3447683","/garage-na-rayone/bumper-kit.js":"/garage-na-rayone/bumper-kit.js?v=3447683","/garage-na-rayone/callsign.js":"/garage-na-rayone/callsign.js?v=3447683","/garage-na-rayone/campaign-config.js":"/garage-na-rayone/campaign-config.js?v=3447683","/garage-na-rayone/campaign-texts.js":"/garage-na-rayone/campaign-texts.js?v=3447683","/garage-na-rayone/campaign-tuning.js":"/garage-na-rayone/campaign-tuning.js?v=3447683","/garage-na-rayone/car-classes.js":"/garage-na-rayone/car-classes.js?v=3447683","/garage-na-rayone/car-customization.js":"/garage-na-rayone/car-customization.js?v=3447683","/garage-na-rayone/car-driver.js":"/garage-na-rayone/car-driver.js?v=3447683","/garage-na-rayone/car-hero.js":"/garage-na-rayone/car-hero.js?v=3447683","/garage-na-rayone/car-lamps.js":"/garage-na-rayone/car-lamps.js?v=3447683","/garage-na-rayone/car-levels.js":"/garage-na-rayone/car-levels.js?v=3447683","/garage-na-rayone/car-levelup.js":"/garage-na-rayone/car-levelup.js?v=3447683","/garage-na-rayone/car-neon.js":"/garage-na-rayone/car-neon.js?v=3447683","/garage-na-rayone/car-reveal.js":"/garage-na-rayone/car-reveal.js?v=3447683","/garage-na-rayone/car-shadow-batch.js":"/garage-na-rayone/car-shadow-batch.js?v=3447683","/garage-na-rayone/car-underbody.js":"/garage-na-rayone/car-underbody.js?v=3447683","/garage-na-rayone/career.js":"/garage-na-rayone/career.js?v=3447683","/garage-na-rayone/challenge-api.js":"/garage-na-rayone/challenge-api.js?v=3447683","/garage-na-rayone/challenge-intro.js":"/garage-na-rayone/challenge-intro.js?v=3447683","/garage-na-rayone/challenge-rules.js":"/garage-na-rayone/challenge-rules.js?v=3447683","/garage-na-rayone/challenge-ui.js":"/garage-na-rayone/challenge-ui.js?v=3447683","/garage-na-rayone/characters.js":"/garage-na-rayone/characters.js?v=3447683","/garage-na-rayone/cloud-save.js":"/garage-na-rayone/cloud-save.js?v=3447683","/garage-na-rayone/crates.js":"/garage-na-rayone/crates.js?v=3447683","/garage-na-rayone/currency-icons.js":"/garage-na-rayone/currency-icons.js?v=3447683","/garage-na-rayone/customizer-ui.js":"/garage-na-rayone/customizer-ui.js?v=3447683","/garage-na-rayone/decal-liveries.js":"/garage-na-rayone/decal-liveries.js?v=3447683","/garage-na-rayone/decal-projection.js":"/garage-na-rayone/decal-projection.js?v=3447683","/garage-na-rayone/decals.js":"/garage-na-rayone/decals.js?v=3447683","/garage-na-rayone/dev/frame-profiler.js":"/garage-na-rayone/dev/frame-profiler.js?v=3447683","/garage-na-rayone/dev/lighting-debug.js":"/garage-na-rayone/dev/lighting-debug.js?v=3447683","/garage-na-rayone/dev/performance.js":"/garage-na-rayone/dev/performance.js?v=3447683","/garage-na-rayone/dev/puddle-debug.js":"/garage-na-rayone/dev/puddle-debug.js?v=3447683","/garage-na-rayone/dev/race-peek.js":"/garage-na-rayone/dev/race-peek.js?v=3447683","/garage-na-rayone/dev/race-preview-options.js":"/garage-na-rayone/dev/race-preview-options.js?v=3447683","/garage-na-rayone/dev/studio-driver.js":"/garage-na-rayone/dev/studio-driver.js?v=3447683","/garage-na-rayone/dev-mode.js":"/garage-na-rayone/dev-mode.js?v=3447683","/garage-na-rayone/dialog-dismiss.js":"/garage-na-rayone/dialog-dismiss.js?v=3447683","/garage-na-rayone/drag-camera.js":"/garage-na-rayone/drag-camera.js?v=3447683","/garage-na-rayone/drift-bonuses.js":"/garage-na-rayone/drift-bonuses.js?v=3447683","/garage-na-rayone/drift-feedback.js":"/garage-na-rayone/drift-feedback.js?v=3447683","/garage-na-rayone/drift-hud.js":"/garage-na-rayone/drift-hud.js?v=3447683","/garage-na-rayone/drift-scenery.js":"/garage-na-rayone/drift-scenery.js?v=3447683","/garage-na-rayone/drivetrain.js":"/garage-na-rayone/drivetrain.js?v=3447683","/garage-na-rayone/duel-rules.js":"/garage-na-rayone/duel-rules.js?v=3447683","/garage-na-rayone/duel-ui.js":"/garage-na-rayone/duel-ui.js?v=3447683","/garage-na-rayone/earned-crates.js":"/garage-na-rayone/earned-crates.js?v=3447683","/garage-na-rayone/engine-audio-legacy.js":"/garage-na-rayone/engine-audio-legacy.js?v=3447683","/garage-na-rayone/engine-audio.js":"/garage-na-rayone/engine-audio.js?v=3447683","/garage-na-rayone/engine-model.js":"/garage-na-rayone/engine-model.js?v=3447683","/garage-na-rayone/engine-presets.js":"/garage-na-rayone/engine-presets.js?v=3447683","/garage-na-rayone/engine-profiles.js":"/garage-na-rayone/engine-profiles.js?v=3447683","/garage-na-rayone/engine-recording.js":"/garage-na-rayone/engine-recording.js?v=3447683","/garage-na-rayone/engine-sport.js":"/garage-na-rayone/engine-sport.js?v=3447683","/garage-na-rayone/engine-voice.js":"/garage-na-rayone/engine-voice.js?v=3447683","/garage-na-rayone/engine-worklet.js":"/garage-na-rayone/engine-worklet.js?v=3447683","/garage-na-rayone/event-rules.js":"/garage-na-rayone/event-rules.js?v=3447683","/garage-na-rayone/event-ui.js":"/garage-na-rayone/event-ui.js?v=3447683","/garage-na-rayone/features.js":"/garage-na-rayone/features.js?v=3447683","/garage-na-rayone/finish-camera.js":"/garage-na-rayone/finish-camera.js?v=3447683","/garage-na-rayone/finish-presentation.js":"/garage-na-rayone/finish-presentation.js?v=3447683","/garage-na-rayone/fleet-migration.js":"/garage-na-rayone/fleet-migration.js?v=3447683","/garage-na-rayone/fleet-views.js":"/garage-na-rayone/fleet-views.js?v=3447683","/garage-na-rayone/fleet.js":"/garage-na-rayone/fleet.js?v=3447683","/garage-na-rayone/form.js":"/garage-na-rayone/form.js?v=3447683","/garage-na-rayone/game.js":"/garage-na-rayone/game.js?v=3447683","/garage-na-rayone/garage-blackout.js":"/garage-na-rayone/garage-blackout.js?v=3447683","/garage-na-rayone/garage-crew.js":"/garage-na-rayone/garage-crew.js?v=3447683","/garage-na-rayone/garage-evening.js":"/garage-na-rayone/garage-evening.js?v=3447683","/garage-na-rayone/garage-focus.js":"/garage-na-rayone/garage-focus.js?v=3447683","/garage-na-rayone/garage-frame.js":"/garage-na-rayone/garage-frame.js?v=3447683","/garage-na-rayone/garage-idle.js":"/garage-na-rayone/garage-idle.js?v=3447683","/garage-na-rayone/garage-lamps.js":"/garage-na-rayone/garage-lamps.js?v=3447683","/garage-na-rayone/garage-layout.js":"/garage-na-rayone/garage-layout.js?v=3447683","/garage-na-rayone/garage-levels.js":"/garage-na-rayone/garage-levels.js?v=3447683","/garage-na-rayone/garage-radio.js":"/garage-na-rayone/garage-radio.js?v=3447683","/garage-na-rayone/garage-resident.js":"/garage-na-rayone/garage-resident.js?v=3447683","/garage-na-rayone/garage-selection.js":"/garage-na-rayone/garage-selection.js?v=3447683","/garage-na-rayone/garage-shot.js":"/garage-na-rayone/garage-shot.js?v=3447683","/garage-na-rayone/garage-surfaces.js":"/garage-na-rayone/garage-surfaces.js?v=3447683","/garage-na-rayone/garage-upgrade.js":"/garage-na-rayone/garage-upgrade.js?v=3447683","/garage-na-rayone/garage-workshop.js":"/garage-na-rayone/garage-workshop.js?v=3447683","/garage-na-rayone/gltf.js":"/garage-na-rayone/gltf.js?v=3447683","/garage-na-rayone/goals.js":"/garage-na-rayone/goals.js?v=3447683","/garage-na-rayone/ground-light.js":"/garage-na-rayone/ground-light.js?v=3447683","/garage-na-rayone/handicap.js":"/garage-na-rayone/handicap.js?v=3447683","/garage-na-rayone/haptics.js":"/garage-na-rayone/haptics.js?v=3447683","/garage-na-rayone/industrial-ground.js":"/garage-na-rayone/industrial-ground.js?v=3447683","/garage-na-rayone/industrial-kit.js":"/garage-na-rayone/industrial-kit.js?v=3447683","/garage-na-rayone/industrial-weathering.js":"/garage-na-rayone/industrial-weathering.js?v=3447683","/garage-na-rayone/intro-atmosphere.js":"/garage-na-rayone/intro-atmosphere.js?v=3447683","/garage-na-rayone/intro-parallax.js":"/garage-na-rayone/intro-parallax.js?v=3447683","/garage-na-rayone/invite-card.js":"/garage-na-rayone/invite-card.js?v=3447683","/garage-na-rayone/kit-clearance.js":"/garage-na-rayone/kit-clearance.js?v=3447683","/garage-na-rayone/lighting-state.js":"/garage-na-rayone/lighting-state.js?v=3447683","/garage-na-rayone/live-portrait.js":"/garage-na-rayone/live-portrait.js?v=3447683","/garage-na-rayone/liveries.js":"/garage-na-rayone/liveries.js?v=3447683","/garage-na-rayone/loading-bar.js":"/garage-na-rayone/loading-bar.js?v=3447683","/garage-na-rayone/loaner-rules.js":"/garage-na-rayone/loaner-rules.js?v=3447683","/garage-na-rayone/loaner-ui.js":"/garage-na-rayone/loaner-ui.js?v=3447683","/garage-na-rayone/location-weathering.js":"/garage-na-rayone/location-weathering.js?v=3447683","/garage-na-rayone/loot-ui.js":"/garage-na-rayone/loot-ui.js?v=3447683","/garage-na-rayone/meta-ui.js":"/garage-na-rayone/meta-ui.js?v=3447683","/garage-na-rayone/mobile-scenery.js":"/garage-na-rayone/mobile-scenery.js?v=3447683","/garage-na-rayone/motion.js":"/garage-na-rayone/motion.js?v=3447683","/garage-na-rayone/music-beats.js":"/garage-na-rayone/music-beats.js?v=3447683","/garage-na-rayone/neons.js":"/garage-na-rayone/neons.js?v=3447683","/garage-na-rayone/notifications.js":"/garage-na-rayone/notifications.js?v=3447683","/garage-na-rayone/onboarding-scene.js":"/garage-na-rayone/onboarding-scene.js?v=3447683","/garage-na-rayone/onboarding.js":"/garage-na-rayone/onboarding.js?v=3447683","/garage-na-rayone/overpass-districts.js":"/garage-na-rayone/overpass-districts.js?v=3447683","/garage-na-rayone/overpass-flow.js":"/garage-na-rayone/overpass-flow.js?v=3447683","/garage-na-rayone/overpass-route.js":"/garage-na-rayone/overpass-route.js?v=3447683","/garage-na-rayone/overpass-world.js":"/garage-na-rayone/overpass-world.js?v=3447683","/garage-na-rayone/overtake-route.js":"/garage-na-rayone/overtake-route.js?v=3447683","/garage-na-rayone/paint-surface.js":"/garage-na-rayone/paint-surface.js?v=3447683","/garage-na-rayone/paints.js":"/garage-na-rayone/paints.js?v=3447683","/garage-na-rayone/parking-course.js":"/garage-na-rayone/parking-course.js?v=3447683","/garage-na-rayone/part-icons.js":"/garage-na-rayone/part-icons.js?v=3447683","/garage-na-rayone/particle-batch.js":"/garage-na-rayone/particle-batch.js?v=3447683","/garage-na-rayone/pbr-renderer.js":"/garage-na-rayone/pbr-renderer.js?v=3447683","/garage-na-rayone/physics.js":"/garage-na-rayone/physics.js?v=3447683","/garage-na-rayone/pitstop-ui.js":"/garage-na-rayone/pitstop-ui.js?v=3447683","/garage-na-rayone/played-stats.js":"/garage-na-rayone/played-stats.js?v=3447683","/garage-na-rayone/portrait-rigs.js":"/garage-na-rayone/portrait-rigs.js?v=3447683","/garage-na-rayone/portrait.js":"/garage-na-rayone/portrait.js?v=3447683","/garage-na-rayone/post-process.js":"/garage-na-rayone/post-process.js?v=3447683","/garage-na-rayone/power-hints.js":"/garage-na-rayone/power-hints.js?v=3447683","/garage-na-rayone/powertrain-layout.js":"/garage-na-rayone/powertrain-layout.js?v=3447683","/garage-na-rayone/powertrain-xray.js":"/garage-na-rayone/powertrain-xray.js?v=3447683","/garage-na-rayone/profiles.js":"/garage-na-rayone/profiles.js?v=3447683","/garage-na-rayone/progression.js":"/garage-na-rayone/progression.js?v=3447683","/garage-na-rayone/puddle-atlas.js":"/garage-na-rayone/puddle-atlas.js?v=3447683","/garage-na-rayone/puddle-field.js":"/garage-na-rayone/puddle-field.js?v=3447683","/garage-na-rayone/puddle-layout.js":"/garage-na-rayone/puddle-layout.js?v=3447683","/garage-na-rayone/puddle-splashes.js":"/garage-na-rayone/puddle-splashes.js?v=3447683","/garage-na-rayone/race-audio.js":"/garage-na-rayone/race-audio.js?v=3447683","/garage-na-rayone/race-effects.js":"/garage-na-rayone/race-effects.js?v=3447683","/garage-na-rayone/race-lighting.js":"/garage-na-rayone/race-lighting.js?v=3447683","/garage-na-rayone/race-peek.js":"/garage-na-rayone/race-peek.js?v=3447683","/garage-na-rayone/race-resource-cache.js":"/garage-na-rayone/race-resource-cache.js?v=3447683","/garage-na-rayone/race-shadows.js":"/garage-na-rayone/race-shadows.js?v=3447683","/garage-na-rayone/race-world.js":"/garage-na-rayone/race-world.js?v=3447683","/garage-na-rayone/receipts.js":"/garage-na-rayone/receipts.js?v=3447683","/garage-na-rayone/referral-road.js":"/garage-na-rayone/referral-road.js?v=3447683","/garage-na-rayone/referral-tiers.js":"/garage-na-rayone/referral-tiers.js?v=3447683","/garage-na-rayone/render-quality.js":"/garage-na-rayone/render-quality.js?v=3447683","/garage-na-rayone/residential-kit.js":"/garage-na-rayone/residential-kit.js?v=3447683","/garage-na-rayone/result-tiers.js":"/garage-na-rayone/result-tiers.js?v=3447683","/garage-na-rayone/reward-tiles.js":"/garage-na-rayone/reward-tiles.js?v=3447683","/garage-na-rayone/ridge-battle.js":"/garage-na-rayone/ridge-battle.js?v=3447683","/garage-na-rayone/ridge-body.js":"/garage-na-rayone/ridge-body.js?v=3447683","/garage-na-rayone/ridge-camera.js":"/garage-na-rayone/ridge-camera.js?v=3447683","/garage-na-rayone/ridge-contact-effects.js":"/garage-na-rayone/ridge-contact-effects.js?v=3447683","/garage-na-rayone/ridge-contact.js":"/garage-na-rayone/ridge-contact.js?v=3447683","/garage-na-rayone/ridge-controls.js":"/garage-na-rayone/ridge-controls.js?v=3447683","/garage-na-rayone/ridge-drift.js":"/garage-na-rayone/ridge-drift.js?v=3447683","/garage-na-rayone/ridge-obstacles.js":"/garage-na-rayone/ridge-obstacles.js?v=3447683","/garage-na-rayone/ridge-records.js":"/garage-na-rayone/ridge-records.js?v=3447683","/garage-na-rayone/ridge-recovery.js":"/garage-na-rayone/ridge-recovery.js?v=3447683","/garage-na-rayone/ridge-route.js":"/garage-na-rayone/ridge-route.js?v=3447683","/garage-na-rayone/ridge-terrain.js":"/garage-na-rayone/ridge-terrain.js?v=3447683","/garage-na-rayone/ridge-tyre-table.js":"/garage-na-rayone/ridge-tyre-table.js?v=3447683","/garage-na-rayone/ridge-tyres.js":"/garage-na-rayone/ridge-tyres.js?v=3447683","/garage-na-rayone/ridge-world.js":"/garage-na-rayone/ridge-world.js?v=3447683","/garage-na-rayone/rival-line-view.js":"/garage-na-rayone/rival-line-view.js?v=3447683","/garage-na-rayone/rival-line.js":"/garage-na-rayone/rival-line.js?v=3447683","/garage-na-rayone/rivals.js":"/garage-na-rayone/rivals.js?v=3447683","/garage-na-rayone/road-repairs.js":"/garage-na-rayone/road-repairs.js?v=3447683","/garage-na-rayone/road-ride.js":"/garage-na-rayone/road-ride.js?v=3447683","/garage-na-rayone/sandbox-save.js":"/garage-na-rayone/sandbox-save.js?v=3447683","/garage-na-rayone/scenery-surface.js":"/garage-na-rayone/scenery-surface.js?v=3447683","/garage-na-rayone/sculpted-body-kit.js":"/garage-na-rayone/sculpted-body-kit.js?v=3447683","/garage-na-rayone/shader-material-pool.js":"/garage-na-rayone/shader-material-pool.js?v=3447683","/garage-na-rayone/shop.js":"/garage-na-rayone/shop.js?v=3447683","/garage-na-rayone/signature-models.js":"/garage-na-rayone/signature-models.js?v=3447683","/garage-na-rayone/signature-parts.js":"/garage-na-rayone/signature-parts.js?v=3447683","/garage-na-rayone/soft-economy.js":"/garage-na-rayone/soft-economy.js?v=3447683","/garage-na-rayone/soyuz-bumper-mesh.js":"/garage-na-rayone/soyuz-bumper-mesh.js?v=3447683","/garage-na-rayone/spoiler-kit.js":"/garage-na-rayone/spoiler-kit.js?v=3447683","/garage-na-rayone/start-tree.js":"/garage-na-rayone/start-tree.js?v=3447683","/garage-na-rayone/store-catalog.js":"/garage-na-rayone/store-catalog.js?v=3447683","/garage-na-rayone/store.js":"/garage-na-rayone/store.js?v=3447683","/garage-na-rayone/storefront.js":"/garage-na-rayone/storefront.js?v=3447683","/garage-na-rayone/street-surface-light.js":"/garage-na-rayone/street-surface-light.js?v=3447683","/garage-na-rayone/surface-detail.js":"/garage-na-rayone/surface-detail.js?v=3447683","/garage-na-rayone/telegram.js":"/garage-na-rayone/telegram.js?v=3447683","/garage-na-rayone/telemetry.js":"/garage-na-rayone/telemetry.js?v=3447683","/garage-na-rayone/tracks.js":"/garage-na-rayone/tracks.js?v=3447683","/garage-na-rayone/tune-preview.js":"/garage-na-rayone/tune-preview.js?v=3447683","/garage-na-rayone/unlocks.js":"/garage-na-rayone/unlocks.js?v=3447683","/garage-na-rayone/upgrade-art.js":"/garage-na-rayone/upgrade-art.js?v=3447683","/garage-na-rayone/upgrade-button.js":"/garage-na-rayone/upgrade-button.js?v=3447683","/garage-na-rayone/upgrades.js":"/garage-na-rayone/upgrades.js?v=3447683","/garage-na-rayone/vehicle-dynamics.js":"/garage-na-rayone/vehicle-dynamics.js?v=3447683","/garage-na-rayone/vehicle-effects.js":"/garage-na-rayone/vehicle-effects.js?v=3447683","/garage-na-rayone/vendor/addons/controls/OrbitControls.js":"/garage-na-rayone/vendor/addons/controls/OrbitControls.js?v=3447683","/garage-na-rayone/vendor/addons/environments/RoomEnvironment.js":"/garage-na-rayone/vendor/addons/environments/RoomEnvironment.js?v=3447683","/garage-na-rayone/vendor/addons/geometries/RoundedBoxGeometry.js":"/garage-na-rayone/vendor/addons/geometries/RoundedBoxGeometry.js?v=3447683","/garage-na-rayone/vendor/addons/libs/meshopt_decoder.module.js":"/garage-na-rayone/vendor/addons/libs/meshopt_decoder.module.js?v=3447683","/garage-na-rayone/vendor/addons/loaders/GLTFLoader.js":"/garage-na-rayone/vendor/addons/loaders/GLTFLoader.js?v=3447683","/garage-na-rayone/vendor/addons/math/SimplexNoise.js":"/garage-na-rayone/vendor/addons/math/SimplexNoise.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/EffectComposer.js":"/garage-na-rayone/vendor/addons/postprocessing/EffectComposer.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/MaskPass.js":"/garage-na-rayone/vendor/addons/postprocessing/MaskPass.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/OutputPass.js":"/garage-na-rayone/vendor/addons/postprocessing/OutputPass.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/Pass.js":"/garage-na-rayone/vendor/addons/postprocessing/Pass.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/RenderPass.js":"/garage-na-rayone/vendor/addons/postprocessing/RenderPass.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/SSAOPass.js":"/garage-na-rayone/vendor/addons/postprocessing/SSAOPass.js?v=3447683","/garage-na-rayone/vendor/addons/postprocessing/ShaderPass.js":"/garage-na-rayone/vendor/addons/postprocessing/ShaderPass.js?v=3447683","/garage-na-rayone/vendor/addons/shaders/CopyShader.js":"/garage-na-rayone/vendor/addons/shaders/CopyShader.js?v=3447683","/garage-na-rayone/vendor/addons/shaders/OutputShader.js":"/garage-na-rayone/vendor/addons/shaders/OutputShader.js?v=3447683","/garage-na-rayone/vendor/addons/shaders/SSAOShader.js":"/garage-na-rayone/vendor/addons/shaders/SSAOShader.js?v=3447683","/garage-na-rayone/vendor/addons/utils/BufferGeometryUtils.js":"/garage-na-rayone/vendor/addons/utils/BufferGeometryUtils.js?v=3447683","/garage-na-rayone/vendor/addons/utils/SkeletonUtils.js":"/garage-na-rayone/vendor/addons/utils/SkeletonUtils.js?v=3447683","/garage-na-rayone/vendor/three.core.min.js":"/garage-na-rayone/vendor/three.core.min.js?v=3447683","/garage-na-rayone/vendor/three.module.js":"/garage-na-rayone/vendor/three.module.js?v=3447683","/garage-na-rayone/wall-recovery.js":"/garage-na-rayone/wall-recovery.js?v=3447683","/garage-na-rayone/weather-effects.js":"/garage-na-rayone/weather-effects.js?v=3447683","/garage-na-rayone/wet-road.js":"/garage-na-rayone/wet-road.js?v=3447683","/garage-na-rayone/wheel-kit.js":"/garage-na-rayone/wheel-kit.js?v=3447683"}}</script><script type="module">
+const coin=`<svg width="15" height="15" viewBox="0 0 24 24"><circle cx="9" cy="12" r="7" fill="#ffbe1a"/><circle cx="16" cy="12" r="7" fill="#ffd34d"/></svg>`;
+const coinInk=`<svg width="15" height="15" viewBox="0 0 24 24"><circle cx="9" cy="12" r="7" fill="#241e15" opacity=".45"/><circle cx="16" cy="12" r="7" fill="#241e15"/></svg>`;
+const bolt=`<svg width="13" height="13" viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#ffbe1a"/></svg>`;
+const gear=`<svg width="13" height="13" viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm10 4-2.1-1.2.5-2.4-2.3-.9-1.2-2.1-2.4.5L12 2l-1.7 1.9-2.4-.5L6.7 5.5l-2.3.9.5 2.4L2 12l2.9 1.2-.5 2.4 2.3.9 1.2 2.1 2.4-.5L12 22l1.7-1.9 2.4.5 1.2-2.1 2.3-.9-.5-2.4Z" fill="#e6eefb"/></svg>`;
+const lock=`<svg width="14" height="14" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3h1.5v11h-13V10Zm2.5 0h5V7a2.5 2.5 0 0 0-5 0Z" fill="currentColor"/></svg>`;
+const garageIcon=`<svg width="26" height="26" viewBox="0 0 24 24"><path d="M2 10 12 4l10 6v11h-3V12H5v9H2Zm5 5h10v2H7Zm0 4h10v2H7Z" fill="#a89a78"/></svg>`;
+
+const CARS=[
+ {id:'samara', name:'ВОСЬМЁРКА',model:'ВАЗ-2108',  tag:'Ровный разгон',     power:110,gears:5,top:195},
+ {id:'kopeyka',name:'КОПЕЙКА',  model:'ВАЗ-2101',  tag:'Тяга с низов',      power:104,gears:4,top:164},
+ {id:'volga',  name:'ВОЛГА',    model:'ГАЗ-24',    tag:'Раскрывается вдаль',power:115,gears:4,top:196},
+ {id:'twelve', name:'ДВЕНАШКА', model:'ВАЗ-2112',  tag:'Любит обороты',     power:119,gears:5,top:214},
+ {id:'niva',   name:'НИВА',     model:'ВАЗ-21214', tag:'Держит мокрый',     power:101,gears:4,top:148},
+];
+
+const top=`<header class="topbar"><span class="chip">${garageIcon.replace(/26/g,'16')} ГАРАЖ I</span>
+ <span class="res"><span>${coin} 2 130</span><span>${gear} 16</span></span><button class="x">×</button></header>`;
+
+const hero=c=>`<section class="hero">
+ <img class="bg" src="assets/garage-look.webp" alt="">
+ <div class="fade"></div>
+ <img class="car" src="assets/cars/${c.id}.webp" alt="">
+ <div class="text"><span class="badge">${c.tag}</span>
+  <h2>${c.name}</h2>
+  <p class="specs"><span>${c.model}</span><span>${bolt} <b>${c.power}</b></span><span>${c.gears} ст.</span><span>${c.top} км/ч</span></p>
+ </div></section>`;
+
+const state=s=>{
+ if(s.sel)return `<span class="state sel"><span class="dot">✓</span>ВЫБРАНА</span>`;
+ if(s.own)return `<span class="state own"><span class="dot">✓</span>В ГАРАЖЕ</span>`;
+ if(s.full)return `<span class="state lock">${lock} НУЖНО МЕСТО</span>`;
+ if(s.have!==undefined)return `<span class="state shards">◆ ${s.have} / ${s.need}</span>`;
+ return `<span class="state lock">${lock} ПОЗЖЕ</span>`;
+};
+const row=(c,s)=>`<button class="row ${s.sel?'on':''} ${s.own?'':'locked'}">
+ <img src="assets/cars/${c.id}.webp" alt="">
+ <span><b>${c.name}</b><small>${s.hint||c.model}</small></span>
+ ${state(s)}
+ ${s.have!==undefined&&!s.full?`<span class="bar"><i style="width:${Math.round(s.have/s.need*100)}%"></i></span>`:''}
+</button>`;
+
+const screen=(car,rows,bar,cap)=>top+`<div class="head"><h1>МОИ ТАЧКИ</h1><p>Открыто ${rows.filter(r=>r[1].own).length} из 5 · мест в гараже ${rows.filter(r=>r[1].own).length}</p></div>`
+ +hero(car)+`<div class="list">${rows.map(([c,s])=>row(c,s)).join('')}</div>`+bar+`<div class="cap">${cap}</div>`;
+
+// A — своя машина, выбрана
+document.getElementById('a').innerHTML=screen(CARS[0],[
+ [CARS[0],{own:true,sel:true}],
+ [CARS[1],{have:12,need:50,hint:'чертежи Спального'}],
+ [CARS[2],{have:0,need:90,hint:'чертежи Промзоны'}],
+ [CARS[3],{have:0,need:100,hint:'чертежи Стройки'}],
+ [CARS[4],{hint:'придёт своим чередом'}],
+],`<div class="bar-bottom"><div class="need">${garageIcon}<span><small>Гараж</small><b>1 ИЗ 1</b></span></div>
+ <button class="cta"><span class="line">В ГАРАЖ →</span></button></div>`,'A · своя, уже за рулём');
+
+// B — закрытая, чертежи идут
+document.getElementById('b').innerHTML=screen(CARS[1],[
+ [CARS[0],{own:true,sel:true}],
+ [CARS[1],{have:12,need:50,hint:'чертежи Спального'}],
+ [CARS[2],{have:0,need:90,hint:'чертежи Промзоны'}],
+ [CARS[3],{have:0,need:100,hint:'чертежи Стройки'}],
+ [CARS[4],{hint:'придёт своим чередом'}],
+],`<div class="bar-bottom"><div class="need">${garageIcon}<span><small>Нужны</small><b>ЧЕРТЕЖИ СПАЛЬНОГО</b></span></div>
+ <button class="cta"><span class="line">◆ 12 / 50 · ГДЕ ВЗЯТЬ</span><span class="prog"><i style="width:24%"></i></span></button></div>`,'B · закрытая, чертежи идут');
+
+// C — собрана, но нет места в гараже
+document.getElementById('c').innerHTML=screen(CARS[2],[
+ [CARS[0],{own:true,sel:true}],
+ [CARS[1],{own:true}],
+ [CARS[2],{have:90,need:90,full:true,hint:'собрана · ждёт места'}],
+ [CARS[3],{have:40,need:100,hint:'чертежи Стройки'}],
+ [CARS[4],{hint:'придёт своим чередом'}],
+],`<div class="bar-bottom"><div class="need">${garageIcon}<span><small>Нужен</small><b>ГАРАЖ II</b></span></div>
+ <button class="cta"><span class="line">ПОДНЯТЬ ГАРАЖ · 3 000 ${coinInk}</span></button></div>`,'C · собрана, ждёт места');
+</script></body></html>

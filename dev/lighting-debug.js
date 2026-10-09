@@ -1,0 +1,8 @@
+import * as T from 'three';
+export function lightingDebug(lighting,scene){
+ const group=new T.Group();group.name='LightingDebug';group.visible=false;scene.add(group);lighting.debugGroup=group;
+ const lights=[...lighting.street,...lighting.headlights.map(p=>p.light)],helpers=lights.map(l=>new T.SpotLightHelper(l,0x8cdcff));for(const h of helpers)group.add(h);
+ const cameras=[lighting.sun.shadow.camera,lighting.shadows.near.shadow.camera,lighting.street[0].shadow.camera].map(c=>new T.CameraHelper(c));for(const h of cameras)group.add(h);
+ const rings=lighting.street.map(()=>{const points=Array.from({length:49},(_,i)=>new T.Vector3(Math.cos(i/48*Math.PI*2)*6,0,Math.sin(i/48*Math.PI*2)*6));const o=new T.Line(new T.BufferGeometry().setFromPoints(points),new T.LineBasicMaterial({color:0xffcb72,depthTest:false}));group.add(o);return o;});
+ return {set(value){group.visible=value;},update(renderer){if(!group.visible)return '';helpers.forEach((h,i)=>{h.visible=lights[i].visible;h.update();});cameras.forEach((h,i)=>{h.visible=i===2?!!lighting.shadows.mainSource:!lighting.shadows.mainSource;h.update();});rings.forEach((r,i)=>{r.position.set(lighting.street[i].position.x,.08,lighting.street[i].position.z);r.visible=lighting.street[i].visible;});const s=lighting.stats(renderer);return `${s.environment} · ${s.weather} · wet ${s.wetness}\nФонари ${s.streetFixtures||s.streetLights} · фары ${s.headlights} · тени ${s.shadowLights}\nОсновной: ${s.main} · ${s.shadowResolution}px\n${s.drawCalls} draws · ${s.triangles.toLocaleString()} triangles (с диагностикой)`;},dispose(){for(const h of [...helpers,...cameras])h.dispose();for(const r of rings){r.geometry.dispose();r.material.dispose();}group.removeFromParent();lighting.debugGroup=null;}};
+}

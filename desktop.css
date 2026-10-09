@@ -1,0 +1,56 @@
+/* Широкий экран: компьютер в полный экран, планшет боком.
+   Правило Андрея (8 октября): плашки и кнопки не растягивать — держать телефонный габарит и просто
+   ставить больше в ряд; кнопки по центру; на заставке босса элементы ближе к середине, а портрет
+   не трогать, если он обрезан краями кадра. Телефон боком сюда не попадает: у него стоит
+   data-portrait-fit, и кадр у него и так телефонный. Всё лежит в одном медиазапросе — на телефоне
+   этот лист не меняет ничего. */
+@media (min-width:720px){
+ /* Тюнинг на широком экране — цепочка слева направо, как человек и действует (Андрей, 9 октября:
+    «продумай с учётом последовательной сортировки, апгрейда, применения деталей»):
+      1. фильтр — вкладки ТЕХНИКА/КУЗОВ/ЦВЕТ и иконки слотов (левая колонка);
+      2. список деталей — плитки телефонного размера на всю оставшуюся ширину, две строки, дальше листается;
+      3. выбранная деталь — имя, редкость, прирост, затем действия столбиком в порядке применения:
+         ПРОКАЧАТЬ (с ценой) → УСТАНОВИТЬ, и мелко — разобрать (правая колонка, низ).
+    Машина целиком — уровень, мощь, «готово» — отдельным блоком над деталью: это не про деталь, а про тачку.
+    Высота панели 272 px, машине остаётся весь экран. Плитка остаётся телефонной (116 px). */
+ :root:not([data-portrait-fit]) #garage-screen{--custom-height:272px}
+ :root:not([data-portrait-fit]) .custom-sheet{display:grid;grid-template-columns:340px minmax(0,1fr) 380px;grid-template-rows:auto 1fr;
+  grid-template-areas:"groups options head" "cats options foot";column-gap:0;row-gap:8px;align-items:start;padding:10px 18px 10px}
+ :root:not([data-portrait-fit]) #custom-groups{grid-area:groups;width:auto;margin:0 18px 0 0}
+ :root:not([data-portrait-fit]) #custom-categories{grid-area:cats;align-self:start;width:auto;margin:0 18px 0 0}
+ /* Список отделён от фильтра и от детали тонкими линиями: три зоны читаются как три шага. */
+ :root:not([data-portrait-fit]) #custom-options{grid-area:options;align-self:stretch;height:100%;min-height:0;grid-template-columns:repeat(auto-fill,116px);
+  justify-content:start;gap:8px;padding:2px 18px;border-left:1px solid #ffffff12;border-right:1px solid #ffffff12}
+ :root:not([data-portrait-fit]) .custom-header{grid-area:head;width:auto;margin:0 0 0 18px;justify-content:flex-start;gap:8px}
+ :root:not([data-portrait-fit]) #custom-done{margin-left:auto}
+ :root:not([data-portrait-fit]) #custom-footer{grid-area:foot;align-self:end;width:auto;margin:0 0 0 18px;border-top:0;padding-top:0;flex-direction:column;align-items:stretch;gap:8px}
+ :root:not([data-portrait-fit]) #custom-info{flex:0 0 auto}
+ :root:not([data-portrait-fit]) .custom-buttons{display:flex;flex-direction:column;width:auto;margin:0;gap:6px}
+ :root:not([data-portrait-fit]) .custom-buttons button{flex:0 0 auto;width:100%;max-width:none}
+ :root:not([data-portrait-fit]) #custom-secondary{order:-1;min-height:46px}
+ :root:not([data-portrait-fit]) #custom-action{order:0;min-height:50px}
+ :root:not([data-portrait-fit]) #custom-salvage{order:1;min-height:32px;background:none;border:0;box-shadow:none;font:500 14px/1.2 Oswald;color:#9d9580}
+ /* Гараж (Андрей, 9 октября: «не делать сбоку затемнение, кнопки в один ряд и без полей»): нижняя панель —
+    не тёмная лента на всю ширину, а один ряд кнопок по центру поверх гаража. Подложка панели прозрачная,
+    у кнопок свои; ряды телефона (3 + 2) раскрываются в одну строку через display:contents. */
+ /* Сцена идёт до самого низа: серой подложки под кнопками нет, ряд кнопок лежит поверх гаража.
+    Плеер — не полоса под сценой, а пилюля в правом нижнем углу. */
+ :root:not([data-portrait-fit]) #garage-screen{--home-height:92px}
+ /* Поле под сценой убираем у самой сцены, а не через --home-height: от него же зависит высота панели. */
+ :root:not([data-portrait-fit]) #garage-screen:not([data-panel=custom]) #garage-view.scene-wrap{margin-bottom:0}
+ :root:not([data-portrait-fit]) #garage-radio{position:absolute;right:14px;bottom:14px;z-index:9;order:0;flex:none;width:auto;
+  height:32px;min-height:32px;max-height:32px;padding:0 12px;gap:8px;border:1px solid #ffffff14;border-radius:8px;background:#0b0d0ccc;box-shadow:0 6px 18px #0008}
+ :root:not([data-portrait-fit]) .home-sheet{padding-right:260px;padding-left:260px}
+ :root:not([data-portrait-fit]) .home-sheet{display:flex;flex-direction:row;justify-content:center;align-items:stretch;gap:10px;
+  padding:8px 16px 10px;background:transparent;border-top:0;box-shadow:none;overflow:visible}
+ :root:not([data-portrait-fit]) :is(.pitstop-keys,.pitstop-launch){display:contents}
+ :root:not([data-portrait-fit]) .pitstop-keys>button{flex:0 0 156px;min-height:58px}
+ :root:not([data-portrait-fit]) #home-sheet #challenge-button{flex:0 0 200px;margin:0}
+ :root:not([data-portrait-fit]) #home-sheet #race-button{flex:0 0 270px;margin:0}
+ :root:not([data-portrait-fit]) #home-sheet #event-button{flex:0 0 156px;margin:0}
+ :root:not([data-portrait-fit]) .invite-banner{left:max(12px,calc(50% - 228px));right:max(12px,calc(50% - 228px))}
+ /* Заставка босса и линия дуэли: имя, мощь и облако — к середине; хвостик облака под голову, она по центру.
+    Портрет на месте: на широком кадре он не обрезан и уже стоит по центру. */
+ :root:not([data-portrait-fit]) :is(.intro-plate,.intro-bubble,.intro-car){width:min(100%,460px);margin-left:auto;margin-right:auto}
+ :root:not([data-portrait-fit]) .intro-bubble::after,:root:not([data-portrait-fit]) .intro-bubble::before{left:50%;margin-left:-10px}
+}

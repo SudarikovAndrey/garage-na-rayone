@@ -1,0 +1,71 @@
+/* Подмена (docs/loaner-invite.md): первый экран новичка по ссылке и сцена победы. Во весь экран
+   поверх игры, тем же языком, что карточка стрелки и заставка босса: тёмный гараж, золото, Oswald.
+   Сверху вниз читается ровно в том порядке, в каком человек задаёт вопросы: кто зовёт → на чём →
+   что делать → что за это будет → кнопка. */
+#loaner-screen{position:absolute;inset:0;z-index:32;display:flex;flex-direction:column;overflow:hidden;color:#efe4c6;
+ background:radial-gradient(120% 70% at 50% 40%,#2b2d25 0%,#141610 56%,#080907 100%);padding-top:var(--tg-top,0px)}
+#loaner-screen[hidden]{display:none}
+.loaner-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(58% 24% at 50% 44%,#e8bb6030,transparent 70%)}
+#loaner-screen[data-mode="win"] .loaner-glow{background:radial-gradient(70% 36% at 50% 62%,#e8bb6040,transparent 72%)}
+.loaner-scroll{position:relative;flex:1 1 auto;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:center;gap:12px;padding:max(3dvh,14px) 16px 8px;text-align:center}
+.loaner-head{display:grid;gap:8px;justify-items:center;width:100%;max-width:420px}
+#loaner-screen .tiny-label{margin:0;color:#e8bb60;letter-spacing:.16em;font-size:11px}
+.loaner-who{display:flex;align-items:center;justify-content:center;gap:10px}
+.loaner-who h2{margin:0;font:600 30px/1 Oswald,sans-serif;letter-spacing:1px;color:#f2e2bd}
+.loaner-avatar{width:46px;height:46px;flex:0 0 auto;border-radius:50%;object-fit:cover;border:2px solid #d8b869;box-shadow:0 0 0 3px #0008}
+.loaner-avatar.is-empty{display:grid;place-items:center;background:#2c2b22;font:600 22px/1 Oswald,sans-serif;color:#e8bb60}
+/* Реплика кореша — белая плашка, как в заставке босса: это его голос, а не подпись экрана. */
+.loaner-bubble{position:relative;margin:0;padding:10px 14px;max-width:340px;border-radius:12px;background:#f2e2bd;color:#1b1a14;font:500 15px/1.35 system-ui,sans-serif;text-align:left;box-shadow:0 8px 24px #0007}
+.loaner-head .loaner-bubble::before{content:'';position:absolute;top:-7px;left:50%;margin-left:-7px;border:7px solid transparent;border-top:0;border-bottom-color:#f2e2bd}
+.loaner-who.is-row{max-width:420px;align-items:flex-start;text-align:left}
+.loaner-who.is-row .loaner-bubble::before{content:'';position:absolute;left:-7px;top:14px;border:7px solid transparent;border-left:0;border-right-color:#f2e2bd}
+/* Тачка кореша — главная картинка: крупно, с тенью на полу и въездом слева. */
+.loaner-car{position:relative;isolation:isolate;margin:0;width:min(100%,420px);display:grid;justify-items:center;gap:2px}
+.loaner-car img{width:92%;max-height:30dvh;object-fit:contain;filter:drop-shadow(0 16px 14px #000b);animation:loaner-roll-in .8s cubic-bezier(.2,.9,.3,1) both}
+.loaner-car::before{content:'';position:absolute;z-index:-1;left:12%;right:12%;top:62%;height:24%;border-radius:50%;background:radial-gradient(closest-side,#e8bb6026,transparent)}
+.loaner-car figcaption{display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;gap:4px 10px}
+.loaner-car figcaption .tiny-label{flex-basis:100%}
+.loaner-car figcaption b{font:600 24px/1 Oswald,sans-serif;color:#f2e2bd;letter-spacing:1px}
+.loaner-car figcaption em{font:600 14px/1 Oswald,sans-serif;font-style:normal;color:#e8bb60;letter-spacing:.08em}
+/* Три шага: что будет и где ты сейчас. */
+.loaner-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;max-width:420px;margin:0;padding:0;list-style:none;counter-reset:step}
+.loaner-steps li{counter-increment:step;display:grid;align-content:start;gap:3px;padding:8px 6px;border:1px solid #ffffff16;border-radius:6px;background:#1a1c17}
+.loaner-steps b{font:600 15px/1 Oswald,sans-serif;letter-spacing:.06em;color:#cfc4a6}
+.loaner-steps b::before{content:counter(step) ' · ';color:#7e7a68}
+.loaner-steps small{font-size:11px;line-height:1.25;color:#9d9580}
+.loaner-steps li[data-now]{border-color:#e8bb60;background:linear-gradient(180deg,#3a3320,#1c1d17);box-shadow:0 0 0 1px #e8bb6038}
+.loaner-steps li[data-now] b{color:#f5e2b3}
+.loaner-steps li[data-done] b::before{content:'✓ ';color:#9fb864}
+.loaner-lead{margin:2px 0 0;font:600 13px/1.2 Oswald,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#e8bb60}
+/* Приз: три плитки, всплывают по очереди. */
+.loaner-prize{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:420px;margin:0;padding:0;list-style:none}
+.loaner-prize li{display:grid;justify-items:center;align-content:start;gap:3px;padding:8px 6px 10px;border:1px solid #e8bb6050;border-radius:8px;background:linear-gradient(180deg,#29281e,#161712);
+ animation:loaner-pop .5s cubic-bezier(.2,.9,.3,1.3) both;animation-delay:calc(.25s + var(--i,0)*.12s)}
+.loaner-prize-art{display:grid;place-items:center;width:100%;aspect-ratio:1.3;overflow:hidden}
+.loaner-prize-art.is-car img{width:118%;max-width:none;object-fit:contain;filter:drop-shadow(0 6px 5px #0009)}
+.loaner-prize-art .crate-art{width:72%;border-radius:6px}
+.loaner-prize b{font:600 14px/1.05 Oswald,sans-serif;letter-spacing:.04em;color:#f2e2bd}
+.loaner-prize small{font-size:10.5px;line-height:1.2;color:#9d9580}
+/* Победа — праздник по центру экрана, а не список сверху: приз крупнее и всплывает после заголовка. */
+#loaner-screen[data-mode="win"] .loaner-scroll{justify-content:center;gap:18px}
+#loaner-screen[data-mode="win"] .loaner-prize{gap:10px}
+#loaner-screen[data-mode="win"] .loaner-prize li{padding:14px 6px;border-color:#e8bb60;box-shadow:0 0 24px #e8bb6022;animation-delay:calc(.45s + var(--i,0)*.18s)}
+#loaner-screen[data-mode="win"] .loaner-prize-art{aspect-ratio:1.1}
+#loaner-screen[data-mode="win"] .loaner-prize b{font-size:16px}
+/* Кнопка одна и дышит: смотреть больше некуда. */
+.loaner-actions{position:relative;flex:0 0 auto;display:grid;gap:8px;justify-items:center;padding:10px 16px calc(max(14px,env(safe-area-inset-bottom)) + 8px + var(--tg-bottom,0px))}
+#loaner-screen .loaner-actions .primary{width:min(100%,420px);min-height:58px;justify-content:center;font:600 24px/1 Oswald,sans-serif;letter-spacing:1.5px;animation:loaner-breathe 2.4s ease-in-out infinite}
+.loaner-actions small{font-size:12px;color:#9d9580;letter-spacing:.04em}
+.loaner-win-title{margin:2px 0 0;font:600 44px/1 Oswald,sans-serif;color:#f0cf7d;text-shadow:0 4px 18px #000a;animation:celebrate-in .6s cubic-bezier(.2,.9,.3,1.2) both}
+.loaner-times{margin:0;color:#d8d3bd;font-size:15px}
+.loaner-times b{font:600 20px/1 Oswald,sans-serif;color:#c7e792}
+@keyframes loaner-roll-in{from{opacity:0;transform:translateX(-22%) scale(.96)}to{opacity:1;transform:none}}
+@keyframes loaner-pop{from{opacity:0;transform:translateY(12px) scale(.9)}to{opacity:1;transform:none}}
+/* Дышит масштабом, а не тенью: у кнопки своя тень, и перекрашивать её здесь незачем. */
+@keyframes loaner-breathe{0%,100%{transform:none}50%{transform:scale(1.025)}}
+@media (prefers-reduced-motion:reduce){.loaner-car img,.loaner-prize li,#loaner-screen .loaner-actions .primary,.loaner-win-title{animation:none}}
+@media (max-height:700px){.loaner-car img{max-height:22dvh}.loaner-who h2{font-size:26px}.loaner-bubble{font-size:14px}.loaner-scroll{gap:9px}.loaner-win-title{font-size:36px}}
+/* Итог заезда подмены: подсказка «что дальше» и счёт переключений — главная часть экрана. В кампании
+   они спрятаны (style.css), здесь новичок без них не поймёт, почему проиграл и что делать. */
+#result-dialog[data-loaner="true"] #result-comment{display:block;margin:6px 0 0;font-size:14px;line-height:1.45;color:#e7d8b2}
+#result-dialog[data-loaner="true"] #result-shifts{display:block;margin:8px 0 0;font-size:12px;color:#c9ceb2}

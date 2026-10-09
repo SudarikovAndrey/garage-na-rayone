@@ -1,0 +1,16 @@
+#overpass-progress,#overpass-landing{display:none}
+#game[data-overpass] .rpm,#game[data-overpass] .keyboard-hint{display:none!important}
+#game[data-overpass] #overpass-progress{display:flex;position:absolute;top:100px;left:50%;transform:translateX(-50%);gap:22px;pointer-events:none;color:#ffe2aa;text-shadow:0 2px 8px #171c18}
+#overpass-progress span{display:grid;text-align:center;gap:3px;min-width:52px}
+#overpass-progress b{font:italic 800 32px/1 var(--display-font,'Oswald',sans-serif)}
+#overpass-progress small{font-size:11px;font-weight:700;white-space:nowrap}
+#overpass-progress .landed{color:#c7e792}#overpass-progress .flying{color:#fff}
+#game[data-overpass] #overpass-landing{display:block;position:absolute;top:27%;left:5%;width:90%;text-align:center;font:italic 800 clamp(24px,7vw,38px)/1.1 var(--display-font,'Oswald',sans-serif);color:#ffe2aa;text-shadow:0 3px 10px #161b14;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .25s;pointer-events:none}
+#game[data-overpass] #overpass-landing[data-flash=true]{opacity:1;transform:none}
+#game[data-overpass] .race-callout{top:48%!important}
+#game[data-overpass] .race-bottom:has(#shift-button:disabled) #shift-button{display:none}
+#game[data-overpass] #feedback{font-size:clamp(12px,3.5vw,18px);min-height:20px;line-height:1.4;margin-bottom:10px}
+.overpass-districts{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}
+.overpass-districts button{min-width:40px;padding:10px 13px;background:#30372f;border:1px solid #777965;color:#eae0bd;font:inherit}
+.overpass-districts button[aria-pressed=true]{background:#e5b25d;color:#20201b}
+.overpass-needs{display:flex;gap:10px;margin:16px 0}.overpass-needs span{flex:1;text-align:center;border-bottom:2px solid #d3a85b;padding:8px 3px;font-size:12px}.overpass-needs b{display:block;font-size:28px}

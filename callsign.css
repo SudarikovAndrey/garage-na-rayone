@@ -1,0 +1,77 @@
+/* Экран позывного — выдача номера.
+ *
+ * Отдельный файл: экран самостоятельный, и его не должно растаскивать по общим листам
+ * (ui-surfaces.css к тому же занят соседней сессией).
+ *
+ * Замысел: игроку выдают номер. На столе с волокном и царапинами лежит пустая пластина, он
+ * вписывает позывной и код региона. Ни персонажа, ни улицы: экран про одно действие.
+ */
+.callsign{position:relative;display:flex;flex-direction:column;align-items:center;min-height:100%;
+ padding:14px 18px 22px;overflow:hidden;border-radius:10px;
+ -webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+/* Поля — исключение: выделять можно только то, что печатаешь. */
+.callsign input{-webkit-user-select:text;user-select:text}
+.callsign-wood{position:absolute;inset:0;background:
+ repeating-linear-gradient(90deg,#00000014 0 1px,transparent 1px 7px),
+ repeating-linear-gradient(0deg,#0000001a 0 2px,transparent 2px 118px),
+ linear-gradient(176deg,#6b4a2c,#4e351e 46%,#3a2716)}
+.callsign-grain{position:absolute;inset:0;opacity:.45;mix-blend-mode:overlay;filter:url(#callsign-grain)}
+.callsign-lamp{position:absolute;left:50%;top:-18%;width:130%;height:70%;transform:translateX(-50%);
+ background:radial-gradient(50% 50% at 50% 50%,#ffd9a336,transparent 72%)}
+.callsign-vignette{position:absolute;inset:0;background:radial-gradient(120% 78% at 50% 34%,transparent 38%,#0b0703cc 100%)}
+.callsign>*:not(i){position:relative}
+.callsign-logo{width:min(214px,60%);margin:auto auto 22px;filter:drop-shadow(0 10px 22px #0009)}
+.callsign-form{display:flex;flex-direction:column;align-items:stretch;width:100%;margin:0}
+.callsign-ask{margin:0 0 12px;text-align:center;font:600 13px Oswald,sans-serif;letter-spacing:.14em;
+ text-transform:uppercase;color:#e8dcc0cc;text-shadow:0 2px 10px #000}
+
+/* Номер по образцу: одна рамка вокруг всего знака вместе с регионом, внутренняя черта перед кодом,
+   засечки крепежа, косой блик. Знаки выдавлены: светлая грань сверху, тёмная снизу. */
+.plate-wrap{position:relative;width:100%;perspective:900px}
+.plate-wrap:before{content:'';position:absolute;left:-14%;right:-14%;top:-120%;bottom:-90%;pointer-events:none;
+ background:radial-gradient(50% 50% at 50% 50%,#ffd9a32e,transparent 70%)}
+.plate{position:relative;display:grid;grid-template-columns:1fr 112px;height:92px;border-radius:9px;
+ transform:rotateX(9deg);transform-style:preserve-3d;
+ background:linear-gradient(178deg,#ffffff 0%,#f7f5ee 42%,#e9e6dc 80%,#dcd9cd 100%);
+ box-shadow:0 2px 0 #b9b4a5,0 16px 26px #0009,0 30px 40px #0007,inset 0 1px 0 #fff}
+.plate-frame{position:absolute;inset:6px;border:2.5px solid #16160f;border-radius:5px;pointer-events:none;
+ box-shadow:0 1px 0 #ffffffbf,inset 0 1px 0 #ffffff8c}
+.plate-split{position:absolute;top:6px;bottom:6px;right:112px;width:2.5px;background:#16160f;pointer-events:none;
+ box-shadow:1px 0 0 #ffffff8c}
+.plate-gloss{position:absolute;inset:0;pointer-events:none;border-radius:9px;
+ background:linear-gradient(104deg,transparent 16%,#ffffff8c 30%,transparent 44%)}
+.plate-bolt{position:absolute;width:9px;height:2px;background:#16160f2e;transform:rotate(-38deg);pointer-events:none}
+.plate-bolt--l{left:13px;top:44px}
+.plate-bolt--r{right:16px;bottom:24px}
+.plate-name,.plate-region{width:100%;height:100%;border:0;outline:0;background:none;text-align:center;
+ font:400 50px/1 'Russo One',Oswald,sans-serif;color:#15150e;text-transform:uppercase;
+ text-shadow:0 -1px 0 #ffffffe6,0 1px 0 #00000047,0 2px 2px #00000026}
+.plate-name{padding:0 10px 0 20px;letter-spacing:.06em}
+.plate-region{padding:0 16px;font-size:44px;letter-spacing:.02em}
+.plate-name::placeholder,.plate-region::placeholder{color:#15150e2e;text-shadow:0 1px 0 #ffffffa6}
+.plate-region::-webkit-outer-spin-button,.plate-region::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.callsign-region-label{display:block;margin:9px 38px 0 0;text-align:right;font:600 10px Oswald,sans-serif;
+ letter-spacing:.12em;color:#e8dcc073}
+
+.callsign-go{margin-top:20px;width:100%;padding:16px;border:0;border-radius:10px;
+ background:linear-gradient(#f2c87d,#e0a63f);color:#241e15;font:700 19px Oswald,sans-serif;letter-spacing:.06em;
+ box-shadow:0 4px 0 #8a6529,0 12px 26px #0009;display:flex;align-items:center;justify-content:center;gap:10px}
+.callsign-go b{font-weight:400}
+.callsign-note{margin:10px 0 auto;text-align:center;font:400 11px Arial;color:#e8dcc066}
+/* Кто уже играл — чипами в строку: это редкий случай, ему место под кнопкой. */
+.callsign-who{display:flex;gap:8px;align-items:center;margin-top:20px;width:100%;overflow-x:auto;scrollbar-width:none}
+.callsign-who .tiny-label{flex:0 0 auto;color:#e8dcc059}
+.callsign-who .profile-list{display:flex;gap:8px;margin:0;padding:0;border:0;background:none}
+.callsign-who .profile-row{flex:0 0 auto;display:flex;align-items:center;gap:7px;padding:4px 11px 4px 4px;
+ border:1px solid #ffffff21;border-radius:99px;background:#1b130acc;white-space:nowrap;color:#e9dfc8;
+ font:600 12px Oswald,sans-serif}
+.callsign-who .profile-row small,.callsign-who .profile-row .profile-row-tail{display:none}
+
+/* Первый вход — на весь экран: это не попап поверх гаража, а отдельный экран выдачи номера.
+   Окно профиля разворачиваем во всю область, шапку и поля убираем, стол разливается до краёв. */
+#meta-dialog:has(.callsign){position:fixed;inset:0;width:100%;max-width:none;height:100%;max-height:none;
+ margin:0;padding:0;border:0;border-radius:0;box-shadow:none;background:#0b0703;overflow:hidden}
+#meta-dialog:has(.callsign) .meta-header{display:none}
+#meta-dialog:has(.callsign) #meta-body{flex:1;display:flex;min-height:0;padding:0;margin:0;overflow:auto}
+#meta-dialog:has(.callsign) .callsign{flex:1;min-height:100%;border-radius:0;
+ padding-top:calc(18px + var(--tg-top,0px));padding-bottom:calc(24px + var(--tg-bottom,0px))}

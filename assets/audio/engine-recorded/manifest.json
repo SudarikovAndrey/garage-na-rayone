@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "source": "https://freesound.org/people/lovretta/sounds/141240/",
+  "preview": "https://cdn.freesound.org/previews/141/141240_581937-hq.mp3",
+  "author": "lovretta",
+  "title": "Renault 19 underhood acceleration",
+  "license": "CC0-1.0",
+  "source_sha256": "93d56efbd1efdc7d2808aeeabe07bf68d0adff8881178c8003600fa3548ae777",
+  "sampleRate": 24000,
+  "channels": 1,
+  "estimatedRpm": true,
+  "loops": [
+    {
+      "file": "idle.wav",
+      "rpm": 800,
+      "start": 27.25,
+      "end": 29.65,
+      "duration": 2.175,
+      "rms": 0.19,
+      "peak": 0.64237,
+      "seam": 0.021146,
+      "sha256": "6348a92db56cb999aee2c4f20e615a18cc7b72f76e570102e28111406532cebb"
+    },
+    {
+      "file": "low.wav",
+      "rpm": 1400,
+      "start": 9.95,
+      "end": 10.56,
+      "duration": 0.45,
+      "rms": 0.19,
+      "peak": 0.53567,
+      "seam": 0.012888,
+      "sha256": "46dd99a289f784de56e3bac43b7e1829b3cd531f9f32c7a0e43bd3b7e5de6c3c"
+    },
+    {
+      "file": "mid-low.wav",
+      "rpm": 2100,
+      "start": 9.48,
+      "end": 10.02,
+      "duration": 0.4429,
+      "rms": 0.19,
+      "peak": 0.58003,
+      "seam": 0.01144,
+      "sha256": "1e20991444c40c304eff1682ce62c95f2459133c5e57929cc29801741e82bb6f"
+    },
+    {
+      "file": "mid.wav",
+      "rpm": 2900,
+      "start": 9.02,
+      "end": 9.63,
+      "duration": 0.5276,
+      "rms": 0.19,
+      "peak": 0.42697,
+      "seam": 0.003043,
+      "sha256": "59072c3250cb921a94ff888e29c8dc680f8b6281e9da76b6f0c1f517d2cff311"
+    },
+    {
+      "file": "cruise.wav",
+      "rpm": 3500,
+      "start": 53.75,
+      "end": 55.65,
+      "duration": 1.8086,
+      "rms": 0.19,
+      "peak": 0.53717,
+      "seam": 0.011033,
+      "sha256": "44f319d826daf45dc23c1902b1f59557a35b6012e069ad68034140168a1b9c8f"
+    },
+    {
+      "file": "pull.wav",
+      "rpm": 4100,
+      "start": 44.78,
+      "end": 45.98,
+      "duration": 1.0902,
+      "rms": 0.19,
+      "peak": 0.5238,
+      "seam": 0.010801,
+      "sha256": "3972479843e7be7841ebbda8d97ce0b90d138fc0af18af5efd894c89f4ff050d"
+    },
+    {
+      "file": "high.wav",
+      "rpm": 4900,
+      "start": 46.15,
+      "end": 47.78,
+      "duration": 1.5,
+      "rms": 0.19,
+      "peak": 0.71898,
+      "seam": 0.040221,
+      "sha256": "ae0dd08f455826c7c668c8103519bdf3d66a3f9839844200e3559c464ca32821"
+    },
+    {
+      "file": "top.wav",
+      "rpm": 5800,
+      "start": 48.35,
+      "end": 49.72,
+      "duration": 1.2414,
+      "rms": 0.19,
+      "peak": 0.65095,
+      "seam": 0.119031,
+      "sha256": "f5f78fcb95e8bf36c0c09d237dad7c24ae8603d309f99332e8a9c9436238f23c"
+    }
+  ]
+}
