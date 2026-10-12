@@ -1,0 +1,11 @@
+// Keep recent complete race packages, not unbounded per-seed scenes. Eviction
+// releases their geometry, effects, textures and reflection/shadow targets together.
+export class RaceResourceCache {
+ constructor({limit=3,bytes=96*1024*1024}={}){this.limit=limit;this.maxBytes=bytes;this.entries=new Map();this.bytes=0;this.hits=0;this.misses=0;}
+ take(key){const entry=this.entries.get(key);if(!entry){this.misses++;return null;}this.entries.delete(key);this.bytes-=entry.bytes;this.hits++;return entry.value;}
+ put(key,value,bytes=0){if(!key||bytes>this.maxBytes){value.dispose();return;}const previous=this.entries.get(key);if(previous){this.entries.delete(key);this.bytes-=previous.bytes;previous.value.dispose();}this.entries.set(key,{value,bytes});this.bytes+=bytes;while(this.entries.size>this.limit||this.bytes>this.maxBytes){const [old,entry]=this.entries.entries().next().value;this.entries.delete(old);this.bytes-=entry.bytes;entry.value.dispose();}}
+ clear(){for(const {value} of this.entries.values())value.dispose();this.entries.clear();this.bytes=0;}
+}
+export function raceResourceKey(index,look){return index+'|'+JSON.stringify(look,(_key,value)=>value&&Object.getPrototypeOf(value)===Object.prototype?Object.fromEntries(Object.keys(value).sort().map(k=>[k,value[k]])):value);}
+// CPU+GPU geometry, texture mipmaps, and the full-resolution shadow/probe targets.
+export function raceResourceBytes(scene){const buffers=new Set(),textures=new Set();let bytes=0;scene.traverse(o=>{if(o.geometry){for(const a of [...Object.values(o.geometry.attributes),o.geometry.index])if(a){const b=(a.isInterleavedBufferAttribute?a.data.array:a.array)?.buffer;if(b&&!buffers.has(b)){buffers.add(b);bytes+=b.byteLength*2;}}}for(const m of Array.isArray(o.material)?o.material:[o.material])if(m){for(const v of Object.values(m))if(v?.isTexture)textures.add(v);for(const u of Object.values(m.uniforms||{}))if(u.value?.isTexture)textures.add(u.value);}if(o.shadow?.map){const target=o.shadow.map;bytes+=target.width*target.height*8;}});if(scene.environment)textures.add(scene.environment);for(const t of textures){const i=t.image||t.source?.data;bytes+=(i?.width||512)*(i?.height||512)*8*4/3;}return Math.ceil(bytes);}

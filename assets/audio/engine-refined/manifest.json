@@ -1,0 +1,490 @@
+{
+  "version": 1,
+  "sampleRate": 24000,
+  "channels": 1,
+  "gameRpmIsArtistic": true,
+  "sources": {
+    "classic": {
+      "title": "car_engine_mini_cooper_1976.wav",
+      "author": "Dokuta_Gerovv",
+      "url": "https://freesound.org/people/Dokuta_Gerovv/sounds/686742/",
+      "preview": "https://cdn.freesound.org/previews/686/686742_11310256-hq.mp3",
+      "license": "CC0-1.0",
+      "sha256": "f8a06c46813a24ac786395126caf71a82a13b7d765e41eb78dfdff2891d5206d"
+    },
+    "mustang": {
+      "title": "Mustang Ehxaust.aif",
+      "author": "victormalloy",
+      "url": "https://freesound.org/people/victormalloy/sounds/113213/",
+      "preview": "https://cdn.freesound.org/previews/113/113213_137116-hq.mp3",
+      "license": "CC0-1.0",
+      "sha256": "11bbc47e6f736d7207f23588c0a994b81a40620f7e7cd164820ea324154385bc"
+    },
+    "porsche": {
+      "title": "Porsche Exhaust.aif",
+      "author": "victormalloy",
+      "url": "https://freesound.org/people/victormalloy/sounds/113214/",
+      "preview": "https://cdn.freesound.org/previews/113/113214_137116-hq.mp3",
+      "license": "CC0-1.0",
+      "sha256": "50cd15bec30d46403c6e7d00a944a3f4480456e367ef9258b861b54aba6acd33"
+    }
+  },
+  "files": [
+    {
+      "file": "classic-idle.wav",
+      "source": "classic",
+      "rpm": 800,
+      "start": 11,
+      "end": 13,
+      "trackOrder": 2,
+      "pitchExponent": 0.9,
+      "duration": 2.3529166666666668,
+      "rms": 0.152,
+      "peak": 0.4531157090266571,
+      "sha256": "efaea0396be9e7e681d4a420949e262b35fc1fa243fbff9730c102aaec9bc464",
+      "trackHz": [
+        42.29650788485628,
+        43.727099660031854
+      ],
+      "targetCycleHz": 17.0,
+      "cycles": 40
+    },
+    {
+      "file": "classic-low.wav",
+      "source": "classic",
+      "rpm": 1400,
+      "start": 14,
+      "end": 16,
+      "trackOrder": 2,
+      "pitchExponent": 0.9,
+      "duration": 1.3864166666666666,
+      "rms": 0.15200000000000002,
+      "peak": 0.4500980274397729,
+      "sha256": "c809e3175db15e542963d52a4d2ac66341477c165e853f602bd57a9aa80f60b3",
+      "trackHz": [
+        43.27763855860667,
+        43.76089407770678
+      ],
+      "targetCycleHz": 28.13087009394403,
+      "cycles": 39
+    },
+    {
+      "file": "classic-mid-low.wav",
+      "source": "classic",
+      "rpm": 2100,
+      "start": 19.92,
+      "end": 20.65,
+      "trackOrder": 2,
+      "pitchExponent": 0.9,
+      "duration": 0.6416666666666667,
+      "rms": 0.19446846952385907,
+      "peak": 0.76,
+      "sha256": "ab6a35dac56a26a2414a90af6757f64ce8c8da8a26d1691a7913afa9f5dfa070",
+      "trackHz": [
+        73.31660927400208,
+        104.38849255626792
+      ],
+      "targetCycleHz": 40.51961389141785,
+      "cycles": 26
+    },
+    {
+      "file": "classic-mid.wav",
+      "source": "classic",
+      "rpm": 2900,
+      "start": 25.92,
+      "end": 26.62,
+      "trackOrder": 2,
+      "pitchExponent": 0.9,
+      "duration": 0.44295833333333334,
+      "rms": 0.1870927456672216,
+      "peak": 0.76,
+      "sha256": "029d04cf079041563a7545b035717d5beba99435678de2600d1b91af41f16857",
+      "trackHz": [
+        70.60968637995302,
+        106.18121904082045
+      ],
+      "targetCycleHz": 54.17839450108867,
+      "cycles": 24
+    },
+    {
+      "file": "classic-cruise.wav",
+      "source": "classic",
+      "rpm": 3500,
+      "start": 19.92,
+      "end": 20.65,
+      "trackOrder": 2,
+      "pitchExponent": 0.9,
+      "duration": 0.374,
+      "rms": 0.19604259363858872,
+      "peak": 0.76,
+      "sha256": "208a020b4ff30dda88a215944a69ade2da84ddc2a47e6305def8ac97963f7e05",
+      "trackHz": [
+        73.31660927400208,
+        104.38849255626792
+      ],
+      "targetCycleHz": 64.16957648725275,
+      "cycles": 24
+    },
+    {
+      "file": "classic-pull.wav",
+      "source": "classic",
+      "rpm": 4100,
+      "start": 25.92,
+      "end": 26.62,
+      "trackOrder": 2,
+      "pitchExponent": 0.9,
+      "duration": 0.29733333333333334,
+      "rms": 0.18216966763076628,
+      "peak": 0.76,
+      "sha256": "cc84e569623f211b54fb2bd73285fa7d4496f26861fa5f80c183793e1fcc10c4",
+      "trackHz": [
+        70.60968637995302,
+        106.18121904082045
+      ],
+      "targetCycleHz": 73.99006419676925,
+      "cycles": 22
+    },
+    {
+      "file": "classic-high.wav",
+      "source": "classic",
+      "rpm": 4900,
+      "start": 19.92,
+      "end": 20.65,
+      "trackOrder": 2,
+      "pitchExponent": 0.9,
+      "duration": 0.2532916666666667,
+      "rms": 0.18605223760738213,
+      "peak": 0.76,
+      "sha256": "671632a467703491a3f61b052dc694e5a63fce529ea0766b7db091076480e7f1",
+      "trackHz": [
+        73.31660927400208,
+        104.38849255626792
+      ],
+      "targetCycleHz": 86.86491621857982,
+      "cycles": 22
+    },
+    {
+      "file": "classic-top.wav",
+      "source": "classic",
+      "rpm": 5800,
+      "start": 25.92,
+      "end": 26.62,
+      "trackOrder": 2,
+      "pitchExponent": 0.9,
+      "duration": 0.19783333333333333,
+      "rms": 0.1835943143111106,
+      "peak": 0.76,
+      "sha256": "21e9f1ae3fc2bd6ce04e668fc74a8aec78a9ee018b79a08029072e00eb842771",
+      "trackHz": [
+        70.60968637995302,
+        106.18121904082045
+      ],
+      "targetCycleHz": 101.10045899602416,
+      "cycles": 20
+    },
+    {
+      "file": "mustang-idle.wav",
+      "source": "mustang",
+      "rpm": 800,
+      "start": 9.5,
+      "end": 10.7,
+      "trackOrder": 8,
+      "pitchExponent": 0.46,
+      "duration": 1.0,
+      "rms": 0.2,
+      "peak": 0.59847460896824,
+      "sha256": "185423fa7e3c1be04cdd04d7514b0e7ce8ed456b3a446542b8eb9ccf7ea86d8a",
+      "trackHz": [
+        107.1524033472997,
+        111.61799097766334
+      ],
+      "targetCycleHz": 13.0,
+      "cycles": 13
+    },
+    {
+      "file": "mustang-low.wav",
+      "source": "mustang",
+      "rpm": 1400,
+      "start": 9.5,
+      "end": 10.7,
+      "trackOrder": 8,
+      "pitchExponent": 0.46,
+      "duration": 0.7730416666666666,
+      "rms": 0.19999999999999996,
+      "peak": 0.6005808415346532,
+      "sha256": "287874abb22e802c536e95562890752d56b29d5f9cee389dcdd7526c3dda2d03",
+      "trackHz": [
+        107.1524033472997,
+        111.61799097766334
+      ],
+      "targetCycleHz": 16.816703020645058,
+      "cycles": 13
+    },
+    {
+      "file": "mustang-mid-low.wav",
+      "source": "mustang",
+      "rpm": 2100,
+      "start": 18.2,
+      "end": 19.3,
+      "trackOrder": 8,
+      "pitchExponent": 0.46,
+      "duration": 0.6908333333333333,
+      "rms": 0.2,
+      "peak": 0.5542214325848415,
+      "sha256": "ad56e6c26ce86f0d5d5720672344bb77a3cd9bbff0854a75f8e861b51175514b",
+      "trackHz": [
+        123.8243667049801,
+        140.27131340719734
+      ],
+      "targetCycleHz": 20.264823889025287,
+      "cycles": 14
+    },
+    {
+      "file": "mustang-mid.wav",
+      "source": "mustang",
+      "rpm": 2900,
+      "start": 44.7,
+      "end": 45.4,
+      "trackOrder": 6,
+      "pitchExponent": 0.46,
+      "duration": 0.5955416666666666,
+      "rms": 0.19999999999999998,
+      "peak": 0.5995663784576615,
+      "sha256": "1b314e2727123204d8756257c932e5c3114e025e639f5623e999eccb4c0046f7",
+      "trackHz": [
+        140.61562529508365,
+        152.19363294977484
+      ],
+      "targetCycleHz": 23.50850639909127,
+      "cycles": 14
+    },
+    {
+      "file": "mustang-cruise.wav",
+      "source": "mustang",
+      "rpm": 3500,
+      "start": 45.1,
+      "end": 45.95,
+      "trackOrder": 5,
+      "pitchExponent": 0.46,
+      "duration": 0.7022083333333333,
+      "rms": 0.20000000000000004,
+      "peak": 0.6445264596718924,
+      "sha256": "1e48803b7cacbb6ddc2310d0e39db9fb6356a3a3f213f6f011227579afa00e10",
+      "trackHz": [
+        122.93593590040786,
+        131.03902691767644
+      ],
+      "targetCycleHz": 25.63263531462798,
+      "cycles": 18
+    },
+    {
+      "file": "mustang-pull.wav",
+      "source": "mustang",
+      "rpm": 4100,
+      "start": 45.1,
+      "end": 45.95,
+      "trackOrder": 5,
+      "pitchExponent": 0.46,
+      "duration": 0.6529583333333333,
+      "rms": 0.19999999999999998,
+      "peak": 0.6472342590517562,
+      "sha256": "62dc61e9e6b2ee1b2bbf9331d16e0f5dd197d89309e3932e1c958770c8e043dd",
+      "trackHz": [
+        122.93593590040786,
+        131.03902691767644
+      ],
+      "targetCycleHz": 27.56782685109704,
+      "cycles": 18
+    },
+    {
+      "file": "mustang-high.wav",
+      "source": "mustang",
+      "rpm": 4900,
+      "start": 45.1,
+      "end": 45.95,
+      "trackOrder": 5,
+      "pitchExponent": 0.46,
+      "duration": 0.568125,
+      "rms": 0.2,
+      "peak": 0.6402141840412607,
+      "sha256": "ba2e1c38eb81c0caae02ea698f06ef333337ca45f11f5263dbf487a59be5bc42",
+      "trackHz": [
+        122.93593590040786,
+        131.03902691767644
+      ],
+      "targetCycleHz": 29.92348385763051,
+      "cycles": 17
+    },
+    {
+      "file": "mustang-top.wav",
+      "source": "mustang",
+      "rpm": 5800,
+      "start": 45.1,
+      "end": 45.95,
+      "trackOrder": 5,
+      "pitchExponent": 0.46,
+      "duration": 0.5257083333333333,
+      "rms": 0.19999999999999998,
+      "peak": 0.6442234187172714,
+      "sha256": "ce3960241f2397a53061e2523fde526d56f0e04d8f285ee3e8a4fd70e2a3a811",
+      "trackHz": [
+        122.93593590040786,
+        131.03902691767644
+      ],
+      "targetCycleHz": 32.33693363395581,
+      "cycles": 17
+    },
+    {
+      "file": "porsche-idle.wav",
+      "source": "porsche",
+      "rpm": 800,
+      "start": 6,
+      "end": 6.8,
+      "trackOrder": 2,
+      "pitchExponent": 0.82,
+      "duration": 0.6817916666666667,
+      "rms": 0.19132000540308153,
+      "peak": 0.76,
+      "sha256": "20887f4dfedce49548b8b592795a213a6da5c07d64570d4388b4de06a7b8cdf1",
+      "trackHz": [
+        44.28180279977312,
+        49.76551567978049
+      ],
+      "targetCycleHz": 22.0,
+      "cycles": 15
+    },
+    {
+      "file": "porsche-low.wav",
+      "source": "porsche",
+      "rpm": 1400,
+      "start": 9.2,
+      "end": 10.1,
+      "trackOrder": 2,
+      "pitchExponent": 0.82,
+      "duration": 0.5170833333333333,
+      "rms": 0.2,
+      "peak": 0.5971262652602416,
+      "sha256": "c8a92b20cbb027fd88d643f887f15e2fd4ddb7f64c631e87da2efdef21e692ee",
+      "trackHz": [
+        44.31249639075929,
+        51.921386521797785
+      ],
+      "targetCycleHz": 34.81079011388537,
+      "cycles": 18
+    },
+    {
+      "file": "porsche-mid-low.wav",
+      "source": "porsche",
+      "rpm": 2100,
+      "start": 11.85,
+      "end": 12.5,
+      "trackOrder": 2,
+      "pitchExponent": 0.82,
+      "duration": 0.6592083333333333,
+      "rms": 0.19999999999999998,
+      "peak": 0.6280167345548036,
+      "sha256": "db2e5d6ed913fa4e43d5e84f6d752193dcb69924b2f1ea15f3e4e8e7ad158f17",
+      "trackHz": [
+        85.88764183264175,
+        143.7717861616079
+      ],
+      "targetCycleHz": 48.54099934285642,
+      "cycles": 32
+    },
+    {
+      "file": "porsche-mid.wav",
+      "source": "porsche",
+      "rpm": 2900,
+      "start": 11.72,
+      "end": 12.35,
+      "trackOrder": 2,
+      "pitchExponent": 0.82,
+      "duration": 0.52175,
+      "rms": 0.2,
+      "peak": 0.6437877880162608,
+      "sha256": "0b411e7c0bd1ba6b18eb92f708411aceafd7e6fd2b00628c0c45ac64931a28dc",
+      "trackHz": [
+        95.5345675577064,
+        154.68078399015894
+      ],
+      "targetCycleHz": 63.24923102142925,
+      "cycles": 33
+    },
+    {
+      "file": "porsche-cruise.wav",
+      "source": "porsche",
+      "rpm": 3500,
+      "start": 11.72,
+      "end": 12.35,
+      "trackOrder": 2,
+      "pitchExponent": 0.82,
+      "duration": 0.433625,
+      "rms": 0.2,
+      "peak": 0.6382388175593163,
+      "sha256": "ae558853b63e0d19fd2465b7f80e75e806845de647c022916cb8027784e9ee51",
+      "trackHz": [
+        95.5345675577064,
+        154.68078399015894
+      ],
+      "targetCycleHz": 73.794617814355,
+      "cycles": 32
+    },
+    {
+      "file": "porsche-pull.wav",
+      "source": "porsche",
+      "rpm": 4100,
+      "start": 11.72,
+      "end": 12.35,
+      "trackOrder": 2,
+      "pitchExponent": 0.82,
+      "duration": 0.36895833333333333,
+      "rms": 0.20000000000000004,
+      "peak": 0.6336312586780909,
+      "sha256": "5de47cf9fce598cee4019d76a7a908ddd7f43a51e6497aaee64b2b0e87a93aeb",
+      "trackHz": [
+        95.5345675577064,
+        154.68078399015894
+      ],
+      "targetCycleHz": 84.0178674429473,
+      "cycles": 31
+    },
+    {
+      "file": "porsche-high.wav",
+      "source": "porsche",
+      "rpm": 4900,
+      "start": 11.72,
+      "end": 12.35,
+      "trackOrder": 2,
+      "pitchExponent": 0.82,
+      "duration": 0.30854166666666666,
+      "rms": 0.20000000000000004,
+      "peak": 0.6379660776730285,
+      "sha256": "9ee4c97016af3a861c867bb85912520ec0b33da2e6fd55d2915177f01f82a70d",
+      "trackHz": [
+        95.5345675577064,
+        154.68078399015894
+      ],
+      "targetCycleHz": 97.24105838377712,
+      "cycles": 30
+    },
+    {
+      "file": "porsche-top.wav",
+      "source": "porsche",
+      "rpm": 5800,
+      "start": 11.72,
+      "end": 12.35,
+      "trackOrder": 2,
+      "pitchExponent": 0.82,
+      "duration": 0.25975,
+      "rms": 0.2,
+      "peak": 0.613589333714553,
+      "sha256": "4008be6a4393c1bb174809e2b0a17dec9b9879ccaadae4ab8529953465ecac9a",
+      "trackHz": [
+        95.5345675577064,
+        154.68078399015894
+      ],
+      "targetCycleHz": 111.66057147139088,
+      "cycles": 29
+    }
+  ]
+}

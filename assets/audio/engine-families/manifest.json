@@ -1,0 +1,218 @@
+{
+  "version": 1,
+  "sampleRate": 24000,
+  "channels": 1,
+  "estimatedRpm": true,
+  "sources": {
+    "mini": {
+      "title": "Car Engine Contact Recording-Mini Cooper S 2019_Gunning_it.wav",
+      "author": "TheLittleCrow",
+      "url": "https://freesound.org/people/TheLittleCrow/sounds/669622/",
+      "preview": "https://cdn.freesound.org/previews/669/669622_5672786-hq.mp3",
+      "license": "CC0-1.0",
+      "source_sha256": "fe89840499181282ecaf837201c81cf7cdcffacefa2af6f453d9c29b530f94c0"
+    },
+    "bigblock": {
+      "title": "Big Block V8 Rev.mp3",
+      "author": "Henaway",
+      "url": "https://freesound.org/people/Henaway/sounds/127980/",
+      "preview": "https://cdn.freesound.org/previews/127/127980_2335231-hq.mp3",
+      "license": "CC0-1.0",
+      "source_sha256": "288aa6632b1c4158868f7c3d0060a8caf3ded72bd72a3b7b0672635db0ff3549"
+    }
+  },
+  "files": [
+    {
+      "file": "mini-idle.wav",
+      "source": "mini",
+      "start": 0.15,
+      "end": 0.95,
+      "rpm": 800,
+      "loop": true,
+      "duration": 0.675,
+      "rms": 0.1373477167958746,
+      "peak": 0.8,
+      "sha256": "48870f8e3cd5bd3581bd943e9f2ec5243c2fd1f3ba8eeb51b8c5072e3bb6bf57"
+    },
+    {
+      "file": "mini-low.wav",
+      "source": "mini",
+      "start": 1.45,
+      "end": 2.25,
+      "rpm": 1400,
+      "loop": true,
+      "duration": 0.7285416666666666,
+      "rms": 0.2,
+      "peak": 0.7446913827357032,
+      "sha256": "4aa273a30ecdb7b6c62b9033e4c4bb5bee5125d948fa80bdc8874f40dbd8b6fd"
+    },
+    {
+      "file": "mini-mid-low.wav",
+      "source": "mini",
+      "start": 2.2,
+      "end": 3.1,
+      "rpm": 2100,
+      "loop": true,
+      "duration": 0.8571666666666666,
+      "rms": 0.19794262811790514,
+      "peak": 0.8,
+      "sha256": "032d3b75c397c3708bb72d403f61b3e09ab15a86a1dd98a915c6cc98fed54085"
+    },
+    {
+      "file": "mini-mid.wav",
+      "source": "mini",
+      "start": 3.1,
+      "end": 3.9,
+      "rpm": 2900,
+      "loop": true,
+      "duration": 0.7448333333333333,
+      "rms": 0.2,
+      "peak": 0.7465273564395357,
+      "sha256": "1ba66874063682908f42d79b14586315934bcc761fd7daa4f75606d4b67b063a"
+    },
+    {
+      "file": "mini-cruise.wav",
+      "source": "mini",
+      "start": 3.6,
+      "end": 4.3,
+      "rpm": 3500,
+      "loop": true,
+      "duration": 0.6,
+      "rms": 0.19794959469822063,
+      "peak": 0.8,
+      "sha256": "cee5806026efb977d65ebf0af3b0b88e7c53d0d699dbfb7fe9742bd7c097e1d2"
+    },
+    {
+      "file": "mini-pull.wav",
+      "source": "mini",
+      "start": 4.15,
+      "end": 4.7,
+      "rpm": 4100,
+      "loop": true,
+      "duration": 0.49754166666666666,
+      "rms": 0.178125865459285,
+      "peak": 0.8,
+      "sha256": "080d39a644324127107f667400d1b1f589929fd172b56d520048bef0a7ba1650"
+    },
+    {
+      "file": "mini-high.wav",
+      "source": "mini",
+      "start": 4.4,
+      "end": 5,
+      "rpm": 4900,
+      "loop": true,
+      "duration": 0.5265416666666667,
+      "rms": 0.2,
+      "peak": 0.6710536641995951,
+      "sha256": "6f2a3e1670309f120fab44c30a34a9cda25c7186b419fc470445af361a2198e4"
+    },
+    {
+      "file": "mini-top.wav",
+      "source": "mini",
+      "start": 4.6,
+      "end": 5.18,
+      "rpm": 5800,
+      "loop": true,
+      "duration": 0.47583333333333333,
+      "rms": 0.2,
+      "peak": 0.6660910953527638,
+      "sha256": "1c18317ed622e2b3bac74ce1d20766f1dad2677b113a45fbdc466e45a73947ea"
+    },
+    {
+      "file": "bigblock-idle.wav",
+      "source": "bigblock",
+      "start": 2.5,
+      "end": 3.3,
+      "rpm": 800,
+      "loop": true,
+      "duration": 0.6,
+      "rms": 0.2,
+      "peak": 0.7723626655613368,
+      "sha256": "3d48203ffe2f9fa626e8dc2266b6291932d160b90ab934199216284e6145fb26"
+    },
+    {
+      "file": "bigblock-low.wav",
+      "source": "bigblock",
+      "start": 1.9,
+      "end": 2.7,
+      "rpm": 1400,
+      "loop": true,
+      "duration": 0.5142916666666667,
+      "rms": 0.20000000000000004,
+      "peak": 0.7066015398096459,
+      "sha256": "88a0cc1d839a22a0c8dc8dde21165d86451a386cdf980f9219340af0b7ab377a"
+    },
+    {
+      "file": "bigblock-mid-low.wav",
+      "source": "bigblock",
+      "start": 1.35,
+      "end": 2.15,
+      "rpm": 2100,
+      "loop": true,
+      "duration": 0.5714583333333333,
+      "rms": 0.18732317369395707,
+      "peak": 0.8,
+      "sha256": "2f0b0a3c3f264dc6a121c8bd470a40744ec8a269315275d673ed16c41dd623be"
+    },
+    {
+      "file": "bigblock-mid.wav",
+      "source": "bigblock",
+      "start": 0.75,
+      "end": 1.5,
+      "rpm": 2900,
+      "loop": true,
+      "duration": 0.49654166666666666,
+      "rms": 0.16616413673795094,
+      "peak": 0.8,
+      "sha256": "dcc9461bd575a8819f0d08f5946a2f9b43c54b48c78701505ab10b19b06ddd2e"
+    },
+    {
+      "file": "bigblock-cruise.wav",
+      "source": "bigblock",
+      "start": 0.05,
+      "end": 0.8,
+      "rpm": 3500,
+      "loop": true,
+      "duration": 0.3428333333333333,
+      "rms": 0.18140964379351315,
+      "peak": 0.7999999999999999,
+      "sha256": "8d0ca1adc841d2f620c347d5030430569920c7930a03435aff0b33952ef1ef4e"
+    },
+    {
+      "file": "bigblock-pull.wav",
+      "source": "bigblock",
+      "start": 0.65,
+      "end": 1.4,
+      "rpm": 4100,
+      "loop": true,
+      "duration": 0.32195833333333335,
+      "rms": 0.16294845244668982,
+      "peak": 0.8,
+      "sha256": "c87c3ff82ab66e15028d39d4fe6becd39a9c16cca0d5bf0dc38ef75e935bbf65"
+    },
+    {
+      "file": "bigblock-high.wav",
+      "source": "bigblock",
+      "start": 0.6,
+      "end": 1.45,
+      "rpm": 4900,
+      "loop": true,
+      "duration": 0.31833333333333336,
+      "rms": 0.15910144434654086,
+      "peak": 0.8,
+      "sha256": "65d9102d52d9af8f3e31f0ece176206eff0ccec87b0004e4f232c2053ecbda81"
+    },
+    {
+      "file": "bigblock-top.wav",
+      "source": "bigblock",
+      "start": 0.55,
+      "end": 1.45,
+      "rpm": 5800,
+      "loop": true,
+      "duration": 0.26895833333333335,
+      "rms": 0.1557931191539268,
+      "peak": 0.8,
+      "sha256": "838dfcf92d8be44775962e572add20c4ecf65983b78f9d70b1aaf0b086aa20bb"
+    }
+  ]
+}

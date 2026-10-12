@@ -1,0 +1,21 @@
+/* Подложка модальных окон.
+ *
+ * Диалог висит поверх живого гаража, и при слабой подложке карточка сливается с кадром: у окна
+ * результата фон просвечивал на две трети, и прямо под его плашкой призыва читалась вторая такая
+ * же плашка из гаража. Поэтому затемняем сильно и размываем — тот же приём, что уже применён в
+ * окне знакомства с боссом.
+ *
+ * Правило живёт отдельным файлом, потому что в style.css оно объявлено дважды: сначала с
+ * размытием, а ниже перебито на `backdrop-filter:none`. Этот файл подключается последним и
+ * задаёт подложку одним местом; когда style.css освободится, те два объявления надо удалить.
+ * Там, где backdrop-filter не поддерживается, остаётся одно затемнение — оно и делает работу.
+ */
+:root{--dialog-dim:#080b07e8}
+@supports (backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px)){
+ :root{--dialog-dim:#080b07cc}
+ dialog::backdrop,#result-dialog::backdrop{-webkit-backdrop-filter:blur(7px) saturate(.85);backdrop-filter:blur(7px) saturate(.85)}
+}
+dialog::backdrop,#result-dialog::backdrop{background:var(--dialog-dim);transition:background .22s ease}
+/* Закрытие: подложка уходит вместе с окном, иначе кадр остаётся мутным лишние полсекунды. */
+dialog[data-closing="true"]::backdrop{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+@starting-style{dialog[open]::backdrop{background:transparent}}

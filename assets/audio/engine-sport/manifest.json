@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "sampleRate": 24000,
+  "channels": 1,
+  "estimatedRpm": true,
+  "sources": {
+    "wrx": {
+      "title": "WRX - Exhaust sounds",
+      "author": "ulose2piranha",
+      "url": "https://freesound.org/people/ulose2piranha/sounds/273334/",
+      "preview": "https://cdn.freesound.org/previews/273/273334_4168822-hq.mp3",
+      "license": "CC0-1.0",
+      "source_sha256": "a710a18ecab0aa9460e6d3e9b5d3fd17892f84700cbe179ebcdf653a88686da3"
+    },
+    "turbo": {
+      "title": "Turbo Spooling and Blow Off.WAV",
+      "author": "EwanPenman11",
+      "url": "https://freesound.org/people/EwanPenman11/sounds/659544/",
+      "preview": "https://cdn.freesound.org/previews/659/659544_13241413-hq.mp3",
+      "license": "CC0-1.0",
+      "source_sha256": "a87bb8d8f60a069e3abeffd2c455594028b386597507597e681cf02c95c71690"
+    },
+    "antilag": {
+      "title": "Car Antilag (No cleanup, 32float)",
+      "author": "modusmogulus",
+      "url": "https://freesound.org/people/modusmogulus/sounds/797835/",
+      "preview": "https://cdn.freesound.org/previews/797/797835_15956618-hq.mp3",
+      "license": "CC0-1.0",
+      "source_sha256": "3e680801c07c56eba0f0adcf546c367c05598db0aaecf4c39dedeebbc5210241"
+    }
+  },
+  "files": [
+    {
+      "file": "idle.wav",
+      "source": "wrx",
+      "start": 0.8,
+      "end": 3.2,
+      "duration": 1.8,
+      "rms": 0.2,
+      "peak": 0.6261065480668868,
+      "sha256": "502e3191bf599a0fcc7addc19abadbd635863d4a439a259e2ad956eacb701b57",
+      "rpm": 800,
+      "loop": true
+    },
+    {
+      "file": "low.wav",
+      "source": "wrx",
+      "start": 27.15,
+      "end": 27.85,
+      "duration": 0.5142916666666667,
+      "rms": 0.2,
+      "peak": 0.712697711803199,
+      "sha256": "27accc6b85691eb04399aaa0516fae34df88c084ae423bc3314b2092a16ffb0c",
+      "rpm": 1400,
+      "loop": true
+    },
+    {
+      "file": "mid-low.wav",
+      "source": "wrx",
+      "start": 26.65,
+      "end": 27.35,
+      "duration": 0.5142916666666667,
+      "rms": 0.2,
+      "peak": 0.4593001471851783,
+      "sha256": "065e8a94db8649a4bf5ccab1d88587492790073eed8a8214fd714ce0c61e395c",
+      "rpm": 2100,
+      "loop": true
+    },
+    {
+      "file": "mid.wav",
+      "source": "wrx",
+      "start": 26.05,
+      "end": 26.8,
+      "duration": 0.5379583333333333,
+      "rms": 0.20000000000000004,
+      "peak": 0.5420717552257907,
+      "sha256": "02369c1bca171a4d836b8963f349fc88e3bf8266a89f6a040fd3894443a9c4d7",
+      "rpm": 2900,
+      "loop": true
+    },
+    {
+      "file": "cruise.wav",
+      "source": "wrx",
+      "start": 25.75,
+      "end": 26.4,
+      "duration": 0.4457083333333333,
+      "rms": 0.2,
+      "peak": 0.6896967425485883,
+      "sha256": "c8ab6ebde1c6b614afe1e834e5de94ee4e020792b65bfad43c43926188299b20",
+      "rpm": 3500,
+      "loop": true
+    },
+    {
+      "file": "pull.wav",
+      "source": "wrx",
+      "start": 25.2,
+      "end": 25.95,
+      "duration": 0.614625,
+      "rms": 0.2,
+      "peak": 0.6668059798832007,
+      "sha256": "0391adcbd936e33a15d6d64f7dcd812b949bd1b5d3929b68a02f71c1806d7dbc",
+      "rpm": 4100,
+      "loop": true
+    },
+    {
+      "file": "high.wav",
+      "source": "wrx",
+      "start": 24.85,
+      "end": 25.75,
+      "duration": 0.63675,
+      "rms": 0.20000000000000004,
+      "peak": 0.7449727520826773,
+      "sha256": "a2f6e3bd65fb9f8abfaf0f4c210d51f2e9de4693c52619fd4101b1d55891cbeb",
+      "rpm": 4900,
+      "loop": true
+    },
+    {
+      "file": "top.wav",
+      "source": "wrx",
+      "start": 24.85,
+      "end": 25.8,
+      "duration": 0.5792916666666666,
+      "rms": 0.19999999999999998,
+      "peak": 0.7459873401421995,
+      "sha256": "800224bc47118a5410c463a8ee9a2a5cd99a9eaa18f9e9b4b20637dfeebdb790",
+      "rpm": 5800,
+      "loop": true
+    },
+    {
+      "file": "spool.wav",
+      "source": "turbo",
+      "start": 0.18,
+      "end": 0.68,
+      "duration": 0.445,
+      "rms": 0.16999999999999998,
+      "peak": 0.6623890442286053,
+      "sha256": "f38c9b6f67fa2141f16dc0a18a7231f99d7b4a15e00356ee43abb7cddb0d9666",
+      "loop": true
+    },
+    {
+      "file": "blowoff.wav",
+      "source": "turbo",
+      "start": 0.66,
+      "end": 1.32,
+      "duration": 0.66,
+      "rms": 0.1339049519103278,
+      "peak": 0.8,
+      "sha256": "a6b204ef65860bf753db90dddba75801cc4cb8a6a90fdfe3d4e6db56debe57a0",
+      "loop": false
+    },
+    {
+      "file": "pop-a.wav",
+      "source": "antilag",
+      "start": 1.395,
+      "end": 1.55,
+      "duration": 0.155,
+      "rms": 0.1055094185989656,
+      "peak": 0.8500000000000001,
+      "sha256": "aede1c3cd7ba2e3ceeec7a5efb5f21cd7e3c0f7d4579329ae1df3d2b7d84c338",
+      "loop": false
+    },
+    {
+      "file": "pop-b.wav",
+      "source": "antilag",
+      "start": 1.565,
+      "end": 1.755,
+      "duration": 0.19,
+      "rms": 0.07874512473603629,
+      "peak": 0.85,
+      "sha256": "443a0c5e8c99a02bfc85252d831b572f4aab5512596902011aa2a8d8d6ad41ca",
+      "loop": false
+    },
+    {
+      "file": "pop-c.wav",
+      "source": "antilag",
+      "start": 2.16,
+      "end": 2.35,
+      "duration": 0.19,
+      "rms": 0.0821035426775321,
+      "peak": 0.85,
+      "sha256": "d04568e048a64993429c5cdfa01ae67615dab52f0288f7c774fec4ea8053bb3a",
+      "loop": false
+    }
+  ]
+}
